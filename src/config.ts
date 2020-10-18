@@ -1,12 +1,13 @@
+import Topography from './index';
 import { ConfigOptions } from './types';
 
 const config: ConfigOptions = {
 	service: 'mapbox',
-	priority: 'storage',
+	priority: 'speed',
 	scale: 15,
-	saveTile: (name, tiledata) =>
-		localStorage.setItem(name, JSON.stringify(tiledata)),
-	retrieveTile: (name) => localStorage.getItem(name),
+	saveTile: (name, tileData) => (Topography.tileCache[name] = tileData),
+	retrieveTile: undefined,
+	tileCache: Topography.tileCache,
 };
 
 export default config;

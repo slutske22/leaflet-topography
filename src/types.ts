@@ -5,7 +5,8 @@ export interface ConfigOptions {
 	scale: number;
 	priority: Priority;
 	saveTile: (name: string, tiledata: ImageData | ImageBitmap) => any;
-	retrieveTile: (string) => any;
+	retrieveTile: (name: string) => ImageData | ImageBitmap;
+	tileCache: any;
 }
 
 export interface UserOptions extends ConfigOptions {

@@ -1,8 +1,9 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 import getTopography from './getTopography';
 
 const Topography = {
 	getTopography,
+	tileCache: {},
 };
 
 L.Topography = Topography;
