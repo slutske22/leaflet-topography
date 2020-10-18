@@ -1,7 +1,7 @@
 import L from 'leaflet';
-import type { Map, LatLng } from 'leaflet';
+import type { Map, LatLng, Point } from 'leaflet';
 import config from './config';
-import type { UserOptions } from './types';
+import type { UserOptions, TileCoord, Priority } from './types';
 
 async function getTopography(
 	latlng: LatLng,
@@ -26,11 +26,11 @@ async function getTopography(
 		E = map.unproject(projectedE, scale),
 		W = map.unproject(projectedW, scale);
 
-	const elePoint = getElevation(point, priority),
-		eleN = getElevation(projectedN, priority),
-		eleS = getElevation(projectedS, priority),
-		eleE = getElevation(projectedE, priority),
-		eleW = getElevation(projectedW, priority);
+	const elePoint = getElevation(point, priority, scale),
+		eleN = getElevation(projectedN, priority, scale),
+		eleS = getElevation(projectedS, priority, scale),
+		eleE = getElevation(projectedE, priority, scale),
+		eleW = getElevation(projectedW, priority, scale);
 
 	const dx = map.distance(E, W),
 		dy = map.distance(N, S);
@@ -52,10 +52,9 @@ async function getTopography(
  * Takes in a projected point and returns an elevation
  * @param {Object} point | L.Point projected point from map.project(LatLng, Zoom)
  */
-function getElevation(point, priority) {
+function getElevation(point: Point, priority: Priority, scale: number) {
 	// const { DEMTiles } = store.getState().data.topography;
-	// const { priority } = store.getState().firestarter.config;
-	const { X, Y, Z } = getTileCoord(point);
+	const { X, Y, Z } = getTileCoord(point, scale);
 	const tileName = `X${X}Y${Y}Z${Z}`;
 	const tile = DEMTiles[tileName];
 
@@ -74,13 +73,10 @@ function getElevation(point, priority) {
 
 	if (priority === 'speed') {
 		// Tile data already saved as Uint8ClampedArray, just need to pull the RGBA values, quick for high volumes
-
 		RGBA = getRGBfromImgData(tile, xyPositionOnTile.x, xyPositionOnTile.y);
 	} else {
-		//
 		// if (priority === "storage")
 		// Tile data in form of ImageBitMap, need to call .getImageData for coordinate, much slower for high volumes
-		//
 		var canvas = document.createElement('canvas');
 		var c = canvas.getContext('2d');
 		c.drawImage(tile, 0, 0);
@@ -118,7 +114,7 @@ function getRGBfromImgData(imgData: ImageData, x: number, y: number) {
 	return { R: d[i], G: d[i + 1], B: d[i + 2], A: d[i + 3] };
 }
 
-export async function fetchDEMTile(tileCoord, priority) {
+export async function fetchDEMTile(tileCoord: TileCoord, priority: Priority) {
 	const { x, y, z } = tileCoord;
 	const imageUrl = `https://api.mapbox.com/v4/mapbox.terrain-rgb/${z}/${x}/${y}.pngraw?access_token=${Mapbox_Access_Token}`;
 	const tileName = `X${x}Y${y}Z${z}`;
@@ -169,11 +165,11 @@ function loadImage(src: string) {
  * @param {Object} projectedPoint | L.Point { x, y }
  * @param {Number} zoom | Zoom value
  */
-function getTileCoord(projectedPoint, zoom: number = 15) {
+function getTileCoord(projectedPoint, scale) {
 	return {
 		X: Math.floor(projectedPoint.x / 256),
 		Y: Math.floor(projectedPoint.y / 256),
-		Z: zoom,
+		Z: scale,
 	};
 }
 
