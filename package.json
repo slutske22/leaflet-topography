@@ -1,0 +1,46 @@
+{
+	"name": "leaflet-topography",
+	"version": "0.1.0",
+	"description": "a set of tools for calculating and visualizing topography in leafletjs",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"clean": "rimraf build",
+		"transpile": "./node_modules/.bin/babel src --out-dir build",
+		"tsc": "tsc",
+		"build": "npm run clean && npm run transpile"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/slutske22/leaflet-topography.git"
+	},
+	"keywords": [
+		"leaflet",
+		"leafletjs",
+		"topography",
+		"leaflet-topography"
+	],
+	"author": "Seth Lutske",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/slutske22/leaflet-topography/issues"
+	},
+	"homepage": "https://github.com/slutske22/leaflet-topography#readme",
+	"devDependencies": {
+		"@babel/cli": "^7.12.1",
+		"@babel/core": "^7.12.3",
+		"@babel/plugin-proposal-class-properties": "^7.12.1",
+		"@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+		"@babel/preset-env": "^7.12.1",
+		"@babel/preset-typescript": "^7.12.1",
+		"@types/leaflet": "^1.5.19",
+		"leaflet": "^1.7.1",
+		"rimraf": "^3.0.2"
+	},
+	"peerDependencies": {
+		"leaflet": "^1.7.1"
+	},
+	"dependencies": {
+		"@types/es6-promise": "^3.3.0"
+	}
+}
