@@ -8,7 +8,7 @@
    <h2 align="center"><a href="https://codesandbox.io/s/react-esri-leaflet-example-n15yn">&#128064; Demo &#128064;</a></h2>
 </p>
 
-leaflet-topography is a leaflet plugin which offers functions and layers for calculating and visuzalizing topographic data in a leaflet map. These tools are based on the Mapbox RGB encoded DEM, which means you must use your mapbox access token to use these tools.
+leaflet-topography is a leaflet plugin which offers functions and layers for calculating and visuzalizing topographic data in a leaflet map. These tools are based on the [Mapbox RGB Encoded DEM](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb), which means you must use your mapbox access token to use these tools.
 
 ## Installation and Use
 
@@ -23,11 +23,11 @@ Or you can download `leaflet-topography.js` from the `/build` folder and include
 ````javascript
 import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topography'
 ````
-# Tools:
+## Tools:
 
-## `getTopography(latlng, options): { elevation, slope, aspect }`
+### `getTopography(latlng, options): { elevation, slope, aspect }`
 
-This is leaflet-topography's central tool. This async function takes in an `L.LatLng` object, and a semi-optional configuration object, and returns a promise which resolves to the result, which contains elevation, slope, and aspect data for that `latlng`.  You can use `async / await` syntax, ot `.then` syntax:
+This is leaflet-topography's central tool. This async function takes in an `L.LatLng` object, and a semi-optional configuration object, and returns a promise which resolves to the result, which contains elevation, slope, and aspect data for that `latlng`.  You can use `async / await` syntax, or `.then` syntax:
 
 ````javascript
 import Topography from 'leaflet-topography'
@@ -51,7 +51,18 @@ map.on('click', (e) => {
 
 Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it them performs calculations to return elevation, slope, and aspect for that location.  For a detailed explanation of what's going on, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
 
-## preconfiguring leaflet-topography
+### TopoLayer
+
+The `TopoLayer` constructor will build a new tile layer, derived from the Mapbox RGB Terrain tileset.  Using web workers, a `TopoLayer` transforms the rgb DEM to visualize topographic features.  It takes a configuration object as the contructor's argument:
+
+````javascript
+import { TopoLayer } from 'leaflet-topography'
+
+const elevationLayer = new TopoLayer({ topotype: 'elevation', token: 'your_mapbox_token' })
+elevationLayer.addTo(map)
+````
+
+### preconfiguring leaflet-topography
 
 In order to use these tools, you must provide a mapbox access token. To use `getTopography`, you must also pass an instance of a leaflet map as an option. While you can pass your token as an argument each time you call `getTopography` or create a new `TopoLayer`, you may find it useful to configure leaflet-topography ahead of time. You can use the `config` option to do so:
 
@@ -71,3 +82,4 @@ map.on(click, async e => {
   console.log(elevation, slope, aspect)
 })
 ```
+
