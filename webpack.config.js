@@ -6,7 +6,7 @@ module.exports = {
 	mode: 'development',
 	output: {
 		path: path.resolve(__dirname, 'build'),
-		filename: 'index.js',
+		filename: 'leaflet-topography.js',
 		library: 'Topography',
 		libraryTarget: 'umd',
 	},

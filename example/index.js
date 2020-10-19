@@ -1,5 +1,5 @@
 // import '../build/index.js';
-import Topography from '../build/index.js';
+import Topography from '../build/leaflet-topography.js';
 
 console.log('Topography', Topography);
 
@@ -32,8 +32,13 @@ Topography.configure({
 	token: process.env.MAPBOX_TOKEN,
 });
 
-map.on('click', async (e) => {
-	console.log(e.latlng);
-	const results = await Topography.getTopography(e.latlng);
-	console.log(results);
+// map.on('click', async (e) => {
+// 	console.log('Requesting Topography...');
+// 	const results = await Topography.getTopography(e.latlng);
+// 	console.log(results);
+// });
+
+map.on('click', (e) => {
+	console.log('Requesting Topography...');
+	Topography.getTopography(e.latlng).then((results) => console.log(results));
 });
