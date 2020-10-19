@@ -5,6 +5,8 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'index.js',
+		library: 'Topography',
+		libraryTarget: 'umd',
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.json'],

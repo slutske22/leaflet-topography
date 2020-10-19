@@ -6,8 +6,6 @@ import config, { _config, tileCache } from './config';
 // if in non-module environment, expect L to be available as global object
 const Leaflet = L || window.L;
 
-console.log('Leaflet', Leaflet);
-
 export const Topography = {
 	getTopography,
 	tileCache,
