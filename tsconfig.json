@@ -1,12 +1,14 @@
 {
-   "compilerOptions": {
-      "lib": [ "es2015", "dom" ],
-      "target": "es5",
-      "allowJs": true,
-      "noImplicitAny": false,
-      "removeComments": true,
-      "sourceMap": true,
-      "noEmit": false,
-      "outDir": "tsc-build"
-   }
+	"compilerOptions": {
+		"module": "esnext",
+		"lib": ["es2015", "dom"],
+		"target": "es5",
+		"allowJs": true,
+		"noImplicitAny": false,
+		"removeComments": true,
+		"sourceMap": true,
+		"noEmit": false,
+		"outDir": "tsc-build",
+		"esModuleInterop": true
+	}
 }

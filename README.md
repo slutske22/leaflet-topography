@@ -32,7 +32,8 @@ This is leaflet-topography's central tool. This async function takes in an `L.La
 ````javascript
 import Topography from 'leaflet-topography'
 
-const map = (window.map = L.map('mapdiv', mapOptions));
+const map = L.map('mapdiv', mapOptions));
+
 const params = {
   map,
   token: 'your_mapbox_access_token'
@@ -45,13 +46,13 @@ map.on('click', async (e) => {
 
 // promise .then syntax
 map.on('click', (e) => {
-	Topography.getTopography(e.latlng).then((results) => console.log(results));
+  Topography.getTopography(e.latlng).then((results) => console.log(results));
 });
 ````
 
 Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it them performs calculations to return elevation, slope, and aspect for that location.  For a detailed explanation of what's going on, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
 
-### TopoLayer
+### `TopoLayer`
 
 The `TopoLayer` constructor will build a new tile layer, derived from the Mapbox RGB Terrain tileset.  Using web workers, a `TopoLayer` transforms the rgb DEM to visualize topographic features.  It takes a configuration object as the contructor's argument:
 
