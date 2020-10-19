@@ -1,6 +1,6 @@
 # leaflet-topography
 
-<img src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/banner.png" width="80px">&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/banner.png">
 a set of tools for calculating and visualizing topography in leafletjs
 
 <p align="center">
