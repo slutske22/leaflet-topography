@@ -7,7 +7,6 @@
       "removeComments": true,
       "sourceMap": true,
       "noEmit": false,
-      "rootDir": "src",
-      "outDir": "build"
+      "outDir": "tsc-build"
    }
 }
