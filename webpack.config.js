@@ -1,4 +1,5 @@
-var path = require('path');
+const path = require('path');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
 	entry: './src/index',
@@ -27,5 +28,16 @@ module.exports = {
 			commonjs2: 'leaflet',
 			root: 'L',
 		},
+	},
+	optimization: {
+		minimizer: [
+			new UglifyJSPlugin({
+				uglifyOptions: {
+					output: {
+						comments: false,
+					},
+				},
+			}),
+		],
 	},
 };

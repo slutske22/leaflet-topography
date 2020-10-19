@@ -1,7 +1,9 @@
 import '../build/index.js';
+import Topography, { getTopography } from '../build/index.js';
 
-const { Topography } = L;
-console.log(Topography);
+// const { Topography } = L;
+console.log('Topography', Topography);
+console.log('getTopography', getTopography);
 
 // Define some maps options
 var mapOptions = {

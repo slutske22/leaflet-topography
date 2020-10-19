@@ -1,8 +1,6 @@
 {
-	"presets": [
-         "@babel/typescript"
-	],
-	"plugins": [
-      "@babel/plugin-transform-block-scoping"
-	]
+	"presets": ["@babel/typescript"]
+	// "plugins": [
+	//    "@babel/plugin-transform-block-scoping"
+	// ]
 }
