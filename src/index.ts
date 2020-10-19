@@ -1,17 +1,20 @@
-import * as L from 'leaflet';
+import L from 'leaflet';
+
+// if in node dev environment, expect and use L to be available as peer dependency
+// if in non-module environment, expect L to be available as global object
+const Leaflet = L || window.L;
+
+console.log('Leaflet', Leaflet);
+
 import getTopography from './getTopography';
+import config, { tileCache } from './config';
 
 const Topography = {
 	getTopography,
-	tileCache: {},
+	tileCache,
 };
 
-L.Topography = Topography;
-
-// @ts-ignore
-if (window.L && !window.L.Topography) {
-	L.Topography = Topography;
-}
+Leaflet.Topography = Topography;
 
 export { getTopography };
 

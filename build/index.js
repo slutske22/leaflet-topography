@@ -1,15 +1,1 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTopography = void 0;
-var leaflet_1 = require("leaflet");
-var getTopography_1 = require("./getTopography");
-exports.getTopography = getTopography_1.default;
-var Topography = {
-    getTopography: getTopography_1.default,
-};
-leaflet_1.default.Topography = Topography;
-if (window.L && !window.L.Topography) {
-    leaflet_1.default.Topography = Topography;
-}
-exports.default = Topography;
-//# sourceMappingURL=index.js.map
+(()=>{"use strict";var e={281:(e,a,t)=>{t.d(a,{Z:()=>c});var r={};const o={service:"mapbox",priority:"speed",scale:15,saveTile:(e,a)=>c.tileCache[e]=a,retrieveTile:void 0,tileCache:r};var n=t.n(void 0)()||window.L;console.log("Leaflet",n);var i={getTopography:async function(e,a,t){var r=Object.assign(o,t),{scale:n,priority:i,token:c,tileCache:s,saveTile:l}=r;async function p(e){var a,{X:t,Y:r,Z:o}=(a=e,{X:Math.floor(a.x/256),Y:Math.floor(a.y/256),Z:n}),v=s[`X${t}Y${r}Z${o}`];if(!v)return console.log("theres no tile"),await async function(e){var{X:a,Y:t,Z:r}=e,o=`https://api.mapbox.com/v4/mapbox.terrain-rgb/${r}/${a}/${t}.pngraw?access_token=${c}`,n=`X${a}Y${t}Z${r}`,s=document.createElement("canvas");s.width=s.height=256;var p=s.getContext("2d");await function(e){return new Promise(((a,t)=>{var r=new Image;r.crossOrigin="*",r.addEventListener("load",(()=>a(r))),r.addEventListener("error",(e=>t(e))),r.src=e}))}(o).then((e=>{if("speed"===i){p.drawImage(e,0,0,256,256);var a=p.getImageData(0,0,256,256);l(n,a)}else createImageBitmap(e,0,0,256,256).then((e=>l(n,e)))}))}({X:t,Y:r,Z:o}),void p(e);var d,h,u,g,y,x={x:Math.floor(e.x)-256*t,y:Math.floor(e.y)-256*r};if("speed"===i)u=x.x,g=4*(x.y*(h=v).width+u),d={R:(y=h.data)[g],G:y[g+1],B:y[g+2],A:y[g+3]};else{var f=document.createElement("canvas").getContext("2d");f.drawImage(v,0,0);var m=f.getImageData(x.x,x.y,1,1).data;d={R:m[0],G:m[1],B:m[2],A:m[3]}}var{R:w,G:M,B:$}=d;return.1*(256*w*256+256*M+$)-1e4}var v=a.project(e,n),d={...v,y:v.y-2},h={...v,y:v.y+2},u={...v,x:v.x+2},g={...v,x:v.x-2},y=a.unproject(d,n),x=a.unproject(h,n),f=a.unproject(u,n),m=a.unproject(g,n),w=await p(v),M=await p(d),$=await p(h),b=await p(u),j=await p(g),I=a.distance(f,m),Z=a.distance(y,x),C=(b-j)/I,X=(M-$)/Z;return{elevation:w,slope:Math.atan(Math.sqrt(C**2+X**2))*(180/Math.PI),aspect:0!==I?90-Math.atan2(X,C)*(180/Math.PI):90-90*(Z>0?1:-1)}},tileCache:r};n.Topography=i;const c=i}},a={};function t(r){if(a[r])return a[r].exports;var o=a[r]={exports:{}};return e[r](o,o.exports,t),o.exports}t.n=e=>{var a=e&&e.__esModule?()=>e.default:()=>e;return t.d(a,{a}),a},t.d=(e,a)=>{for(var r in a)t.o(a,r)&&!t.o(e,r)&&Object.defineProperty(e,r,{enumerable:!0,get:a[r]})},t.o=(e,a)=>Object.prototype.hasOwnProperty.call(e,a),t(281)})();
