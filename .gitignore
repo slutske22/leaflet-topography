@@ -3,3 +3,4 @@ build
 example/node_modules
 example/.cache
 example/dist
+example/.env

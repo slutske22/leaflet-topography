@@ -30,7 +30,7 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 	//
 	// Takes in a projected point and returns an elevation
 	async function getElevation(point: { x: number; y: number }) {
-		// const { DEMTiles } = store.getState().data.topography;
+		//
 		const { X, Y, Z } = getTileCoord(point);
 		const tileName = `X${X}Y${Y}Z${Z}`;
 
@@ -39,10 +39,9 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 
 		// if tile doesn't yet exist, fetch it, wait until its fetched, and rerun this function
 		if (!tile) {
-			console.log('theres no tile');
+			// console.log('theres no tile');
 			await fetchDEMTile({ X, Y, Z });
-			getElevation(point);
-			return;
+			return await getElevation(point);
 		}
 
 		const xyPositionOnTile = {
@@ -176,7 +175,7 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 	// @ts-ignore
 	const W = map.unproject(projectedW, scale);
 
-	const elePoint = await getElevation(point),
+	const elePoint = await getElevation({ x: point.x, y: point.y }),
 		eleN = await getElevation(projectedN),
 		eleS = await getElevation(projectedS),
 		eleE = await getElevation(projectedE),
@@ -191,8 +190,8 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 	const slope = Math.atan(Math.sqrt(dzdx ** 2 + dzdy ** 2)) * (180 / Math.PI);
 	const aspect =
 		dx !== 0
-			? 90 - Math.atan2(dzdy, dzdx) * (180 / Math.PI)
-			: 90 - 90 * (dy > 0 ? 1 : -1);
+			? (Math.atan2(dzdy, dzdx) * (180 / Math.PI) + 180) % 360
+			: (90 * (dy > 0 ? 1 : -1) + 180) % 360;
 
 	return { elevation: elePoint, slope, aspect };
 }

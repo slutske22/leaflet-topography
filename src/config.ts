@@ -1,11 +1,10 @@
-import Topography from './index';
 import { ConfigOptions } from './types';
 
 // default cache for saving tiles
 export const tileCache = {};
 
 // function to set the _config of L.Topography
-const config = (userConfig: ConfigOptions) => {
+const configure = (userConfig: ConfigOptions) => {
 	const newConfig = Object.assign(_config, userConfig);
 	_config = newConfig;
 	return _config;
@@ -19,4 +18,4 @@ export var _config: ConfigOptions = {
 	tileCache: tileCache,
 };
 
-export default config;
+export default configure;

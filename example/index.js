@@ -1,9 +1,7 @@
-import '../build/index.js';
-import Topography, { getTopography } from '../build/index.js';
+// import '../build/index.js';
+import Topography from '../build/index.js';
 
-// const { Topography } = L;
 console.log('Topography', Topography);
-console.log('getTopography', getTopography);
 
 // Define some maps options
 var mapOptions = {
@@ -15,7 +13,7 @@ var mapOptions = {
 var map = (window.map = L.map('leafletMapid', mapOptions));
 
 //  Add a baselayer
-var mapBoxOutdoors = L.tileLayer(
+var esriOceans = L.tileLayer(
 	'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}',
 	{
 		attribution:
@@ -24,4 +22,18 @@ var mapBoxOutdoors = L.tileLayer(
 	}
 ).addTo(map);
 
-map.on('click', (e) => console.log(e.latlng));
+// Testing .env
+// var mapboxRGB = L.tileLayer(
+// 	`https://api.mapbox.com/v4/mapbox.terrain-rgb/{z}/{x}/{y}.pngraw?access_token=${process.env.MAPBOX_TOKEN}`
+// ).addTo(map);
+
+Topography.configure({
+	map,
+	token: process.env.MAPBOX_TOKEN,
+});
+
+map.on('click', async (e) => {
+	console.log(e.latlng);
+	const results = await Topography.getTopography(e.latlng);
+	console.log(results);
+});

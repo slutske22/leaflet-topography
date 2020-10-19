@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import getTopography from './getTopography';
-import config, { _config, tileCache } from './config';
+import configure, { _config, tileCache } from './config';
 
 // if in node dev environment, expect and use L to be available as peer dependency
 // if in non-module environment, expect L to be available as global object
@@ -10,7 +10,7 @@ export const Topography = {
 	getTopography,
 	tileCache,
 	_config,
-	config,
+	configure,
 };
 
 Leaflet.Topography = Topography;
