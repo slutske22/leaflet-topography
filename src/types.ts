@@ -1,16 +1,19 @@
+import type { Map } from 'leaflet';
+
 export type Priority = 'storage' | 'speed';
 
 export interface ConfigOptions {
 	service?: 'mapbox' | 'esri';
 	scale: number;
 	priority: Priority;
-	saveTile: (name: string, tiledata: ImageData | ImageBitmap) => any;
-	retrieveTile: (name: string) => ImageData | ImageBitmap;
 	tileCache: any;
 }
 
 export interface UserOptions extends ConfigOptions {
 	token: string;
+	map: Map;
+	saveTile: (name: string, tiledata: ImageData | ImageBitmap) => any;
+	retrieveTile: (name: string) => ImageData | ImageBitmap;
 }
 
 export interface TileCoord {

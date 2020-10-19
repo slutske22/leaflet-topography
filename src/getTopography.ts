@@ -1,16 +1,33 @@
-import type { Map, LatLng, Point } from 'leaflet';
-import config from './config';
+import type { LatLng } from 'leaflet';
+import { _config } from './config';
 import type { UserOptions, TileCoord } from './types';
 
-async function getTopography(
-	latlng: LatLng,
-	map: Map,
-	userOptions: UserOptions
-) {
+async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 	//
-	const options = Object.assign(config, userOptions);
-	const { scale, priority, token, tileCache, saveTile } = options;
+	// SETUP:
+	// merge options from configuration _config with option passed in current function call
+	const options = Object.assign(_config, userOptions);
+	const { map, scale, priority, token, tileCache, saveTile } = options;
 
+	// Sound alarms if certain config options are not given by user
+	if (!map) {
+		throw new Error(
+			'Map instance must be passed as option to leaflet-topography config or options'
+		);
+	}
+	if (!token) {
+		throw new Error('Token required in leaflet-topography config / options');
+	}
+
+	// if user has not set a saveTile function of their own, use this default, which saves tiles to L.Topography.tileCache
+	const effectiveSaveTile = saveTile
+		? saveTile
+		: (name: string, tileData: ImageData | ImageBitmap) =>
+				(tileCache[name] = tileData);
+
+	//
+	//
+	//
 	// Takes in a projected point and returns an elevation
 	async function getElevation(point: { x: number; y: number }) {
 		// const { DEMTiles } = store.getState().data.topography;
@@ -64,6 +81,9 @@ async function getTopography(
 		return -10000 + (R * 256 * 256 + G * 256 + B) * 0.1;
 	}
 
+	//
+	//
+	//
 	// Takes in ImageData object (created when saving a tile to the store), and xy coordinate
 	// of point on tile, returns RGBA value of that pixel from that ImageData's Uint8ClampedArray
 	function getRGBfromImgData(imgData: ImageData, x: number, y: number) {
@@ -73,6 +93,10 @@ async function getTopography(
 		return { R: d[i], G: d[i + 1], B: d[i + 2], A: d[i + 3] };
 	}
 
+	//
+	//
+	//
+	// Takes in a tile coordinate, fetches the tile image, and saves it to the cache in the form of either an ImageData array or an ImageBitman, depending on options.priority
 	async function fetchDEMTile(tileCoord: TileCoord) {
 		const { X, Y, Z } = tileCoord;
 		const imageUrl = `https://api.mapbox.com/v4/mapbox.terrain-rgb/${Z}/${X}/${Y}.pngraw?access_token=${token}`;
@@ -91,19 +115,22 @@ async function getTopography(
 				// in the form of a Uint8Clamped array for the entire tile
 				c.drawImage(image, 0, 0, 256, 256);
 				var pixelData = c.getImageData(0, 0, 256, 256);
-				saveTile(tileName, pixelData);
+				effectiveSaveTile(tileName, pixelData);
 			} else {
 				//
 				// if (priority === "storage")
 				// LESS STORAGE NEEDED BUT MUCH SLOWER:
 				// Write the image to an ImageBitMap and then call .getImageData for each pixel inside the getElevation function
 				createImageBitmap(image, 0, 0, 256, 256).then((ibm) =>
-					saveTile(tileName, ibm)
+					effectiveSaveTile(tileName, ibm)
 				);
 			}
 		});
 	}
 
+	//
+	//
+	//
 	// Takes in image src url as string, returns promise that resolves when image is loaded
 	function loadImage(src: string): Promise<CanvasImageSource> {
 		return new Promise((resolve, reject) => {
@@ -115,6 +142,9 @@ async function getTopography(
 		});
 	}
 
+	//
+	//
+	//
 	// Take in a projection point and return the tile coordinates { X, Y, Z } of that point
 	function getTileCoord(projectedPoint: { x: number; y: number }) {
 		return {
@@ -124,6 +154,9 @@ async function getTopography(
 		};
 	}
 
+	//
+	//
+	//
 	// Central getTopography function using mapbox:
 	const point = map.project(latlng, scale);
 
@@ -134,7 +167,7 @@ async function getTopography(
 		projectedE = { ...point, x: point.x + pixelDiff },
 		projectedW = { ...point, x: point.x - pixelDiff };
 
-	// @ts-ignore
+	// @ts-ignore - ts complaining at me about projectedXs not being proper L.Point types
 	const N = map.unproject(projectedN, scale);
 	// @ts-ignore
 	const S = map.unproject(projectedS, scale);

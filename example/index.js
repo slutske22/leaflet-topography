@@ -1,5 +1,8 @@
 import '../build/index.js';
 
+const { Topography } = L;
+console.log(Topography);
+
 // Define some maps options
 var mapOptions = {
 	center: { lat: 20.77694995473552, lng: -156.29021108150485 },
@@ -7,7 +10,7 @@ var mapOptions = {
 };
 
 //Create a map and assign it to the map div
-var map = L.map('leafletMapid', mapOptions);
+var map = (window.map = L.map('leafletMapid', mapOptions));
 
 //  Add a baselayer
 var mapBoxOutdoors = L.tileLayer(
