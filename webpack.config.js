@@ -6,7 +6,6 @@ module.exports = {
 	mode: 'development',
 	output: {
 		path: path.resolve(__dirname, 'build'),
-		// filename: 'leaflet-topography.js',
 		filename: 'leaflet-topography.js',
 		library: 'Topography',
 		libraryTarget: 'umd',
@@ -18,7 +17,10 @@ module.exports = {
 		rules: [
 			{
 				test: /\.worker\.js$/,
-				use: { loader: 'worker-loader' },
+				loader: 'worker-loader',
+				options: {
+					inline: 'fallback',
+				},
 			},
 			{
 				test: /\.(ts|js)x?$/,

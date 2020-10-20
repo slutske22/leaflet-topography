@@ -1,7 +1,7 @@
 import { ConfigOptions } from './types';
 
 // default cache for saving tiles
-export const tileCache = {};
+export const _tileCache = {};
 
 // function to set the _config of L.Topography
 const configure = (userConfig: ConfigOptions) => {
@@ -15,7 +15,7 @@ export var _config: ConfigOptions = {
 	service: 'mapbox',
 	priority: 'speed',
 	scale: 15,
-	tileCache: tileCache,
+	_tileCache,
 };
 
 export default configure;

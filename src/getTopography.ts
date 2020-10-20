@@ -7,7 +7,7 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 	// SETUP:
 	// merge options from configuration _config with option passed in current function call
 	const options = Object.assign(_config, userOptions);
-	const { map, scale, priority, token, tileCache, saveTile } = options;
+	const { map, scale, priority, token, _tileCache, saveTile } = options;
 
 	// Sound alarms if certain config options are not given by user
 	if (!map) {
@@ -19,11 +19,11 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		throw new Error('Token required in leaflet-topography config / options');
 	}
 
-	// if user has not set a saveTile function of their own, use this default, which saves tiles to L.Topography.tileCache
+	// if user has not set a saveTile function of their own, use this default, which saves tiles to L.Topography._tileCache
 	const effectiveSaveTile = saveTile
 		? saveTile
 		: (name: string, tileData: ImageData | ImageBitmap) =>
-				(tileCache[name] = tileData);
+				(_tileCache[name] = tileData);
 
 	//
 	//
@@ -35,7 +35,7 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		const tileName = `X${X}Y${Y}Z${Z}`;
 
 		// get the tile from the cache
-		const tile = tileCache[tileName];
+		const tile = _tileCache[tileName];
 
 		// if tile doesn't yet exist, fetch it, wait until its fetched, and rerun this function
 		if (!tile) {

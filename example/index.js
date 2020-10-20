@@ -1,5 +1,5 @@
 // import '../build/index.js';
-import Topography from '../build/main.js';
+import Topography from '../build/leaflet-topography.js';
 
 console.log('Topography', Topography);
 

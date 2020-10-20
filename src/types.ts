@@ -6,11 +6,11 @@ export interface ConfigOptions {
 	service?: 'mapbox' | 'esri';
 	scale: number;
 	priority: Priority;
-	tileCache: any;
+	_tileCache: any;
+	token?: string;
 }
 
 export interface UserOptions extends ConfigOptions {
-	token: string;
 	map: Map;
 	saveTile: (name: string, tiledata: ImageData | ImageBitmap) => any;
 	retrieveTile: (name: string) => ImageData | ImageBitmap;
