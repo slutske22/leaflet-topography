@@ -37,10 +37,11 @@ import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topogra
 - [**`getTopography`**](#gettopography)
 - [**`TopoLayer`**](#topolayer)
 - [**`configure`**](#configure)
+- [**`preload`**](#preload)
 
 <hr>
 
-<h3 id="gettopography"><code>getTopography(latlng, options): { elevation, slope, aspect }</code></h3>
+<h3 id="gettopography"><code>getTopography</code></h3>
 
 This is leaflet-topography's central tool. This async function takes in an `L.LatLng` object, and a semi-optional configuration object, and returns a promise which resolves to the result, which contains elevation, slope, and aspect data for that `latlng`.  You can use `async / await` syntax, or `.then` syntax:
 
@@ -176,6 +177,8 @@ const elevationLayer = new TopoLayer({ topotype: 'elevation', token: 'your_mapbo
 elevationLayer.addTo(map)
 ````
 
+<hr>
+
 ### `configure`
 
 You may find it useful to preconfigure leaflet-topography ahead of time. You can use the `configure` function to do so, which will eliminate the need to pass an `options` argument to `getTopography`, or to pass your token to the `TopoLayer` constructor.
@@ -200,7 +203,39 @@ map.on(click, async e => {
 const elevationLayer = new TopoLayer({ topotype: 'elevation' })
 ```
 
+<hr>
+
 ### `preload`
+
+`preload` is a convenience function which takes in an `L.LatLngBounds` and saves all DEM tiles within that bounds to the cache.  If you know you will be doing analysis in a certain area, `preload` will perform all the data fetching ahead of time:
+
+````javascript
+import L from 'leaflet';
+import { preload, configure } from 'leaflet-topography';
+
+const map = L.map('mapdiv', mapOptions));
+
+configure({
+  map,
+  token: 'your_mapbox_access_token',
+  priority: 'storage'
+});
+
+const corner1 = L.latLng(40.712, -74.227);
+const corner2 = L.latLng(40.774, -74.125);
+const analysisArea = L.latLngBounds(corner1, corner2);
+
+preload(analysisArea);
+
+map.on('click', e => {
+  getTopography(e.latlng)
+    .then(results => console.log(results));
+});
+````
+
+**Be careful!** Calling `preload` on too large an area with a high `scale` may cause your browser to try to fetch hundreds or even millions of tile images at once!
+
+<hr>
 
 ## Alternatives
 
