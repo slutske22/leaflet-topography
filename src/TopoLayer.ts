@@ -1,4 +1,5 @@
 import { GridLayer, DomUtil } from 'leaflet';
+import { _config } from './config';
 import workers from './workers/blobs';
 
 import * as ElevationWorker from './workers/dem.worker.js';
@@ -43,6 +44,12 @@ var uniqueId = (function () {
 const TopoLayer = GridLayer.extend({
 	// add worker initialization to beforeAdd Method
 	beforeAdd: function (map) {
+		// error if there's no token
+		const { token } = this.options;
+		if (!token && !_config.token) {
+			throw new Error('Cannot initialize TopoLayer without mapbox token');
+		}
+
 		map._addZoomLimit(this);
 
 		// object to hold canvas contexts as they are created and updated
@@ -79,12 +86,15 @@ const TopoLayer = GridLayer.extend({
 
 	// createTile method required - creates a new tile of the gridlayer
 	createTile: function (coords) {
-		const { token } = this.options;
+		const token = this.options.token || _config.token;
 
 		var tile = <HTMLCanvasElement>DomUtil.create('canvas', 'leaflet-tile');
 		var size = this.getTileSize();
 		tile.width = size.x;
 		tile.height = size.y;
+
+		tile.style.opacity = '0';
+		tile.style.transition = 'opacity 500ms';
 
 		var ctx = tile.getContext('2d');
 		var demCtx;
@@ -125,6 +135,7 @@ const TopoLayer = GridLayer.extend({
 		var shades = e.data.shades;
 		imgData.data.set(shades);
 		ctx.putImageData(imgData, 0, 0);
+		ctx.canvas.style.opacity = '1';
 	},
 });
 
