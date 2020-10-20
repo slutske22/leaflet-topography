@@ -199,3 +199,15 @@ map.on(click, async e => {
 // Add a TopoLayer, no need to pass token
 const elevationLayer = new TopoLayer({ topotype: 'elevation' })
 ```
+
+### `preload`
+
+## Alternatives
+
+[Esri-leaflet](https://esri.github.io/esri-leaflet/) can be used for both querying and visualizing topographic data in leaflet with relative ease.  You can see some examples of how to do this in my articles [Slope and Aspect as a function of `LatLng`](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet) and [Visualizing Topography](https://observablehq.com/@slutske22/slope-and-aspect-in-leaflet).  Leaflet-topography grew out of my dissatisfaction esri-leaflet, as I was in need of a way to query hundrends of points in the same area for topographic data in a very short time (on the order of seconds).  
+
+There are *many* tile layers and image layers which visualize slope, aspect, hillshade, and elevation, and you are likely to find a pre-fab layer that suits your needs.  I wanted to have full control over customizing the coloration of my layers, which is what inspired `TopoLayer`.
+
+### License
+
+GPL-3.0 License
