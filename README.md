@@ -36,7 +36,7 @@ import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topogra
 
 - [**`getTopography`**](#gettopography)
 - [**`TopoLayer`**](#topolayer)
-- **`configure`**
+- [**`configure`**](#configure)
 
 <hr>
 
@@ -178,7 +178,7 @@ elevationLayer.addTo(map)
 
 ### `configure`
 
-You may find it useful to configure leaflet-topography ahead of time. You can use the `configure` function to do so, which will eliminate the need to pass an `options` argument to `getTopography`, or to pass your token to the `TopoLayer` constructor.
+You may find it useful to preconfigure leaflet-topography ahead of time. You can use the `configure` function to do so, which will eliminate the need to pass an `options` argument to `getTopography`, or to pass your token to the `TopoLayer` constructor.
 
 ```javascript
 // Create a map
