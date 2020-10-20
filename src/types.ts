@@ -6,7 +6,7 @@ export interface ConfigOptions {
 	service?: 'mapbox' | 'esri';
 	scale: number;
 	priority: Priority;
-	tileCache: any;
+	_tileCache: any;
 	token?: string;
 }
 

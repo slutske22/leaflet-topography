@@ -25,7 +25,13 @@ import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topogra
 ````
 ## Tools:
 
-### `getTopography(latlng, options): { elevation, slope, aspect }`
+- [**`getTopography`**](#gettopography)
+- [**`TopoLayer`**](#topolayer)
+- **`configure`**
+
+<hr>
+
+<h3 id="gettopography"><code>getTopography(latlng, options): { elevation, slope, aspect }</code></h3>
 
 This is leaflet-topography's central tool. This async function takes in an `L.LatLng` object, and a semi-optional configuration object, and returns a promise which resolves to the result, which contains elevation, slope, and aspect data for that `latlng`.  You can use `async / await` syntax, or `.then` syntax:
 
@@ -51,6 +57,61 @@ map.on('click', (e) => {
 ````
 
 Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it them performs calculations to return elevation, slope, and aspect for that location.  For a detailed explanation of what's going on, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
+
+### Options
+
+<table>
+   <tr>
+      <td> <b> Option </b> </td>
+      <td> <b> Type </b> </td>
+      <td> <b> Default </b> </td>
+      <td> <b> Description </b> </td>
+   </tr>
+   <tr>
+      <td>
+         <b>map</b><br>
+         required 
+      </td>
+      <td> <code> L.Map </code> </td>
+      <td> none </td>
+      <td> Instance of leaflet map, required for proper projections </td>
+   </tr>
+   <tr>
+      <td>
+         <b>token</b><br>
+         required 
+      </td>
+      <td> <code> string </code> </td>
+      <td> none </td>
+      <td> Mapbox token, required to retrieve mapbox tiles used in calculations </td>
+   </tr>
+   <tr>
+      <td>
+         <b>scale</b>
+      </td>
+      <td> <code> number </code> </td>
+      <td> 15 </td>
+      <td> Zoom level of retrieved tiles.  Using a lower scale will give slope and aspect calculations with lower resolution.  Not recommended to use scale less than 12 </td>
+   </tr>
+   <tr>
+      <td>
+         <b>priority</b>
+      </td>
+      <td> <code> 'speed' | 'storage' </code> </td>
+      <td> 'speed' </td>
+      <td> Priority used by the <code>getTopography</code> algorithm.  When prioritizing speed, retrieved tile data is cached as an <code>ImageData</code> <code>Uint8ClampedArray</code>.  Retrieving pixel data from cached <code>Uint8ClampedArray</code>s is very fast, but each <code>Uint8ClampedArray</code> takes up almost 3 megabytes of in-browser memory.  Prioritizing storage will cache tile data as an <code>ImageBitmap</code>, which required about 40 <i>bytes</i> of storage.  However, retrieving pixel data from an <code>ImageBitmap</code> requires calling <code>drawImage</code> and <code>getImageData</code>, which takes more time. </td>
+   </tr>
+   <tr>
+      <td>
+         <b>saveTile</b>
+      </td>
+      <td> <code> fn(name: string, tileData: ImageData | ImageBitmap) => void </code> </td>
+      <td> undefined </td>
+      <td> Custom function provided by the user to define tile-cacheing behavior. </td>
+   </tr>
+</table>
+
+<hr>
 
 ### `TopoLayer`
 
