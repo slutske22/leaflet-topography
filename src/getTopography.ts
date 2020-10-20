@@ -2,12 +2,25 @@ import type { LatLng } from 'leaflet';
 import { _config } from './config';
 import type { UserOptions, TileCoord } from './types';
 
+/**
+ * Takes in an L.LatLng and returns { elevation, slope, aspect }
+ * @param {Object} latlng | L.LatLng
+ * @param userOptions | user options
+ */
 async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 	//
 	// SETUP:
 	// merge options from configuration _config with option passed in current function call
 	const options = Object.assign(_config, userOptions);
-	const { map, scale, priority, token, _tileCache, saveTile } = options;
+	const {
+		map,
+		scale,
+		spread,
+		priority,
+		token,
+		_tileCache,
+		saveTile,
+	} = options;
 
 	// Sound alarms if certain config options are not given by user
 	if (!map) {
@@ -25,10 +38,10 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		: (name: string, tileData: ImageData | ImageBitmap) =>
 				(_tileCache[name] = tileData);
 
-	//
-	//
-	//
-	// Takes in a projected point and returns an elevation
+	/**
+	 * Takes in a projected point and returns an elevation
+	 * @param {Object} point | L.Point
+	 */
 	async function getElevation(point: { x: number; y: number }) {
 		//
 		const { X, Y, Z } = getTileCoord(point);
@@ -67,6 +80,8 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 				1
 			).data;
 
+			console.log(pixelData);
+
 			RGBA = {
 				R: pixelData[0],
 				G: pixelData[1],
@@ -80,11 +95,13 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		return -10000 + (R * 256 * 256 + G * 256 + B) * 0.1;
 	}
 
-	//
-	//
-	//
-	// Takes in ImageData object (created when saving a tile to the store), and xy coordinate
-	// of point on tile, returns RGBA value of that pixel from that ImageData's Uint8ClampedArray
+	/**
+	 * Takes in ImageData object (created when saving a tile to the store), and xy coordinate
+	 * of point on tile, returns RGBA value of that pixel from that ImageData's Uint8ClampedArray
+	 * @param {Object} imgData
+	 * @param {Number} x
+	 * @param {Number} y
+	 */
 	function getRGBfromImgData(imgData: ImageData, x: number, y: number) {
 		var index = y * imgData.width + x;
 		var i = index * 4;
@@ -92,10 +109,11 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		return { R: d[i], G: d[i + 1], B: d[i + 2], A: d[i + 3] };
 	}
 
-	//
-	//
-	//
-	// Takes in a tile coordinate, fetches the tile image, and saves it to the cache in the form of either an ImageData array or an ImageBitman, depending on options.priority
+	/**
+	 * Takes in a tile coordinate, fetches the tile image, and saves it to the cache in the form of
+	 * either an ImageData array or an ImageBitman, depending on options.priority
+	 * @param {Object} tileCoord
+	 */
 	async function fetchDEMTile(tileCoord: TileCoord) {
 		const { X, Y, Z } = tileCoord;
 		const imageUrl = `https://api.mapbox.com/v4/mapbox.terrain-rgb/${Z}/${X}/${Y}.pngraw?access_token=${token}`;
@@ -127,10 +145,10 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		});
 	}
 
-	//
-	//
-	//
-	// Takes in image src url as string, returns promise that resolves when image is loaded
+	/**
+	 * Takes in image src url as string, returns promise that resolves when image is loaded
+	 * @param {String} src
+	 */
 	function loadImage(src: string): Promise<CanvasImageSource> {
 		return new Promise((resolve, reject) => {
 			const img = new Image();
@@ -141,10 +159,10 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		});
 	}
 
-	//
-	//
-	//
-	// Take in a projection point and return the tile coordinates { X, Y, Z } of that point
+	/**
+	 * Take in a projection point and return the tile coordinates { X, Y, Z } of that point
+	 * @param {Object} projectedPoint
+	 */
 	function getTileCoord(projectedPoint: { x: number; y: number }) {
 		return {
 			X: Math.floor(projectedPoint.x / 256),
@@ -153,13 +171,14 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		};
 	}
 
-	//
-	//
-	//
-	// Central getTopography function using mapbox:
+	// -------------------------------------------------------------- //
+	//                                                                //
+	//       Central getTopography function using mapbox:             //
+	//                                                                //
+	// -------------------------------------------------------------- //
 	const point = map.project(latlng, scale);
 
-	const pixelDiff = 2;
+	const pixelDiff = spread;
 
 	const projectedN = { ...point, y: point.y - pixelDiff },
 		projectedS = { ...point, y: point.y + pixelDiff },

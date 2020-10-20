@@ -5,6 +5,7 @@ export type Priority = 'storage' | 'speed';
 export interface ConfigOptions {
 	service?: 'mapbox' | 'esri';
 	scale: number;
+	spread: number;
 	priority: Priority;
 	_tileCache: any;
 	token?: string;

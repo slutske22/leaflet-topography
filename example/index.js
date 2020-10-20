@@ -1,8 +1,6 @@
 // import '../build/index.js';
 import Topography from '../build/leaflet-topography.js';
 
-console.log('Topography', Topography);
-
 // Define some maps options
 var mapOptions = {
 	center: { lat: 20.77694995473552, lng: -156.29021108150485 },

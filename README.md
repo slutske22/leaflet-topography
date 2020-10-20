@@ -109,15 +109,23 @@ You must pass an options as the second argument of `getTopography`, *or* you can
       </td>
       <td> <code> number </code> </td>
       <td> 15 </td>
-      <td> Zoom level of retrieved tiles.  Using a lower scale will give slope and aspect calculations with lower resolution.  Not recommended to use scale less than 12 </td>
+      <td> Zoom level of retrieved tiles.  Using a lower scale will give slope and aspect calculations with lower resolution.  Not recommended to use scale less than 12, values greater than 15 not possible </td>
+   </tr>
+   <tr>
+      <td>
+         <b>spread</b>
+      </td>
+      <td> <code> number </code> </td>
+      <td> 2 </td>
+      <td> Number of pixels away from queried point to use for calculations.  Larger numbers give lower resolution.  If you are using a spread > 4 you should consider simply lowering your scale. You probably don't need to touch this. </td>
    </tr>
    <tr>
       <td>
          <b>priority</b>
       </td>
       <td> <code> 'speed' | 'storage' </code> </td>
-      <td> 'speed' </td>
-      <td> Priority used by the <code>getTopography</code> algorithm.  When prioritizing speed, retrieved tile data is cached as an <code>ImageData</code> <code>Uint8ClampedArray</code>.  Retrieving pixel data from cached <code>Uint8ClampedArray</code>s is very fast, but each <code>Uint8ClampedArray</code> takes up almost 3 megabytes of in-browser memory.  Prioritizing storage will cache tile data as an <code>ImageBitmap</code>, which required about 40 <i>bytes</i> of storage.  However, retrieving pixel data from an <code>ImageBitmap</code> requires calling <code>drawImage</code> and <code>getImageData</code>, which takes more time. </td>
+      <td> 'storage' </td>
+      <td> Priority used by the <code>getTopography</code> algorithm.  When prioritizing speed, retrieved tile data is cached as an <code>ImageData</code> <code>Uint8ClampedArray</code>.  Retrieving pixel data from cached <code>Uint8ClampedArray</code>s is very fast, but each <code>Uint8ClampedArray</code> takes up almost 3 megabytes of in-browser memory.  Prioritizing storage will cache tile data as an <code>ImageBitmap</code>, which requires about 40 <i>bytes</i> of storage per bitmap.  However, retrieving pixel data from an <code>ImageBitmap</code> requires calling <code>drawImage</code> and <code>getImageData</code>, which is slightly slower.  Difference will not be noticeable when requesting topography one point at a time, but can make a big difference when querying hundreds of points in a small area in a small amount of time.  </td>
    </tr>
    <tr>
       <td>

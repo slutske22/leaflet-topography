@@ -15,6 +15,7 @@ export var _config: ConfigOptions = {
 	service: 'mapbox',
 	priority: 'speed',
 	scale: 15,
+	spread: 2,
 	_tileCache,
 };
 
