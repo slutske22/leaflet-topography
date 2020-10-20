@@ -14,7 +14,7 @@ Leaflet-topography is a leaflet plugin which offers functions and layers for cal
 
 ## Why?
 
-While [other tools](#alternatives) exist to calculate and visualize topography in leaflet, this package is designed to do so at lightning speed. Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it them performs calculations to return elevation, slope, and aspect for that location.  The point's associated DEM tile is cached in the format and location of your choice. This means that further queries that fall in the same tile return topography data at lightning speed.  For a detailed explanation of how this works, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
+While [other tools](#alternatives) exist to calculate and visualize topography in leaflet, this package is designed to do so at lightning speed. Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it them performs calculations to return elevation, slope, and aspect for that location.  The point's associated DEM tile is cached in the format and location of your choice. This means that further queries that fall in the same tile return topography data quickly, without the need for another network request.  For a detailed explanation of how this works, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
 
 
 <img width="100%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topography-banner.png">
@@ -40,7 +40,7 @@ import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topogra
 
 <hr>
 
-<h3 id="gettopography"><code>getTopography(latlng: L.LatLng, options: Options): { elevation, slope, aspect }</code></h3>
+<h3 id="gettopography"><code>getTopography(latlng, options): { elevation, slope, aspect }</code></h3>
 
 This is leaflet-topography's central tool. This async function takes in an `L.LatLng` object, and a semi-optional configuration object, and returns a promise which resolves to the result, which contains elevation, slope, and aspect data for that `latlng`.  You can use `async / await` syntax, or `.then` syntax:
 
@@ -75,6 +75,8 @@ Results are returned with the following units:
 | `aspect`     | degrees in polar coordinates (0 due east increasing counterclockwise) | 0 - 360  |
 
 ### Options
+
+You must pass an options as the second argument of `getTopography`, *or* you can use the [`configure`](#configure) function to preconfigure leaflet-topography.
 
 <table>
    <tr>
@@ -140,24 +142,26 @@ const elevationLayer = new TopoLayer({ topotype: 'elevation', token: 'your_mapbo
 elevationLayer.addTo(map)
 ````
 
-### preconfiguring leaflet-topography
+### `configure`
 
-In order to use these tools, you must provide a mapbox access token. To use `getTopography`, you must also pass an instance of a leaflet map as an option. While you can pass your token as an argument each time you call `getTopography` or create a new `TopoLayer`, you may find it useful to configure leaflet-topography ahead of time. You can use the `config` option to do so:
+You may find it useful to configure leaflet-topography ahead of time. You can use the `config` option to do so, which will eliminate the need to pass an `options` argument to `getTopography`, or to pass your token to the `TopoLayer` constructor.
 
 ```javascript
 // Create a map
 const map = L.map('mapDiv', mapOptions));
 
 // Configure leaflet-topography
-L.Topography.config({
+L.Topography.configure({
   map,
   token: your_mapbox_token
 });
 
-// Use leaflet topography
+// Use leaflet topography, no need to pass options
 map.on(click, async e => {
   const { elevation, slope, aspect } = await L.Topography.getTopography(e)
   console.log(elevation, slope, aspect)
 })
-```
 
+// Add a TopoLayer, no need to pass token
+const elevationLayer = new TopoLayer({ topotype: 'elevation' })
+```
