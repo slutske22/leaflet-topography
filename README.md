@@ -145,9 +145,6 @@ You must pass an options as the second argument of `getTopography`, *or* you can
    </tr>
 </table>
 
-<hr>
-
-
 ### Cacheing Tiles
 
 The key feature of leaflet-topography that enables returning topography data for high volumes of points in the same area in a short time is its data-cacheing behavior.  Note the loose use of the word 'cache' - it is really in-memory storage.  The default behavior is to simply store the DEM tiles in an object, with the key being the tile name in the format `X<X>Y<Y>Z<Z>`, and the value being the data, either as a `Uint8ClampedArray` or an `ImageBitmap`.  By default, the tiles are stored in `L.Topography._tileCache`. However, you have the option to define your own cacheing functions to store the tiles wherever you like.  You can use the `saveTile` and `retrieveTile` options to do this.  For example, if you wanted to store the tiles on the `window` object instead (not recommended), you could do this:
@@ -163,7 +160,10 @@ configure({
    retrieveTile: myRetrieveFunction
 })
 ````
-And now your tiles will be saved to and retrieved from the `window.myTemporaryCache` object.  There are many in-browser data storage options.  [This example](...) uses [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) to store tile data.
+And now your tiles will be saved to and retrieved from the `window.myTemporaryCache` object.  There are [many in-browser data storage options](https://developers.google.com/web/fundamentals/instant-and-offline/web-storage), and these functions can be adapted to work with the storage method of your choice.
+
+<hr>
+
 
 ### `TopoLayer`
 
