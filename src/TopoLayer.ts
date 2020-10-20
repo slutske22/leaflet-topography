@@ -1,30 +1,37 @@
 import { GridLayer, DomUtil } from 'leaflet';
-import Worker from 'web-worker';
+import workers from './workers/blobs';
 
-// import ElevationWorker from './workers/dem.worker.ts';
-// import SlopeWorker from './workers/slope.worker.ts';
-// import AspectWorker from './workers/aspect.worker.ts';
-// import SlopeAspectWorker from './workers/slopeaspect.worker.ts';
+import * as ElevationWorker from './workers/dem.worker.js';
+import * as SlopeWorker from './workers/slope.worker.js';
+import * as AspectWorker from './workers/aspect.worker.js';
+import * as SlopeAspectWorker from './workers/slopeaspect.worker.js';
 
-const elevationworker = new Worker(
-	new URL('./workers/dem.worker.js', import.meta.url)
-);
-const slopeworker = new Worker(
-	new URL('./workers/slope.worker.js', import.meta.url)
-);
-const aspectworker = new Worker(
-	new URL('./workers/aspect.worker.js', import.meta.url)
-);
-const slopeaspectworker = new Worker(
-	new URL('./workers/slopeaspect.worker.js', import.meta.url)
-);
+// const elevationworker = new Worker(
+// 	new URL('./workers/dem.worker.js', import.meta.url)
+// );
+// const slopeworker = new Worker(
+// 	new URL('./workers/slope.worker.js', import.meta.url)
+// );
+// const aspectworker = new Worker(
+// 	new URL('./workers/aspect.worker.js', import.meta.url)
+// );
+// const slopeaspectworker = new Worker(
+// 	new URL('./workers/slopeaspect.worker.js', import.meta.url)
+// );
 
-const workers = {
-	elevation: elevationworker,
-	slope: slopeworker,
-	aspect: aspectworker,
-	slopeaspect: slopeaspectworker,
-};
+// const workers = {
+// 	elevation: elevationworker,
+// 	slope: slopeworker,
+// 	aspect: aspectworker,
+// 	slopeaspect: slopeaspectworker,
+// };
+
+// const workers = {
+// 	elevation: ElevationWorker,
+// 	slope: SlopeWorker,
+// 	aspect: AspectWorker,
+// 	slopeaspect: SlopeAspectWorker,
+// };
 
 var uniqueId = (function () {
 	var lastId = 0;
