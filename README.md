@@ -135,6 +135,14 @@ You must pass an options as the second argument of `getTopography`, *or* you can
       <td> undefined </td>
       <td> Custom function provided by the user to define tile-cacheing behavior. Must take the form <code>function(name: string, tileData: ImageData | ImageBitmap) => void</code>.  See the <a href="#cacheing-tiles">cacheing tiles</a> section for more information.</td>
    </tr>
+   <tr>
+      <td>
+         <b>retrieveTile</b>
+      </td>
+      <td> <code> function </code> </td>
+      <td> undefined </td>
+      <td> Custom function provided by the user to define where to retrieve tile data from.  Must take the form <code>function(name: string) => tileData: ImageData | ImageBitmap</code>. See the <a href="#cacheing-tiles">cacheing tiles</a> section for more information.</td>
+   </tr>
 </table>
 
 <hr>
@@ -173,3 +181,19 @@ map.on(click, async e => {
 // Add a TopoLayer, no need to pass token
 const elevationLayer = new TopoLayer({ topotype: 'elevation' })
 ```
+
+### Cacheing Tiles
+
+The key feature of leaflet-topography that enables returning topography data for high volumes of points in the same area in a short time is its data-cacheing behavior.  Note the loose use of the word 'cache' - it is really in-memory storage.  The default behavior is to simply store the DEM tiles in an object, with the key being the tile name in the format `X<X>Y<Y>Z<Z>`, and the value being the data, either as a `Uint8ClampedArray` or an `ImageBitmap`.  By default, the tiles are stored in `L.Topography._tileCache`. However, you have the option to define your own cacheing functions to store the tiles wherever you like.  You can use the `saveTile` and `retrieveTile` options to do this.  For example, if you wanted to store the tiles on the `window` object instead (not recommended!), you could do this:
+
+````javascript
+import { configure } from 'leaflet-topography
+
+const mySaveFunction = (name, data) => window.myTemporaryCache[name] = data
+const myRetrieveFunction = (name) => return window.myTemporaryCache[name]
+
+configure({
+   safeTile: mySaveFunction,
+   retrieveTile: myRetrieveFunction
+})
+````

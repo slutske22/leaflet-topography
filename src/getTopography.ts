@@ -20,6 +20,7 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		token,
 		_tileCache,
 		saveTile,
+		retrieveTile,
 	} = options;
 
 	// Sound alarms if certain config options are not given by user
@@ -48,7 +49,7 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		const tileName = `X${X}Y${Y}Z${Z}`;
 
 		// get the tile from the cache
-		const tile = _tileCache[tileName];
+		const tile = retrieveTile ? retrieveTile(tileName) : _tileCache[tileName];
 
 		// if tile doesn't yet exist, fetch it, wait until its fetched, and rerun this function
 		if (!tile) {
