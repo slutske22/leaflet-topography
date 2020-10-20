@@ -124,7 +124,7 @@ You must pass an options as the second argument of `getTopography`, *or* you can
          <b>priority</b>
       </td>
       <td> <code> 'speed' | 'storage' </code> </td>
-      <td> 'storage' </td>
+      <td> 'speed' </td>
       <td> Priority used by the <code>getTopography</code> algorithm.  When prioritizing speed, retrieved tile data is cached as an <code>ImageData</code> <code>Uint8ClampedArray</code>.  Retrieving pixel data from cached <code>Uint8ClampedArray</code>s is very fast, but each <code>Uint8ClampedArray</code> takes up almost 3 megabytes of in-browser memory.  Prioritizing storage will cache tile data as an <code>ImageBitmap</code>, which requires about 40 <i>bytes</i> of storage per bitmap.  However, retrieving pixel data from an <code>ImageBitmap</code> requires calling <code>drawImage</code> and <code>getImageData</code>, which is slightly slower.  Difference will not be noticeable when requesting topography one point at a time, but can make a big difference when querying hundreds of points in a small area in a small amount of time.  </td>
    </tr>
    <tr>
