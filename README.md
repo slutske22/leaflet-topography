@@ -147,6 +147,24 @@ You must pass an options as the second argument of `getTopography`, *or* you can
 
 <hr>
 
+
+### Cacheing Tiles
+
+The key feature of leaflet-topography that enables returning topography data for high volumes of points in the same area in a short time is its data-cacheing behavior.  Note the loose use of the word 'cache' - it is really in-memory storage.  The default behavior is to simply store the DEM tiles in an object, with the key being the tile name in the format `X<X>Y<Y>Z<Z>`, and the value being the data, either as a `Uint8ClampedArray` or an `ImageBitmap`.  By default, the tiles are stored in `L.Topography._tileCache`. However, you have the option to define your own cacheing functions to store the tiles wherever you like.  You can use the `saveTile` and `retrieveTile` options to do this.  For example, if you wanted to store the tiles on the `window` object instead (not recommended), you could do this:
+
+````javascript
+import { configure } from 'leaflet-topography'
+
+const mySaveFunction = (name, data) => window.myTemporaryCache[name] = data
+const myRetrieveFunction = (name) => return window.myTemporaryCache[name]
+
+configure({
+   safeTile: mySaveFunction,
+   retrieveTile: myRetrieveFunction
+})
+````
+And now your tiles will be saved to and retrieved from the `window.myTemporaryCache` object.  There are many in-browser data storage options.  [This example](...) uses [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) to store tile data.
+
 ### `TopoLayer`
 
 The `TopoLayer` constructor will build a new tile layer, derived from the Mapbox RGB Terrain tileset.  Using web workers, a `TopoLayer` transforms the rgb DEM to visualize topographic features.  It takes a configuration object as the contructor's argument:
@@ -181,19 +199,3 @@ map.on(click, async e => {
 // Add a TopoLayer, no need to pass token
 const elevationLayer = new TopoLayer({ topotype: 'elevation' })
 ```
-
-### Cacheing Tiles
-
-The key feature of leaflet-topography that enables returning topography data for high volumes of points in the same area in a short time is its data-cacheing behavior.  Note the loose use of the word 'cache' - it is really in-memory storage.  The default behavior is to simply store the DEM tiles in an object, with the key being the tile name in the format `X<X>Y<Y>Z<Z>`, and the value being the data, either as a `Uint8ClampedArray` or an `ImageBitmap`.  By default, the tiles are stored in `L.Topography._tileCache`. However, you have the option to define your own cacheing functions to store the tiles wherever you like.  You can use the `saveTile` and `retrieveTile` options to do this.  For example, if you wanted to store the tiles on the `window` object instead (not recommended!), you could do this:
-
-````javascript
-import { configure } from 'leaflet-topography
-
-const mySaveFunction = (name, data) => window.myTemporaryCache[name] = data
-const myRetrieveFunction = (name) => return window.myTemporaryCache[name]
-
-configure({
-   safeTile: mySaveFunction,
-   retrieveTile: myRetrieveFunction
-})
-````
