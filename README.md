@@ -166,7 +166,7 @@ L.Topography.configure({
 
 // Use leaflet topography, no need to pass options
 map.on(click, async e => {
-  const { elevation, slope, aspect } = await L.Topography.getTopography(e)
+  const { elevation, slope, aspect } = await L.Topography.getTopography(e.latlng)
   console.log(elevation, slope, aspect)
 })
 
