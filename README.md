@@ -1,5 +1,6 @@
 <p align="center">
    <img width="160px" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topography-icon.png">
+
    <h1 align="center">leaflet-topography</h1>
 </p>
 <p align="center">
@@ -7,7 +8,14 @@
    <h2 align="center"><a href="https://codesandbox.io/s/react-esri-leaflet-example-n15yn">&#128064; Demo &#128064;</a></h2>
 </p>
 
-leaflet-topography is a leaflet plugin which offers functions and layers for calculating and visuzalizing topographic data in a leaflet map. These tools are based on the [Mapbox RGB Encoded DEM](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb), which means you must use your mapbox access token to use these tools.
+
+
+Leaflet-topography is a leaflet plugin which offers functions and layers for calculating and visuzalizing topographic data in a leaflet map. These tools are based on the [Mapbox RGB Encoded DEM](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb), which means you must use your mapbox access token to use these tools.
+
+## Why?
+
+While [other tools](#alternatives) exist to calculate and visualize topography in leaflet, this package is designed to do so at lightning speed. Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it them performs calculations to return elevation, slope, and aspect for that location.  The point's associated DEM tile is cached in the format and location of your choice. This means that further queries that fall in the same tile return topography data at lightning speed.  For a detailed explanation of how this works, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
+
 
 <img width="100%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topography-banner.png">
 
@@ -32,7 +40,7 @@ import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topogra
 
 <hr>
 
-<h3 id="gettopography"><code>getTopography(latlng, options): { elevation, slope, aspect }</code></h3>
+<h3 id="gettopography"><code>getTopography(latlng: L.LatLng, options: Options): { elevation, slope, aspect }</code></h3>
 
 This is leaflet-topography's central tool. This async function takes in an `L.LatLng` object, and a semi-optional configuration object, and returns a promise which resolves to the result, which contains elevation, slope, and aspect data for that `latlng`.  You can use `async / await` syntax, or `.then` syntax:
 
@@ -41,23 +49,30 @@ import Topography from 'leaflet-topography'
 
 const map = L.map('mapdiv', mapOptions));
 
-const params = {
+const options = {
   map,
   token: 'your_mapbox_access_token'
 }
 
 // async / await syntax
 map.on('click', async (e) => {
-  const results = await Topography.getTopography(e.latlng);
+  const results = await Topography.getTopography(e.latlng, options);
 });
 
 // promise .then syntax
 map.on('click', (e) => {
-  Topography.getTopography(e.latlng).then((results) => console.log(results));
+  Topography.getTopography(e.latlng, options)
+    .then((results) => console.log(results));
 });
 ````
 
-Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it them performs calculations to return elevation, slope, and aspect for that location.  For a detailed explanation of what's going on, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
+Results are returned with the following units:
+
+| result       |   unit                            |  range                                       |
+|--------------|-----------------------------------|----------------------------------------------|
+| `elevation`  | meters relative to sea level      | -413 to 8,848 (Dead Sea to Mt Everest)       |
+| `slope`      | degrees                           | 0 - 90 (flat to vertical cliff)              |
+| `aspect`     | degrees in polar coordinates (0 due east increasing counterclockwise) | 0 - 360  |
 
 ### Options
 
@@ -106,9 +121,9 @@ Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-R
       <td>
          <b>saveTile</b>
       </td>
-      <td> <code> fn(name: string, tileData: ImageData | ImageBitmap) => void </code> </td>
+      <td> <code> function </code> </td>
       <td> undefined </td>
-      <td> Custom function provided by the user to define tile-cacheing behavior. </td>
+      <td> Custom function provided by the user to define tile-cacheing behavior. Must take the form <code>function(name: string, tileData: ImageData | ImageBitmap) => void</code>.  See the <a href="#cacheing-tiles">cacheing tiles</a> section for more information.</td>
    </tr>
 </table>
 
