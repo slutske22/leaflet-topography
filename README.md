@@ -1,6 +1,5 @@
-<img width="100%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/banner.png">
-
 <p align="center">
+   <img width="160px" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topography-icon.png">
    <h1 align="center">leaflet-topography</h1>
 </p>
 <p align="center">
@@ -9,6 +8,8 @@
 </p>
 
 leaflet-topography is a leaflet plugin which offers functions and layers for calculating and visuzalizing topographic data in a leaflet map. These tools are based on the [Mapbox RGB Encoded DEM](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb), which means you must use your mapbox access token to use these tools.
+
+<img width="100%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topography-banner.png">
 
 ## Installation and Use
 
