@@ -69,11 +69,14 @@ map.on('click', (e) => {
 
 Results are returned with the following units:
 
-| result       |   unit                            |  range                                       |
-|--------------|-----------------------------------|----------------------------------------------|
-| `elevation`  | meters relative to sea level      | -413 to 8,848 (Dead Sea to Mt Everest)       |
-| `slope`      | degrees                           | 0 - 90 (flat to vertical cliff)              |
-| `aspect`     | degrees in polar coordinates (0 due east increasing counterclockwise) | 0 - 360  |
+| result        |   unit                            |  range                                       |
+|---------------|-----------------------------------|----------------------------------------------|
+| `elevation`   | meters relative to sea level      | -413 to 8,848 (Dead Sea to Mt Everest)       |
+| `slope`       | degrees                           | 0 - 90 (flat to vertical cliff)              |
+| `aspect`      | degrees in polar coordinates (0 due east increasing counterclockwise) | 0 - 360  |
+| `resolution`* | meters                            | less than 1 to greater than 20,000,000       |
+
+<sub>(*Resolution is a metadata value describing roughly how large the area used to calculate slope and aspect is.  Slope and aspect are calculated based on a `latlng`'s 4 neighboring pixels.  Higher `scale` values have smaller distances between pixels, so the neightbors are closer together, and the resolution is better.  Higher `spread` values mean skipping more pixels to choose a neighbor, which worsens resolution.  Larger resolution in this context means the surface being measured is more "smoothed out".) </sub>
 
 ### Options
 

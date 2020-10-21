@@ -19,7 +19,6 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		spread,
 		priority,
 		token,
-		_tileCache,
 		saveTile,
 		retrieveTile,
 	} = options;
@@ -140,7 +139,7 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 	// @ts-ignore
 	const W = map.unproject(projectedW, scale);
 
-	const elePoint = await getElevation({ x: point.x, y: point.y }),
+	const elevation = await getElevation({ x: point.x, y: point.y }),
 		eleN = await getElevation(projectedN),
 		eleS = await getElevation(projectedS),
 		eleE = await getElevation(projectedE),
@@ -152,13 +151,15 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 	const dzdx = (eleE - eleW) / dx,
 		dzdy = (eleN - eleS) / dy;
 
+	const resolution = (dx + dy) / 2;
+
 	const slope = Math.atan(Math.sqrt(dzdx ** 2 + dzdy ** 2)) * (180 / Math.PI);
 	const aspect =
 		dx !== 0
 			? (Math.atan2(dzdy, dzdx) * (180 / Math.PI) + 180) % 360
 			: (90 * (dy > 0 ? 1 : -1) + 180) % 360;
 
-	return { elevation: elePoint, slope, aspect };
+	return { elevation, slope, aspect, resolution };
 }
 
 export default getTopography;

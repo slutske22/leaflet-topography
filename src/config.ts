@@ -19,7 +19,6 @@ export var _config: ConfigOptions = {
 	saveTile: (name: string, tileData: ImageData | ImageBitmap) =>
 		(_tileCache[name] = tileData),
 	retrieveTile: (tileName) => _tileCache[tileName],
-	_tileCache,
 };
 
 export default configure;

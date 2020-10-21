@@ -10,7 +10,6 @@ export interface ConfigOptions {
 	priority: Priority;
 	saveTile: SaveTile;
 	retrieveTile: (name: string) => ImageData | ImageBitmap;
-	_tileCache: any;
 }
 
 export interface UserOptions extends ConfigOptions {

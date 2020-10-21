@@ -31,8 +31,8 @@ L.tileLayer(
 Topography.configure({
 	map,
 	token: process.env.MAPBOX_TOKEN,
-	scale: 13,
-	spread: 6,
+	scale: 15,
+	spread: 1,
 });
 
 // map.on('click', async (e) => {
@@ -43,9 +43,9 @@ Topography.configure({
 
 const bounds = map.getBounds();
 
-if (map.getZoom() >= 13) {
-	Topography.preload([bounds]);
-}
+// if (map.getZoom() >= 13) {
+// 	Topography.preload([bounds]);
+// }
 
 map.on('click', (e) => {
 	console.log('Requesting Topography...');
