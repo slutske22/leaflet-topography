@@ -251,9 +251,9 @@ There are *many* tile layers and image layers which visualize slope, aspect, hil
 
 If you are interesting in nerding out on this as hard as me, here are some interesting articles about topography and hillshading, also in a mapbox context:
 
-[Hillshade, by Sahil Chinoy](https://observablehq.com/@sahilchinoy/hillshader)
-[DIY Hillshade, by Andy Woodruff](https://observablehq.com/@awoodruff/diy-hillshade)
-[Mapbox hillshade and satellite map blending, by Armand Emamdjomeh](https://observablehq.com/@emamd/mapbox-hillshade-and-satellite-map-blending)
+- [Hillshade, by Sahil Chinoy](https://observablehq.com/@sahilchinoy/hillshader)
+- [DIY Hillshade, by Andy Woodruff](https://observablehq.com/@awoodruff/diy-hillshade)
+- [Mapbox hillshade and satellite map blending, by Armand Emamdjomeh](https://observablehq.com/@emamd/mapbox-hillshade-and-satellite-map-blending)
 
 ### License
 
