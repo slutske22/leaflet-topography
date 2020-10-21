@@ -118,7 +118,7 @@ You must pass an options as the second argument of `getTopography`, *or* you can
       </td>
       <td> <code> number </code> </td>
       <td> 2 </td>
-      <td> Number of pixels away from queried point to use for calculations.  Larger numbers give lower resolution.  If you are using a spread > 4 you should consider simply lowering your scale. You probably don't need to touch this. </td>
+      <td> Number of pixels away from queried point to use for calculations.  Larger numbers give lower resolution and "smooth" the surface being measured.  If you are using a spread > 10 you should consider simply lowering your scale. </td>
    </tr>
    <tr>
       <td>

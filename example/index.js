@@ -11,12 +11,15 @@ var mapOptions = {
 var map = (window.map = L.map('leafletMapid', mapOptions));
 
 //  Add a baselayer
-var esriOceans = L.tileLayer(
-	'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}',
+L.tileLayer(
+	'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}{r}.{ext}',
 	{
 		attribution:
-			'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+			'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+		subdomains: 'abcd',
+		minZoom: 0,
 		maxZoom: 18,
+		ext: 'png',
 	}
 ).addTo(map);
 
@@ -29,6 +32,7 @@ Topography.configure({
 	map,
 	token: process.env.MAPBOX_TOKEN,
 	scale: 13,
+	spread: 6,
 });
 
 // map.on('click', async (e) => {
