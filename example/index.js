@@ -3,8 +3,8 @@ import Topography from '../build/leaflet-topography.js';
 
 // Define some maps options
 var mapOptions = {
-	center: { lat: 20.77694995473552, lng: -156.29021108150485 },
-	zoom: 10,
+	center: { lat: 20.704019268909484, lng: -156.25198759138587 },
+	zoom: 13,
 };
 
 //Create a map and assign it to the map div
@@ -28,6 +28,7 @@ var esriOceans = L.tileLayer(
 Topography.configure({
 	map,
 	token: process.env.MAPBOX_TOKEN,
+	scale: 13,
 });
 
 // map.on('click', async (e) => {
@@ -35,6 +36,10 @@ Topography.configure({
 // 	const results = await Topography.getTopography(e.latlng);
 // 	console.log(results);
 // });
+
+const bounds = map.getBounds();
+
+Topography.preload([bounds]);
 
 map.on('click', (e) => {
 	console.log('Requesting Topography...');

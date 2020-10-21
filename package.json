@@ -50,6 +50,7 @@
 	"dependencies": {
 		"@types/es6-promise": "^3.3.0",
 		"rainbowvis.js": "^1.0.1",
-		"web-worker": "^1.0.0"
+		"web-worker": "^1.0.0",
+		"xyz-affair": "^0.9.1"
 	}
 }
