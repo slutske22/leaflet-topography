@@ -207,7 +207,7 @@ const elevationLayer = new TopoLayer({ topotype: 'elevation' })
 
 ### `preload`
 
-`preload` is a convenience function which takes in an `L.LatLngBounds` and saves all DEM tiles within that bounds to the cache.  If you know you will be doing analysis in a certain area, `preload` will perform all the data fetching ahead of time:
+`preload` is a convenience function which takes in an aray of `L.LatLngBounds` and saves all DEM tiles within those bounds to the cache.  If you know you will be doing analysis in a certain area(s), `preload` will perform all the data fetching ahead of time:
 
 ````javascript
 import L from 'leaflet';
@@ -223,9 +223,13 @@ configure({
 
 const corner1 = L.latLng(40.712, -74.227);
 const corner2 = L.latLng(40.774, -74.125);
-const analysisArea = L.latLngBounds(corner1, corner2);
+const analysisArea1 = L.latLngBounds(corner1, corner2);
 
-preload(analysisArea);
+const corner3 = L.latLng(41.712, -72.227);
+const corner4 = L.latLng(41.774, -72.125);
+const analysisArea2 = L.latLngBounds(corner3, corner4);
+
+preload([analysisArea1, analysisArea2]);
 
 map.on('click', e => {
   getTopography(e.latlng)

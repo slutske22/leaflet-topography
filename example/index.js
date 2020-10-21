@@ -39,7 +39,9 @@ Topography.configure({
 
 const bounds = map.getBounds();
 
-Topography.preload([bounds]);
+if (map.getZoom() >= 13) {
+	Topography.preload([bounds]);
+}
 
 map.on('click', (e) => {
 	console.log('Requesting Topography...');
