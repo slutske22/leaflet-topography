@@ -1,6 +1,6 @@
 import { GridLayer, DomUtil } from 'leaflet';
 import { _config } from './config';
-import workers from './workers/blobs';
+import workers from './workers';
 
 import * as ElevationWorker from './workers/dem.worker.js';
 import * as SlopeWorker from './workers/slope.worker.js';
