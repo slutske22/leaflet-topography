@@ -25,7 +25,7 @@ Topography.configure({
 	token: process.env.MAPBOX_TOKEN,
 	scale: 13,
 	spread: 4,
-	// priority: 'storage',
+	priority: 'storage',
 });
 
 const bounds = map.getBounds();

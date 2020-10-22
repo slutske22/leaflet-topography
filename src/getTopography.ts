@@ -66,6 +66,7 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 			// if (priority === "storage")
 			// Tile data in form of ImageBitMap, need to call .getImageData for coordinate, much slower for high volumes
 			var canvas = document.createElement('canvas');
+			canvas.width = canvas.height = 256;
 			var c = canvas.getContext('2d');
 			c.drawImage(tile, 0, 0);
 			var pixelData = c.getImageData(
