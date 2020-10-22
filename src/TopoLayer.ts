@@ -2,10 +2,10 @@ import { GridLayer, DomUtil } from 'leaflet';
 import { _config } from './config';
 import workers from './workers';
 
-import * as ElevationWorker from './workers/dem.worker.js';
-import * as SlopeWorker from './workers/slope.worker.js';
-import * as AspectWorker from './workers/aspect.worker.js';
-import * as SlopeAspectWorker from './workers/slopeaspect.worker.js';
+// import ElevationWorker from './workers/src/dem.worker.js';
+// import SlopeWorker from './workers/src/slope.worker.js';
+// import AspectWorker from './workers/src/aspect.worker.js';
+// import SlopeAspectWorker from './workers/src/slopeaspect.worker.js';
 
 // const elevationworker = new Worker(
 // 	new URL('./workers/dem.worker.js', import.meta.url)
