@@ -1,5 +1,5 @@
-// import '../build/index.js';
 import Topography from '../build/leaflet-topography.js';
+import './layers.js';
 
 // Define some maps options
 var mapOptions = {
@@ -38,51 +38,3 @@ map.on('click', (e) => {
 	console.log('Requesting Topography...');
 	Topography.getTopography(e.latlng).then((results) => console.log(results));
 });
-
-const elevationlayer = (window.elevationlayer = new Topography.TopoLayer({
-	topotype: 'elevation',
-}));
-
-const aspectlayer = (window.aspectlayer = new Topography.TopoLayer({
-	topotype: 'aspect',
-}));
-
-const aspectlayercontinuous = (window.aspectlayercontinuous = new Topography.TopoLayer(
-	{
-		topotype: 'aspect',
-		continuous: true,
-	}
-));
-
-const aspectlayercustom = (window.aspectlayercustom = new Topography.TopoLayer({
-	topotype: 'aspect',
-	colors: [
-		'#303E73',
-		'#7A85AD',
-		'#515E90',
-		'#172557',
-		'#07123A',
-		'#164A5B',
-		'#75CFEC',
-		'#172557',
-		'#303E73',
-	],
-	continuous: true,
-}));
-
-const customelevation = (window.customelevation = new Topography.TopoLayer({
-	topotype: 'elevation',
-	colors: [
-		'#164A5B',
-		'#75CFEC',
-		'#8b4513',
-		'#FCFFA0',
-		'#e15f02',
-		'#008000',
-		'#855723',
-		'#006400',
-		'#ffffff',
-	],
-	breakpoints: [-850, 0, 300, 500, 700, 800, 1500, 2400, 8700],
-	continuous: true,
-}));

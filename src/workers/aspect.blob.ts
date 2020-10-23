@@ -152,18 +152,37 @@ export default URL.createObjectURL(
 						'#9afb0c',
 					];
 
-					var breakpoints = userBreakpoints || [
-						0,
-						22.5,
-						67.5,
-						112.5,
-						157.5,
-						202.5,
-						247.5,
-						292.5,
-						337.5,
-						360,
-					];
+					const start = 0,
+						end = 360,
+						range = end - start,
+						bracket = range / (colors.length - 1),
+						offset = bracket / 2;
+
+					const derivedBreakpoints = (() => {
+						let group = [];
+						group.push(start);
+						for (let i = 0; i < colors.length - 1; i++) {
+							let breakpoint = i * bracket + offset;
+							group.push(breakpoint);
+						}
+						group.push(end);
+						return group;
+					})();
+
+					var breakpoints = userBreakpoints || derivedBreakpoints;
+
+					// const backup = [
+					// 	0,
+					// 	22.5,
+					// 	67.5,
+					// 	112.5,
+					// 	157.5,
+					// 	202.5,
+					// 	247.5,
+					// 	292.5,
+					// 	337.5,
+					// 	360,
+					// ];
 
 					var gradients = (() => {
 						var collection = [];
