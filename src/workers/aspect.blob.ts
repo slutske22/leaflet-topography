@@ -175,15 +175,6 @@ export default URL.createObjectURL(
 							collection.push(rainbow);
 						}
 
-						// const lastRainbow = new Rainbow();
-						// lastRainbow.setNumberRange(
-						// 	breakpoints[breakpoints.length - 1],
-						// 	breakpoints[0]
-						// );
-						// lastRainbow.setSpectrum(colors[colors.length - 1], colors[0]);
-
-						// collection.push(lastRainbow);
-
 						return collection;
 					})();
 

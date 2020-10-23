@@ -39,10 +39,20 @@ map.on('click', (e) => {
 	Topography.getTopography(e.latlng).then((results) => console.log(results));
 });
 
+const elevationlayer = (window.elevationlayer = new Topography.TopoLayer({
+	topotype: 'elevation',
+}));
+
 const aspectlayer = (window.aspectlayer = new Topography.TopoLayer({
 	topotype: 'aspect',
-	continuous: true,
 }));
+
+const aspectlayercontinuous = (window.aspectlayercontinuous = new Topography.TopoLayer(
+	{
+		topotype: 'aspect',
+		continuous: true,
+	}
+));
 
 const customelevation = (window.customelevation = new Topography.TopoLayer({
 	topotype: 'elevation',
