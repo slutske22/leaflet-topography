@@ -209,7 +209,7 @@ elevationLayer.addTo(map)
       <td><b>colors</b></td>
       <td>Array of hex values</td>
       <td>depends on topotype</td>
-      <td>You can pass an array of hex values to choose the colors rendered by the workers, mapped to the breakpoints you define</td>
+      <td>You can pass an array of hex color values to choose the colors rendered by the workers, mapped to the breakpoints you define</td>
    </tr>   
    <tr>
       <td><b>breakpoints</b></td>
@@ -221,7 +221,14 @@ elevationLayer.addTo(map)
       <td><b>continuous</b></td>
       <td>boolean</td>
       <td>depends on topotype</td>
-      <td>For elevation, determines if color should be continuous at elevation = 0, or if it should jump from one color to the next.</a></td>
+      <td>
+         <ul>
+            <li>For <code>topotype: 'elevation'</code>, determines if color should be continuous at elevation = 0, or if it should jump from one color to the next.</a>
+            </li>
+            <li>For <code>topotype: 'aspect'</code>, determines if color should be a continuous gradient, or render in class breaks according to whether or not the aspect value falls in the breakpoint range.</a>
+            </li>
+         </ul>
+         </td>
    </tr>
 </table>
 

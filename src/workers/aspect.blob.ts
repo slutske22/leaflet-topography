@@ -197,7 +197,7 @@ export default URL.createObjectURL(
 							}
 						}
 
-						return '#9afb0c';
+						return colors[0];
 					}
 
 					var px = new Uint8ClampedArray(256 * 256 * 4);
