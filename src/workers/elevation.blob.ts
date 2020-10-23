@@ -83,6 +83,11 @@ export default URL.createObjectURL(
 						'#ffffff',
 					];
 
+					var colorsHashless = colors.map((color) => {
+						const hashless = color.substring(1);
+						return hashless;
+					});
+
 					const start = -850,
 						end = 8700,
 						range = end - start,
@@ -111,7 +116,13 @@ export default URL.createObjectURL(
 						8700,
 					];
 
-					var breakpoints = userBreakpoints || backupBreakpoints;
+					var breakpoints = (() => {
+						if (userBreakpoints) {
+							return userBreakpoints;
+						} else {
+							return userColors ? derivedBreakpoints : backupBreakpoints;
+						}
+					})();
 
 					if (breaksAt0 && !breakpoints.includes(0)) {
 						breakpoints.push(0);
@@ -150,14 +161,14 @@ export default URL.createObjectURL(
 						  })()
 						: null;
 
-					// console.log(
-					// 	'colors',
-					// 	colors,
-					// 	'breakpoints',
-					// 	breakpoints,
-					// 	'gradients',
-					// 	gradients
-					// );
+					console.log(
+						'colors',
+						colors,
+						'breakpoints',
+						breakpoints,
+						'gradients',
+						gradients
+					);
 
 					function hypsotint(elevation) {
 						for (let i = 0; i < breakpoints.length - 1; i++) {
@@ -167,7 +178,7 @@ export default URL.createObjectURL(
 							) {
 								return continuous
 									? gradients[i].colorAt(elevation)
-									: colors[i];
+									: colorsHashless[i];
 							}
 						}
 
