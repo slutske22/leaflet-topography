@@ -204,16 +204,24 @@ elevationLayer.addTo(map)
       </td>
       <td>none</td>
       <td>If using a custom topography worker script, this value must be the string that would be passed to <code>new Worker(&lt;worker&gt;)</code></td>
-   </tr>   <tr>
+   </tr> 
+   <tr>
       <td><b>colors</b></td>
       <td>Array of hex values</td>
       <td>depends on topotype</td>
       <td>You can pass an array of hex values to choose the colors rendered by the workers, mapped to the breakpoints you define</td>
-   </tr>   <tr>
+   </tr>   
+   <tr>
       <td><b>breakpoints</b></td>
       <td>Array of number values</td>
       <td>depends on topotype</td>
       <td>Determines where the colors array is mapped to.  Should span the range of <a href="#results">possible values of results</a></td>
+   </tr>
+      <tr>
+      <td><b>continuous</b></td>
+      <td>boolean</td>
+      <td>depends on topotype</td>
+      <td>For elevation, determines if color should be continuous at elevation = 0, or if it should jump from one color to the next.</a></td>
    </tr>
 </table>
 
