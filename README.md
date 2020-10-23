@@ -232,6 +232,19 @@ elevationLayer.addTo(map)
    </tr>
 </table>
 
+For `topotype: 'aspect'`, custom `color` and `breakpoints` should be of the same length, as well as circular, meaning their first value is the same as their last.  For example:
+
+````javascript
+const customAspectLayer = new Topography.TopoLayer({
+  topotype: 'aspect',
+  colors: ['#303E73', '#7A85AD', '#515E90', '#ca009c', '#303E73'],
+  breakpoints: [0, 90, 80, 270, 360],
+  continuous: true,
+})
+````
+
+You can see a handful of examples of TopoLayers in [this codesandbox](www.todo.todo).
+
 <hr>
 
 ### `configure`
