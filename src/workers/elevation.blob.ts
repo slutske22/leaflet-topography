@@ -47,8 +47,14 @@ export default URL.createObjectURL(
 				}
 
 				function shading(dem, userOptions) {
-					const continuous = userOptions.continuous;
-					const breaksAt0 = userOptions.breaksAt0;
+					const continuous =
+						userOptions.continuous === undefined
+							? true
+							: userOptions.continuous;
+					const breaksAt0 = (userOptions.breaksAt0 =
+						userOptions.breaksAt0 === undefined
+							? true
+							: userOptions.breaksAt0);
 					const userColors = userOptions.colors;
 					const userBreakpoints = userOptions.breakpoints;
 
@@ -73,6 +79,7 @@ export default URL.createObjectURL(
 						'#855723',
 						'#006400',
 						'#493829',
+						'#3d3d3d',
 						'#ffffff',
 					];
 
@@ -92,38 +99,56 @@ export default URL.createObjectURL(
 						return group;
 					})();
 
-					const backupBreakpoints = [-850, 0, 300, 800, 1500, 2400, 8700];
+					const backupBreakpoints = [
+						-850,
+						0,
+						300,
+						800,
+						1500,
+						2400,
+						5000,
+						7200,
+						8700,
+					];
 
-					var breakpoints = userBreakpoints || derivedBreakpoints;
+					var breakpoints = userBreakpoints || backupBreakpoints;
 
 					if (breaksAt0 && !breakpoints.includes(0)) {
 						breakpoints.push(0);
 						breakpoints.sort((a, b) => a - b);
 					}
 
-					var gradients = (() => {
-						var collection = [];
+					var gradients = continuous
+						? (() => {
+								var collection = [];
 
-						for (let i = 0; i < breakpoints.length - 1; i++) {
-							var rainbow = new Rainbow();
-							rainbow.setNumberRange(breakpoints[i], breakpoints[i + 1]);
+								for (let i = 0; i < breakpoints.length - 1; i++) {
+									var rainbow = new Rainbow();
+									rainbow.setNumberRange(
+										breakpoints[i],
+										breakpoints[i + 1]
+									);
 
-							// discontinuous use of colors between negative and position values
-							if (!breaksAt0) {
-								rainbow.setSpectrum(colors[i], colors[i + 1]);
-							} else if (breaksAt0 && i < breakpoints.length - 2) {
-								if (i === 0) {
-									rainbow.setSpectrum(colors[i], colors[i + 1]);
-								} else {
-									rainbow.setSpectrum(colors[i + 1], colors[i + 2]);
+									// discontinuous use of colors between negative and position values
+									if (!breaksAt0) {
+										rainbow.setSpectrum(colors[i], colors[i + 1]);
+									} else if (breaksAt0 && i < breakpoints.length - 2) {
+										if (i === 0) {
+											rainbow.setSpectrum(colors[i], colors[i + 1]);
+										} else {
+											rainbow.setSpectrum(
+												colors[i + 1],
+												colors[i + 2]
+											);
+										}
+									}
+
+									collection.push(rainbow);
 								}
-							}
 
-							collection.push(rainbow);
-						}
-
-						return collection;
-					})();
+								return collection;
+						  })()
+						: null;
 
 					// console.log(
 					// 	'colors',
