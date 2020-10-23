@@ -9,13 +9,14 @@ export default URL.createObjectURL(
 					self.dems = {};
 
 					if (e.data.raster) {
-						const { colors, breakpoints, continuous } = e.data;
+						const { colors, breakpoints, continuous, breaksAt0 } = e.data;
 						const { data } = e.data.raster;
 						self.dems[e.data.id] = raster2dem(data);
 						self.shades = shading(self.dems[e.data.id], {
 							colors,
 							breakpoints,
 							continuous,
+							breaksAt0,
 						});
 					}
 
@@ -47,6 +48,7 @@ export default URL.createObjectURL(
 
 				function shading(dem, userOptions) {
 					const continuous = userOptions.continuous;
+					const breaksAt0 = userOptions.breaksAt0;
 					const userColors = userOptions.colors;
 					const userBreakpoints = userOptions.breakpoints;
 
@@ -73,15 +75,31 @@ export default URL.createObjectURL(
 						'#493829',
 						'#ffffff',
 					];
-					var breakpoints = userBreakpoints || [
-						-850,
-						0,
-						300,
-						800,
-						1500,
-						2400,
-						8700,
-					];
+
+					const start = -850,
+						end = 8700,
+						range = end - start,
+						bracket = range / (colors.length - 1);
+
+					const derivedBreakpoints = (() => {
+						let group = [];
+						for (let i = 0; i < colors.length - 1; i++) {
+							let breakpoint = start + i * bracket;
+							group.push(breakpoint);
+							group.sort((a, b) => a - b);
+						}
+						group.push(end);
+						return group;
+					})();
+
+					const backupBreakpoints = [-850, 0, 300, 800, 1500, 2400, 8700];
+
+					var breakpoints = userBreakpoints || derivedBreakpoints;
+
+					if (breaksAt0 && !breakpoints.includes(0)) {
+						breakpoints.push(0);
+						breakpoints.sort((a, b) => a - b);
+					}
 
 					var gradients = (() => {
 						var collection = [];
@@ -89,15 +107,11 @@ export default URL.createObjectURL(
 						for (let i = 0; i < breakpoints.length - 1; i++) {
 							var rainbow = new Rainbow();
 							rainbow.setNumberRange(breakpoints[i], breakpoints[i + 1]);
-							rainbow._numberRange = [
-								breakpoints[i],
-								breakpoints[i + 1],
-							];
 
 							// discontinuous use of colors between negative and position values
-							if (continuous) {
+							if (!breaksAt0) {
 								rainbow.setSpectrum(colors[i], colors[i + 1]);
-							} else {
+							} else if (breaksAt0 && i < breakpoints.length - 2) {
 								if (i === 0) {
 									rainbow.setSpectrum(colors[i], colors[i + 1]);
 								} else {
@@ -111,13 +125,24 @@ export default URL.createObjectURL(
 						return collection;
 					})();
 
+					// console.log(
+					// 	'colors',
+					// 	colors,
+					// 	'breakpoints',
+					// 	breakpoints,
+					// 	'gradients',
+					// 	gradients
+					// );
+
 					function hypsotint(elevation) {
 						for (let i = 0; i < breakpoints.length - 1; i++) {
 							if (
 								breakpoints[i] < elevation &&
 								elevation <= breakpoints[i + 1]
 							) {
-								return gradients[i].colorAt(elevation);
+								return continuous
+									? gradients[i].colorAt(elevation)
+									: colors[i];
 							}
 						}
 

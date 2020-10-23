@@ -1,14 +1,24 @@
 import Topography from '../build/leaflet-topography.js';
+import * as Geocoding from 'esri-leaflet-geocoder';
 import './layers.js';
 
 // Define some maps options
+// hawaii:
 var mapOptions = {
 	center: { lat: 20.644973760193032, lng: -156.10400190576914 },
 	zoom: 15,
 };
 
+// himalayas:
+// var mapOptions = {
+// 	center: { lat: 30.221101852485987, lng: 85.6494140625 },
+// 	zoom: 5,
+// };
+
 //Create a map and assign it to the map div
 var map = (window.map = L.map('leafletMapid', mapOptions));
+
+Geocoding.geosearch({ useMapBounds: false }).addTo(map);
 
 //  Add a baselayer
 var USGS_USImagery = L.tileLayer(
@@ -18,7 +28,8 @@ var USGS_USImagery = L.tileLayer(
 		attribution:
 			'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>',
 	}
-).addTo(map);
+);
+USGS_USImagery.addTo(map);
 
 Topography.configure({
 	map,
@@ -33,6 +44,10 @@ const bounds = map.getBounds();
 if (map.getZoom() >= 13) {
 	Topography.preload([bounds]);
 }
+
+map.on('click', (e) => {
+	console.log(e.latlng, map.getZoom());
+});
 
 map.on('click', (e) => {
 	console.log('Requesting Topography...');
