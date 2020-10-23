@@ -217,7 +217,7 @@ elevationLayer.addTo(map)
       <td>depends on topotype</td>
       <td>Determines where the colors array is mapped to.  Should span the range of <a href="#results">possible values of results</a></td>
    </tr>
-      <tr>
+   <tr>
       <td><b>continuous</b></td>
       <td>boolean</td>
       <td>depends on topotype</td>
@@ -230,9 +230,67 @@ elevationLayer.addTo(map)
          </ul>
          </td>
    </tr>
+   <tr>
+      <td><b>breaksAt0</b></td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>Only relevant to <code>topotype: 'elevation'</code>.  Determines whether or not to inject a breakpoint at elevation = 0 and apply discontinuous use of color gradients.  Creates a nice water effect when set to <code>true</code>, but hides any topography that is below sea level. </a></td>
+   </tr>
 </table>
 
-For `topotype: 'aspect'`, custom `color` and `breakpoints` should be of the same length, as well as circular, meaning their first value is the same as their last.  For example:
+### Colors and Breakpoints Hints and Tips
+
+The variety of options and use cases for all topotypes, colors, breakpoints, and variations of continuous and breaksAt0 is *very large*.  Many uses cases are untested, but here are a few tips to get nice results:
+
+<table>
+   <tr>
+      <td>
+         <b><code>topotype</code></b>
+      </td>
+      <td>
+         <b>Hints / Requirements</b>
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <code>elevation</code>
+      </td>
+      <td>
+        If using <code>breaksAt0: true</code>, <code>colors</code> and <code>breakpoints</code> must be of the same length, <i>unless</i> your <code>breakpoints</code> <i>already includes<i> <code>0</code>.  If it already includes <code>0</code>, <code>breakpoints</code> must contain <i>one value more</i> than <code>colors</code>.  See the sample codesandbox for examples of this.
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <code>slope</code>
+      </td>
+      <td>
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <code>aspect</code>
+      </td>
+      <td>
+         <code>colors</code> and <code>breakpoints</code> should be of the same length.  <code>colors</code> must be circular, meaning its first value is the same as its last.  <code>breakpoints</code> must start and end with <code>0</code> and <code>360</code>:
+         <code><pre>
+   const customAspectLayer = new Topography.TopoLayer({
+      topotype: 'aspect',
+      colors: ['#303E73', '#7A85AD', '#515E90', '#ca009c', '#303E73'],
+      breakpoints: [0, 90, 80, 270, 360],
+   })
+         </pre></code>
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <code>slopeapsect</code>
+      </td>
+      <td>
+      </td>
+   </tr>
+</table>
+
+<!-- For `topotype: 'aspect'`, custom `color` and `breakpoints` should be of the same length, as well as circular, meaning their first value is the same as their last.  For example:
 
 ````javascript
 const customAspectLayer = new Topography.TopoLayer({
@@ -241,7 +299,7 @@ const customAspectLayer = new Topography.TopoLayer({
   breakpoints: [0, 90, 80, 270, 360],
   continuous: true,
 })
-````
+```` -->
 
 You can see a handful of examples of TopoLayers in [this codesandbox](www.todo.todo).
 
