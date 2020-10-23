@@ -38,3 +38,20 @@ map.on('click', (e) => {
 	console.log('Requesting Topography...');
 	Topography.getTopography(e.latlng).then((results) => console.log(results));
 });
+
+const customelevation = (window.customelevation = new Topography.TopoLayer({
+	topotype: 'elevation',
+	colors: [
+		'blue',
+		'red',
+		'#164A5B',
+		'#75CFEC',
+		'#FCFFA0',
+		'#008000',
+		'#855723',
+		'#006400',
+		'#493829',
+		'white',
+	],
+	breakpoints: [-850, 0, 300, 500, 700, 800, 1500, 2400, 8700],
+}));

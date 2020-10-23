@@ -9,9 +9,13 @@ export default URL.createObjectURL(
 					self.dems = {};
 
 					if (e.data.raster) {
+						const { colors, breakpoints } = e.data;
 						const { data } = e.data.raster;
 						self.dems[e.data.id] = raster2dem(data);
-						self.shades = shading(self.dems[e.data.id]);
+						self.shades = shading(self.dems[e.data.id], {
+							colors,
+							breakpoints,
+						});
 					}
 
 					postMessage({
@@ -40,7 +44,80 @@ export default URL.createObjectURL(
 					return dem;
 				}
 
-				function shading(dem) {
+				function shading(dem, userOptions) {
+					const userColors = userOptions.colors;
+					const userBreakpoints = userOptions.breakpoints;
+
+					function hexToR(h) {
+						return parseInt(cutHex(h).substring(0, 2), 16);
+					}
+					function hexToG(h) {
+						return parseInt(cutHex(h).substring(2, 4), 16);
+					}
+					function hexToB(h) {
+						return parseInt(cutHex(h).substring(4, 6), 16);
+					}
+					function cutHex(h) {
+						return h.charAt(0) == '#' ? h.substring(1, 7) : h;
+					}
+
+					var colors = userColors || [
+						'#164A5B',
+						'#75CFEC',
+						'#FCFFA0',
+						'#008000',
+						'#855723',
+						'#006400',
+						'#493829',
+						'white',
+					];
+					var breakpoints = userBreakpoints || [
+						-850,
+						0,
+						300,
+						800,
+						1500,
+						2400,
+						8700,
+					];
+
+					var gradients = (() => {
+						var collection = [];
+
+						for (let i = 0; i < breakpoints.length - 1; i++) {
+							var rainbow = new Rainbow();
+							rainbow.setNumberRange(breakpoints[i], breakpoints[i + 1]);
+							rainbow._numberRange = [
+								breakpoints[i],
+								breakpoints[i + 1],
+							];
+
+							// discontinuous use of colors between negative and position values
+							if (i === 0) {
+								rainbow.setSpectrum(colors[i], colors[i + 1]);
+							} else {
+								rainbow.setSpectrum(colors[i + 1], colors[i + 2]);
+							}
+
+							collection.push(rainbow);
+						}
+
+						return collection;
+					})();
+
+					function hypsotint(elevation) {
+						for (let i = 0; i < breakpoints.length - 1; i++) {
+							if (
+								breakpoints[i] < elevation &&
+								elevation <= breakpoints[i + 1]
+							) {
+								return gradients[i].colorAt(elevation);
+							}
+						}
+
+						return '000000';
+					}
+
 					var px = new Uint8ClampedArray(256 * 256 * 4);
 
 					for (let i = 0; i < dem.length; i++) {
@@ -53,67 +130,6 @@ export default URL.createObjectURL(
 					}
 
 					return px;
-				}
-
-				function hexToR(h) {
-					return parseInt(cutHex(h).substring(0, 2), 16);
-				}
-				function hexToG(h) {
-					return parseInt(cutHex(h).substring(2, 4), 16);
-				}
-				function hexToB(h) {
-					return parseInt(cutHex(h).substring(4, 6), 16);
-				}
-				function cutHex(h) {
-					return h.charAt(0) == '#' ? h.substring(1, 7) : h;
-				}
-
-				var colors = [
-					'#164A5B',
-					'#75CFEC',
-					'#FCFFA0',
-					'#008000',
-					'#855723',
-					'#006400',
-					'#493829',
-					'white',
-				];
-				var breakpoints = [-850, 0, 300, 800, 1500, 2400, 8700];
-
-				var gradients = (() => {
-					var collection = [];
-
-					for (let i = 0; i < breakpoints.length - 1; i++) {
-						var rainbow = new Rainbow();
-						rainbow.setNumberRange(breakpoints[i], breakpoints[i + 1]);
-						rainbow._numberRange = [breakpoints[i], breakpoints[i + 1]];
-
-						// discontinuous use of colors between negative and position values
-						if (i === 0) {
-							rainbow.setSpectrum(colors[i], colors[i + 1]);
-							rainbow._spectrum = [colors[i], colors[i + 1]];
-						} else {
-							rainbow.setSpectrum(colors[i + 1], colors[i + 2]);
-							rainbow._spectrum = [colors[i + 1], colors[i + 2]];
-						}
-
-						collection.push(rainbow);
-					}
-
-					return collection;
-				})();
-
-				function hypsotint(elevation) {
-					for (let i = 0; i < breakpoints.length - 1; i++) {
-						if (
-							breakpoints[i] < elevation &&
-							elevation <= breakpoints[i + 1]
-						) {
-							return gradients[i].colorAt(elevation);
-						}
-					}
-
-					return '000000';
 				}
 
 				function Rainbow() {

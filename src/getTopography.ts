@@ -47,7 +47,6 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 
 		// if tile doesn't yet exist, fetch it, wait until its fetched, and rerun this function
 		if (!tile) {
-			// console.log('theres no tile');
 			await fetchDEMTile({ X, Y, Z }, token, priority, saveTile);
 			return await getElevation(point);
 		}
@@ -75,8 +74,6 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 				1,
 				1
 			).data;
-
-			console.log(pixelData);
 
 			RGBA = {
 				R: pixelData[0],
