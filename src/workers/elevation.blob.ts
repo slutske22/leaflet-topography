@@ -139,18 +139,35 @@ export default URL.createObjectURL(
 										breakpoints[i],
 										breakpoints[i + 1]
 									);
+									rainbow._numberRange = [
+										breakpoints[i],
+										breakpoints[i + 1],
+									];
 
 									// discontinuous use of colors between negative and position values
 									if (!breaksAt0) {
 										rainbow.setSpectrum(colors[i], colors[i + 1]);
+										rainbow._spectrum = [colors[i], colors[i + 1]];
 									} else if (breaksAt0 && i < breakpoints.length - 2) {
 										if (i === 0) {
 											rainbow.setSpectrum(colors[i], colors[i + 1]);
+											rainbow._spectrum = [colors[i], colors[i + 1]];
 										} else {
+											if (
+												i === 1 &&
+												userColors &&
+												!userBreakpoints
+											) {
+												colors.push(colors[colors.length - 1]);
+											}
 											rainbow.setSpectrum(
 												colors[i + 1],
 												colors[i + 2]
 											);
+											rainbow._spectrum = [
+												colors[i + 1],
+												colors[i + 2],
+											];
 										}
 									}
 

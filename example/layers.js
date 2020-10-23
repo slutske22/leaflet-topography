@@ -5,15 +5,19 @@ const elevationLayers = [
 		name: 'Default',
 		layer: (window.elevationlayer = new Topography.TopoLayer({
 			topotype: 'elevation',
-			continuous: false,
 		})),
 	},
 	{
 		name: 'Disontinuous Custom Colors',
 		layer: (window.elevationDisontinuous = new Topography.TopoLayer({
 			topotype: 'elevation',
-			continuous: false,
+			// continuous: false,
+			// breaksAt0: false,
 			colors: [
+				'#ffffff',
+				'#ffffff',
+				'#ffffff',
+				'#eeeeee',
 				'#303E73',
 				'#7A85AD',
 				'#515E90',
@@ -39,6 +43,7 @@ const elevationLayers = [
 		name: 'Continuous Custom Colors',
 		layer: (window.elevationcustomcontinuous = new Topography.TopoLayer({
 			topotype: 'elevation',
+			continuous: false,
 			colors: [
 				'#164A5B',
 				'#75CFEC',
