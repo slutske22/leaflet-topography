@@ -9,12 +9,13 @@ export default URL.createObjectURL(
 					self.dems = {};
 
 					if (e.data.raster) {
-						const { colors, breakpoints } = e.data;
+						const { colors, breakpoints, continuous } = e.data;
 						const { data } = e.data.raster;
 						self.dems[e.data.id] = raster2dem(data);
 						self.shades = shading(self.dems[e.data.id], {
 							colors,
 							breakpoints,
+							continuous,
 						});
 					}
 
@@ -45,6 +46,7 @@ export default URL.createObjectURL(
 				}
 
 				function shading(dem, userOptions) {
+					const continuous = userOptions.continuous;
 					const userColors = userOptions.colors;
 					const userBreakpoints = userOptions.breakpoints;
 
@@ -69,7 +71,7 @@ export default URL.createObjectURL(
 						'#855723',
 						'#006400',
 						'#493829',
-						'white',
+						'#ffffff',
 					];
 					var breakpoints = userBreakpoints || [
 						-850,
@@ -93,10 +95,14 @@ export default URL.createObjectURL(
 							];
 
 							// discontinuous use of colors between negative and position values
-							if (i === 0) {
+							if (continuous) {
 								rainbow.setSpectrum(colors[i], colors[i + 1]);
 							} else {
-								rainbow.setSpectrum(colors[i + 1], colors[i + 2]);
+								if (i === 0) {
+									rainbow.setSpectrum(colors[i], colors[i + 1]);
+								} else {
+									rainbow.setSpectrum(colors[i + 1], colors[i + 2]);
+								}
 							}
 
 							collection.push(rainbow);

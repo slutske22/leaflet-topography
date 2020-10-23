@@ -39,19 +39,23 @@ map.on('click', (e) => {
 	Topography.getTopography(e.latlng).then((results) => console.log(results));
 });
 
+const elevationlayer = (window.elevationlayer = new Topography.TopoLayer({
+	topotype: 'elevation',
+}));
+
 const customelevation = (window.customelevation = new Topography.TopoLayer({
 	topotype: 'elevation',
 	colors: [
-		'blue',
-		'red',
 		'#164A5B',
 		'#75CFEC',
+		'#8b4513',
 		'#FCFFA0',
+		'#e15f02',
 		'#008000',
 		'#855723',
 		'#006400',
-		'#493829',
-		'white',
+		'#ffffff',
 	],
 	breakpoints: [-850, 0, 300, 500, 700, 800, 1500, 2400, 8700],
+	continuous: true,
 }));

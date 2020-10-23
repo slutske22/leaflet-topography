@@ -67,7 +67,7 @@ map.on('click', (e) => {
 });
 ````
 
-Results are returned with the following units:
+<span id="results">Results are returned with the following units:</span>
 
 | result        |   unit                            |  range                                       |
 |---------------|-----------------------------------|----------------------------------------------|
@@ -179,6 +179,43 @@ import { TopoLayer } from 'leaflet-topography'
 const elevationLayer = new TopoLayer({ topotype: 'elevation', token: 'your_mapbox_token' })
 elevationLayer.addTo(map)
 ````
+
+<table>
+   <tr>
+      <td> <b> Option </b> </td>
+      <td> <b> Type </b> </td>
+      <td> <b> Default </b> </td>
+      <td> <b> Description </b> </td>
+   </tr>
+   <tr>
+      <td>
+         <b>topotype</b><br>
+         required
+      </td>
+      <td>string</td>
+      <td>none</td>
+      <td>Type of topography to render.  Can be one of `elevation`, `slope`, `aspect`, `slopeaspect`, or `custom`.  When choosing `custom`, the `worker` option must have a value.</td>
+   </tr>
+   <tr>
+      <td><b>worker</b></td>
+      <td>
+         <code>string</code><br>
+         location of custom worker script
+      </td>
+      <td>none</td>
+      <td>If using a custom topography worker script, this value must be the string that would be passed to <code>new Worker(&lt;worker&gt;)</code></td>
+   </tr>   <tr>
+      <td><b>colors</b></td>
+      <td>Array of hex values</td>
+      <td>depends on topotype</td>
+      <td>You can pass an array of hex values to choose the colors rendered by the workers, mapped to the breakpoints you define</td>
+   </tr>   <tr>
+      <td><b>breakpoints</b></td>
+      <td>Array of number values</td>
+      <td>depends on topotype</td>
+      <td>Determines where the colors array is mapped to.  Should span the range of <a href="#results">possible values of results</a></td>
+   </tr>
+</table>
 
 <hr>
 
