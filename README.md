@@ -215,17 +215,18 @@ elevationLayer.addTo(map)
       <td><b>breakpoints</b></td>
       <td>Array of number values</td>
       <td>depends on topotype</td>
-      <td>Determines where the colors array is mapped to.  Should span the range of <a href="#results">possible values of results</a></td>
+      <td>Determines how colors are spread across values.  Should span the range of <a href="#results">possible values of results</a>.  If you provide <code>colors</code> without providing <code>breakpoints</code>, the breakpoints will be generated evenly for you across the topotype's range.</td>
    </tr>
    <tr>
       <td><b>continuous</b></td>
       <td>boolean</td>
       <td>depends on topotype</td>
       <td>
+         Determines if color should be a continuous gradient, or render in class breaks according to whether or not the topo value falls in the breakpoint range
          <ul>
-            <li>For <code>topotype: 'elevation'</code>, determines if color should be continuous at elevation = 0, or if it should jump from one color to the next.</a>
+            <li><code>topotype: 'elevation'</code> default to true
             </li>
-            <li>For <code>topotype: 'aspect'</code>, determines if color should be a continuous gradient, or render in class breaks according to whether or not the aspect value falls in the breakpoint range.</a>
+            <li><code>topotype: 'aspect'</code> defaults to false
             </li>
          </ul>
          </td>
@@ -240,7 +241,7 @@ elevationLayer.addTo(map)
 
 ### Colors and Breakpoints Hints and Tips
 
-The variety of options and use cases for all topotypes, colors, breakpoints, and variations of continuous and breaksAt0 is *very large*.  Many uses cases are untested, but here are a few tips to get nice results:
+There are countless combinations of <code>colors</code>, <code>breakpoints</code>, <code>continuous</code>, and <code>breakAt0</code>. Many uses cases are untested, so open an issue or PR if you run into problems. Here are a few tips to get nice results:
 
 <table>
    <tr>
