@@ -203,7 +203,7 @@ elevationLayer.addTo(map)
          location of custom worker script
       </td>
       <td>none</td>
-      <td>If using a custom topography worker script, this value must be the string that would be passed to <code>new Worker(&lt;worker&gt;)</code></td>
+      <td>If using a custom topography worker script, this value must be the path string that would be passed to <code>new Worker(&lt;worker&gt;)</code></td>
    </tr> 
    <tr>
       <td><b>colors</b></td>
@@ -224,7 +224,7 @@ elevationLayer.addTo(map)
       <td>
          Determines if color should be a continuous gradient, or render in class breaks according to whether or not the topo value falls in the breakpoint range
          <ul>
-            <li><code>topotype: 'elevation'</code> default to true
+            <li><code>topotype: 'elevation'</code> defaults to true
             </li>
             <li><code>topotype: 'aspect'</code> defaults to false
             </li>
