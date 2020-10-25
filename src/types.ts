@@ -10,10 +10,10 @@ export interface ConfigOptions {
 	priority: Priority;
 	saveTile: SaveTile;
 	retrieveTile: (name: string) => ImageData | ImageBitmap;
+	token: string;
 }
 
 export interface UserOptions extends ConfigOptions {
-	token: string;
 	map: Map;
 }
 

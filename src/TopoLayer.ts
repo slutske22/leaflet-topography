@@ -3,8 +3,6 @@ import { Rainbow } from './utils';
 import { _config } from './config';
 import workers from './workers';
 
-window.Rainbow = Rainbow;
-
 // import ElevationWorker from './workers/src/dem.worker.js';
 // import SlopeWorker from './workers/src/slope.worker.js';
 // import AspectWorker from './workers/src/aspect.worker.js';

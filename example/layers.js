@@ -162,4 +162,29 @@ const slopeaspectLayer = [
 			continuous: true,
 		})),
 	},
+	{
+		name: 'Midnight Blue',
+		layer: (window.slopeaspectlayerMidnightBlue = new Topography.TopoLayer({
+			topotype: 'slopeaspect',
+			colors: [
+				'#303E73',
+				'#7A85AD',
+				'#515E90',
+				'#172557',
+				'#07123A',
+				'#164A5B',
+				'#75CFEC',
+				'#172557',
+				'#303E73',
+			],
+		})),
+	},
+	{
+		name: 'Continuous',
+		layer: (window.slopeaspectlayerWest = new Topography.TopoLayer({
+			topotype: 'slopeaspect',
+			colors: ['#6c9b0a', '#08006f', '#6c9b0a', '#6c9b0a'],
+			breakpoints: [0, 225, 305, 360],
+		})),
+	},
 ];

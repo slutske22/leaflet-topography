@@ -200,7 +200,12 @@ export default URL.createObjectURL(
 						for (let i = 0; i < breakpoints.length - 2; i++) {
 							var rainbow = new Rainbow();
 							rainbow.setNumberRange(breakpoints[i], breakpoints[i + 1]);
+							rainbow._numberRange = [
+								breakpoints[i],
+								breakpoints[i + 1],
+							];
 							rainbow.setSpectrum(colors[i], colors[i + 1]);
+							rainbow._spectrum = [colors[i], colors[i + 1]];
 							collection.push(rainbow);
 						}
 
@@ -210,9 +215,20 @@ export default URL.createObjectURL(
 					var gradients = colors.map((color) => {
 						let rainbow = new Rainbow();
 						rainbow.setNumberRange(0, 90);
+						rainbow._numberRange = [0, 90];
 						rainbow.setSpectrum('#808080', color);
+						rainbow._spectrum = ['#808080', color];
 						return rainbow;
 					});
+
+					console.log(
+						'colors',
+						colors,
+						'breakpoints',
+						breakpoints,
+						'gradients',
+						gradients
+					);
 
 					function hypsotint(slope, aspect) {
 						let correctedAspect =
@@ -222,7 +238,9 @@ export default URL.createObjectURL(
 								? aspect % 360
 								: aspect;
 
-						for (let i = 0; i < breakpoints.length - 2; i++) {
+						var l = continuous ? 2 : 1;
+
+						for (let i = 0; i < breakpoints.length - l; i++) {
 							if (
 								breakpoints[i] < correctedAspect &&
 								correctedAspect <= breakpoints[i + 1]

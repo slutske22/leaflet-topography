@@ -49,7 +49,6 @@
 		"leaflet": "^1.7.1"
 	},
 	"dependencies": {
-		"rainbowvis.js": "^1.0.1",
 		"xyz-affair": "^0.9.1"
 	}
 }

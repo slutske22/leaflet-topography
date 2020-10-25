@@ -148,6 +148,7 @@ export default URL.createObjectURL(
 					function cutHex(h) {
 						return h.charAt(0) == '#' ? h.substring(1, 7) : h;
 					}
+
 					var colors = userColors || [
 						'#9afb0c',
 						'#00ad43',
