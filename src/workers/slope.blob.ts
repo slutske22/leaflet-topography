@@ -188,14 +188,14 @@ export default URL.createObjectURL(
 						return collection;
 					})();
 
-					console.log(
-						'colors',
-						colors,
-						'breakpoints',
-						breakpoints,
-						'gradients',
-						gradients
-					);
+					// console.log(
+					// 	'colors',
+					// 	colors,
+					// 	'breakpoints',
+					// 	breakpoints,
+					// 	'gradients',
+					// 	gradients
+					// );
 
 					function hypsotint(slope) {
 						for (let i = 0; i < breakpoints.length - 1; i++) {
