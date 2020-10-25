@@ -67,7 +67,13 @@ const TopoLayer = GridLayer.extend({
 
 	// createTile method required - creates a new tile of the gridlayer
 	createTile: function (coords) {
-		const { colors, breakpoints, continuous, breaksAt0 } = this.options;
+		const {
+			colors,
+			breakpoints,
+			continuous,
+			breaksAt0,
+			fallback,
+		} = this.options;
 		const token = this.options.token || _config.token;
 
 		var tile = <HTMLCanvasElement>DomUtil.create('canvas', 'leaflet-tile');
@@ -106,6 +112,7 @@ const TopoLayer = GridLayer.extend({
 				breakpoints,
 				continuous,
 				breaksAt0,
+				fallback,
 				RainbowAsString: Rainbow.toString(),
 			};
 

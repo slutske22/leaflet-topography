@@ -14,6 +14,7 @@ export default URL.createObjectURL(
 							breakpoints,
 							continuous,
 							breaksAt0,
+							fallback,
 							RainbowAsString,
 						} = e.data;
 						const rainbowCreator = new Function(
@@ -27,6 +28,7 @@ export default URL.createObjectURL(
 							breakpoints,
 							continuous,
 							breaksAt0,
+							fallback,
 						});
 					}
 
@@ -67,6 +69,7 @@ export default URL.createObjectURL(
 							: userOptions.breaksAt0);
 					const userColors = userOptions.colors;
 					const userBreakpoints = userOptions.breakpoints;
+					const fallback = userOptions.fallback;
 
 					function hexToR(h) {
 						return parseInt(cutHex(h).substring(0, 2), 16);
@@ -209,7 +212,7 @@ export default URL.createObjectURL(
 							}
 						}
 
-						return '000000';
+						return fallback || '#000000';
 					}
 
 					var px = new Uint8ClampedArray(256 * 256 * 4);

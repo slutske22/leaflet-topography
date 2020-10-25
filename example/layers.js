@@ -185,6 +185,7 @@ const slopeaspectLayer = [
 			topotype: 'slopeaspect',
 			colors: ['#6c9b0a', '#08006f', '#6c9b0a', '#6c9b0a'],
 			breakpoints: [0, 225, 305, 360],
+			continuous: true,
 		})),
 	},
 ];

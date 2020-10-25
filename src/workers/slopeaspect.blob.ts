@@ -13,6 +13,7 @@ export default URL.createObjectURL(
 							colors,
 							breakpoints,
 							continuous,
+							fallback,
 							RainbowAsString,
 						} = e.data;
 						const rainbowCreator = new Function(
@@ -25,7 +26,7 @@ export default URL.createObjectURL(
 							Rainbow,
 							self.slopeaspects[e.data.id].slopes,
 							self.slopeaspects[e.data.id].aspects,
-							{ colors, breakpoints, continuous }
+							{ colors, breakpoints, continuous, fallback }
 						);
 					}
 
@@ -136,6 +137,7 @@ export default URL.createObjectURL(
 					const continuous = userOptions.continuous;
 					const userColors = userOptions.colors;
 					const userBreakpoints = userOptions.breakpoints;
+					const fallback = userOptions.fallback;
 
 					function hexToR(h) {
 						return parseInt(cutHex(h).substring(0, 2), 16);
@@ -221,14 +223,14 @@ export default URL.createObjectURL(
 						return rainbow;
 					});
 
-					console.log(
-						'colors',
-						colors,
-						'breakpoints',
-						breakpoints,
-						'gradients',
-						gradients
-					);
+					// console.log(
+					// 	'colors',
+					// 	colors,
+					// 	'breakpoints',
+					// 	breakpoints,
+					// 	'gradients',
+					// 	gradients
+					// );
 
 					function hypsotint(slope, aspect) {
 						let correctedAspect =
@@ -266,7 +268,7 @@ export default URL.createObjectURL(
 							}
 						}
 
-						return '#00ad43';
+						return fallback || '#00ad43';
 					}
 
 					var px = new Uint8ClampedArray(256 * 256 * 4);
