@@ -150,7 +150,7 @@ export default URL.createObjectURL(
 						return h.charAt(0) == '#' ? h.substring(1, 7) : h;
 					}
 
-					var colors = [
+					var colors = userColors || [
 						'#9afb0c',
 						'#00ad43',
 						'#0068c0',
@@ -161,18 +161,38 @@ export default URL.createObjectURL(
 						'#f4fa00',
 						'#9afb0c',
 					];
-					var breakpoints = [
-						0,
-						22.5,
-						67.5,
-						112.5,
-						157.5,
-						202.5,
-						247.5,
-						292.5,
-						337.5,
-						360,
-					];
+
+					const start = 0,
+						end = 360,
+						range = end - start,
+						bracket = range / (colors.length - 1),
+						offset = bracket / 2;
+
+					const derivedBreakpoints = (() => {
+						let group = [];
+						group.push(start);
+						for (let i = 0; i < colors.length - 1; i++) {
+							let breakpoint = i * bracket + offset;
+							group.push(breakpoint);
+						}
+						group.push(end);
+						return group;
+					})();
+
+					var breakpoints = userBreakpoints || derivedBreakpoints;
+
+					// var backup = [
+					// 	0,
+					// 	22.5,
+					// 	67.5,
+					// 	112.5,
+					// 	157.5,
+					// 	202.5,
+					// 	247.5,
+					// 	292.5,
+					// 	337.5,
+					// 	360,
+					// ];
 
 					var aspectGradients = (() => {
 						var collection = [];
@@ -189,7 +209,7 @@ export default URL.createObjectURL(
 
 					var gradients = colors.map((color) => {
 						let rainbow = new Rainbow();
-						rainbow.setNumberRange(0, 70);
+						rainbow.setNumberRange(0, 90);
 						rainbow.setSpectrum('#808080', color);
 						return rainbow;
 					});
@@ -207,16 +227,21 @@ export default URL.createObjectURL(
 								breakpoints[i] < correctedAspect &&
 								correctedAspect <= breakpoints[i + 1]
 							) {
-								if (slope < 70) {
-									var aspectColor = aspectGradients[i].colorAt(
-										correctedAspect
-									);
-									var doubleGradient = new Rainbow();
-									doubleGradient.setNumberRange(0, 70);
-									doubleGradient.setSpectrum('#808080', aspectColor);
-									return continuous
-										? doubleGradient.colorAt(slope)
-										: gradients[i].colorAt(slope);
+								if (slope < 90) {
+									if (continuous) {
+										var aspectColor = aspectGradients[i].colorAt(
+											correctedAspect
+										);
+										var doubleGradient = new Rainbow();
+										doubleGradient.setNumberRange(0, 90);
+										doubleGradient.setSpectrum(
+											'#808080',
+											aspectColor
+										);
+										return doubleGradient.colorAt(slope);
+									} else {
+										return gradients[i].colorAt(slope);
+									}
 								}
 
 								return colors[i];

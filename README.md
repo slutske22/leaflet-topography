@@ -287,6 +287,7 @@ There are countless combinations of <code>colors</code>, <code>breakpoints</code
          <code>slopeapsect</code>
       </td>
       <td>
+         All the same rules apply as from <code>topotype: aspect</code>.  Using <code>continuous: true</code> on a <code>slopeaspect</code> layer is very CPU heavy and slow.  This needs optimization.  I would recommend considering another visualization.  <a href="https://slutske22.maps.arcgis.com/home/item.html?id=03799ae3f3d8486ba27db2b2110d4765" target="_blank">Read more here.</a>
       </td>
    </tr>
 </table>

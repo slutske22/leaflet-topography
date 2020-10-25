@@ -160,13 +160,13 @@ export default URL.createObjectURL(
 						'#9afb0c',
 					];
 
-					const start = 0,
+					var start = 0,
 						end = 360,
 						range = end - start,
 						bracket = range / (colors.length - 1),
 						offset = bracket / 2;
 
-					const derivedBreakpoints = (() => {
+					var derivedBreakpoints = (() => {
 						let group = [];
 						group.push(start);
 						for (let i = 0; i < colors.length - 1; i++) {
