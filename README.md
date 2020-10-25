@@ -221,7 +221,7 @@ elevationLayer.addTo(map)
       <td>
          <code>object</code>
       </td>
-      <td>If using a custom topography worker script, this value must be the path string that would be passed to <code>new Worker(&lt;worker&gt;)</code></td>
+      <td>Customization object that allows you to customize the color choice and distribution of the TopoLayer.  See below for details.</td>
    </tr>  
 </table>
 
@@ -236,18 +236,18 @@ The optional `customization` object allows you to customize the way colors are r
       <td> <b> Description </b> </td>
    </tr>
    <tr>
-      <td><b><code>colors</code></b></td>
-      <td>Array of hex value strings</td>
+      <td><b>colors</b></td>
+      <td><code>Array&lt;string&gt;</code> <br> hex color value</td>
       <td>You can pass an array of hex color values to choose the colors rendered by the workers, mapped to the breakpoints you define</td>
    </tr>   
    <tr>
-      <td><b><code>breakpoints</code></b></td>
-      <td>Array of numbers</td>
+      <td><b>breakpoints</b></td>
+      <td><code>Array&lt;number&gt;</code></td>
       <td>Determines how colors are spread across values.  Should span the range of <a href="#results">possible values of results</a>.  If you provide <code>colors</code> without providing <code>breakpoints</code>, the breakpoints will be generated evenly for you across the topotype's range.</td>
    </tr>
    <tr>
-      <td><b><code>continuous</code></b></td>
-      <td>boolean</td>
+      <td><b>continuous</b></td>
+      <td><code>boolean</code></td>
       <td>
          Determines if color should be a continuous gradient, or render in class breaks according to whether or not the topo value falls in the breakpoint range
          <ul>
@@ -259,13 +259,13 @@ The optional `customization` object allows you to customize the way colors are r
          </td>
    </tr>
    <tr>
-      <td><b><code>breaksAt0</code></b></td>
-      <td>boolean</td>
+      <td><b>breaksAt0</b></td>
+      <td><code>boolean</code></td>
       <td>Only relevant to <code>topotype: 'elevation'</code>.  Determines whether or not to inject a breakpoint at elevation = 0 and apply discontinuous use of color gradients.  Creates a nice water effect when set to <code>true</code>, but hides any topography that is below sea level. Defaults to <code>true</code>.</td>
    </tr>
    <tr>
-      <td><b><code>fallback</code></b></td>
-      <td>String: hex color</td>
+      <td><b>fallback</b></td>
+      <td><code>string</code><br> hex color value</td>
       <td>Fallback color to use if calculated topo values escape the color mapping algorithm.</a></td>
    </tr>
 </table>

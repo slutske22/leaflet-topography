@@ -7,6 +7,10 @@ export default URL.createObjectURL(
 			function () {
 				self.dems = {};
 				onmessage = function (e) {
+					const { customization, RainbowAsString } = e.data;
+					const rainbowCreator = new Function('return ' + RainbowAsString);
+					const Rainbow = rainbowCreator();
+
 					self.slopeshades = {};
 
 					if (e.data === 'clear') {
@@ -17,7 +21,11 @@ export default URL.createObjectURL(
 					if (e.data.raster) {
 						const { data } = e.data.raster;
 						self.slopeshades[e.data.id] = raster2slopes(data);
-						self.shades = shading(self.slopeshades[e.data.id]);
+						self.shades = shading(
+							Rainbow,
+							self.slopeshades[e.data.id],
+							customization
+						);
 					}
 
 					postMessage({
@@ -72,7 +80,9 @@ export default URL.createObjectURL(
 									(dem[i - 257] + 2 * dem[i - 256] + dem[i - 255])) /
 								8;
 
-							slopes[i] = Math.atan(Math.sqrt(dx * dx + dy * dy));
+							slopes[i] =
+								(Math.atan(Math.sqrt(dx * dx + dy * dy)) * 180) /
+								Math.PI;
 						}
 					}
 
@@ -112,15 +122,105 @@ export default URL.createObjectURL(
 					return slopes;
 				}
 
-				function shading(slopes) {
+				function shading(Rainbow, slopes, customization) {
+					let continuous = true,
+						userColors,
+						userBreakpoints,
+						fallback;
+
+					if (customization) {
+						continuous =
+							customization.continuous === undefined
+								? true
+								: customization.continuous;
+						userColors = customization.colors;
+						userBreakpoints = customization.breakpoints;
+						fallback = customization.fallback;
+					}
+
+					function hexToR(h) {
+						return parseInt(cutHex(h).substring(0, 2), 16);
+					}
+					function hexToG(h) {
+						return parseInt(cutHex(h).substring(2, 4), 16);
+					}
+					function hexToB(h) {
+						return parseInt(cutHex(h).substring(4, 6), 16);
+					}
+					function cutHex(h) {
+						return h.charAt(0) == '#' ? h.substring(1, 7) : h;
+					}
+
+					var colors = userColors || ['#000000', '#FFFFFF'];
+
+					var start = 0,
+						end = 90,
+						range = end - start,
+						bracket = range / (colors.length - 1);
+
+					var derivedBreakpoints = (() => {
+						let group = [];
+						for (let i = 0; i < colors.length - 1; i++) {
+							let breakpoint = i * bracket;
+							group.push(breakpoint);
+						}
+						group.push(end);
+						return group;
+					})();
+
+					var breakpoints = userBreakpoints || derivedBreakpoints;
+
+					var gradients = (() => {
+						var collection = [];
+
+						for (let i = 0; i < breakpoints.length - 1; i++) {
+							var rainbow = new Rainbow();
+							rainbow.setNumberRange(breakpoints[i], breakpoints[i + 1]);
+							rainbow._numberRange = [
+								breakpoints[i],
+								breakpoints[i + 1],
+							];
+							rainbow.setSpectrum(colors[i], colors[i + 1]);
+							rainbow._spectrum = [colors[i], colors[i + 1]];
+							collection.push(rainbow);
+						}
+
+						return collection;
+					})();
+
+					console.log(
+						'colors',
+						colors,
+						'breakpoints',
+						breakpoints,
+						'gradients',
+						gradients
+					);
+
+					function hypsotint(slope) {
+						for (let i = 0; i < breakpoints.length - 1; i++) {
+							if (
+								breakpoints[i] < slope &&
+								slope <= breakpoints[i + 1]
+							) {
+								return continuous
+									? gradients[i].colorAt(slope)
+									: colors[i];
+							}
+						}
+
+						return fallback || colors[0];
+					}
+
 					var px = new Uint8ClampedArray(256 * 256 * 4);
 
 					for (let i = 0; i < slopes.length; i++) {
 						var color = (slopes[i] * 255) / (Math.PI / 2);
+						var hex = `${hypsotint(slopes[i])}`;
 
-						px[4 * i + 0] = color;
-						px[4 * i + 1] = color;
-						px[4 * i + 2] = color;
+						px[4 * i + 0] = hexToR(hex);
+						px[4 * i + 1] = hexToG(hex);
+						px[4 * i + 2] = hexToB(hex);
 						px[4 * i + 3] = 255;
 					}
 

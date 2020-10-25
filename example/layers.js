@@ -114,6 +114,35 @@ const elevationLayers = [
 	},
 ];
 
+const slopeLayers = [
+	{
+		name: 'Default',
+		layer: (window.slopelayer = new Topography.TopoLayer({
+			topotype: 'slope',
+		})),
+	},
+	{
+		name: 'Tri Color',
+		layer: (window.slopelayerTricolor = new Topography.TopoLayer({
+			topotype: 'slope',
+			customization: {
+				colors: ['#000000', '#808080', '#fd632a'],
+			},
+		})),
+	},
+	{
+		name: 'Greater Than 70',
+		layer: (window.slopelayer70 = new Topography.TopoLayer({
+			topotype: 'slope',
+			customization: {
+				colors: ['#000000', '#fd632a', '#fd632a'],
+				brakpoints: [0, 70, 90],
+				continuous: false,
+			},
+		})),
+	},
+];
+
 const aspectLayers = [
 	{
 		name: 'Default',
