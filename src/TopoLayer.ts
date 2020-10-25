@@ -1,31 +1,14 @@
 import { GridLayer, DomUtil } from 'leaflet';
+import { Rainbow } from './utils';
 import { _config } from './config';
 import workers from './workers';
+
+window.Rainbow = Rainbow;
 
 // import ElevationWorker from './workers/src/dem.worker.js';
 // import SlopeWorker from './workers/src/slope.worker.js';
 // import AspectWorker from './workers/src/aspect.worker.js';
 // import SlopeAspectWorker from './workers/src/slopeaspect.worker.js';
-
-// const elevationworker = new Worker(
-// 	new URL('./workers/dem.worker.js', import.meta.url)
-// );
-// const slopeworker = new Worker(
-// 	new URL('./workers/slope.worker.js', import.meta.url)
-// );
-// const aspectworker = new Worker(
-// 	new URL('./workers/aspect.worker.js', import.meta.url)
-// );
-// const slopeaspectworker = new Worker(
-// 	new URL('./workers/slopeaspect.worker.js', import.meta.url)
-// );
-
-// const workers = {
-// 	elevation: elevationworker,
-// 	slope: slopeworker,
-// 	aspect: aspectworker,
-// 	slopeaspect: slopeaspectworker,
-// };
 
 // const workers = {
 // 	elevation: ElevationWorker,
@@ -117,13 +100,15 @@ const TopoLayer = GridLayer.extend({
 		demImg.src = `https://api.mapbox.com/v4/mapbox.terrain-rgb/${z}/${x}/${y}.pngraw?access_token=${token}`;
 
 		const redraw = () => {
+			const raster = demCtx.getImageData(0, 0, 256, 256);
 			var data = {
 				id: id,
-				raster: demCtx.getImageData(0, 0, 256, 256),
+				raster,
 				colors,
 				breakpoints,
 				continuous,
 				breaksAt0,
+				RainbowAsString: Rainbow.toString(),
 			};
 
 			var workerIndex = (x + y) % this._workers.length;

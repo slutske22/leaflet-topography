@@ -34,10 +34,10 @@ import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topogra
 ````
 ## Tools:
 
-- [**`getTopography`**](#gettopography)
-- [**`TopoLayer`**](#topolayer)
-- [**`configure`**](#configure)
-- [**`preload`**](#preload)
+- ### [`getTopography`](#gettopography) ###
+- ### [`TopoLayer`](#topolayer) ###
+- ### [`configure`](#configure) ###
+- ### [`preload`](#preload) ###
 
 <hr>
 

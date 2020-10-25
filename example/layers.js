@@ -147,3 +147,12 @@ const aspectLayers = [
 		})),
 	},
 ];
+
+const slopeaspectLayer = [
+	{
+		name: 'Default',
+		layer: (window.slopeaspectlayer = new Topography.TopoLayer({
+			topotype: 'slopeaspect',
+		})),
+	},
+];
