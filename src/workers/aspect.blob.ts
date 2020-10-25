@@ -8,13 +8,7 @@ export default URL.createObjectURL(
 				self.slopeaspects = {};
 
 				onmessage = function (e) {
-					const {
-						colors,
-						breakpoints,
-						continuous,
-						fallback,
-						RainbowAsString,
-					} = e.data;
+					const { customization, RainbowAsString } = e.data;
 					const rainbowCreator = new Function('return ' + RainbowAsString);
 					const Rainbow = rainbowCreator();
 					if (e.data.raster) {
@@ -24,7 +18,7 @@ export default URL.createObjectURL(
 							Rainbow,
 							self.slopeaspects[e.data.id].slopes,
 							self.slopeaspects[e.data.id].aspects,
-							{ colors, breakpoints, continuous, fallback }
+							customization
 						);
 					}
 
@@ -132,11 +126,18 @@ export default URL.createObjectURL(
 					return { slopes, aspects };
 				}
 
-				function shading(Rainbow, slopes, aspects, userOptions) {
-					const continuous = userOptions.continuous;
-					const userColors = userOptions.colors;
-					const userBreakpoints = userOptions.breakpoints;
-					const fallback = userOptions.fallback;
+				function shading(Rainbow, slopes, aspects, customization) {
+					let continuous, userColors, userBreakpoints, fallback;
+
+					if (customization) {
+						continuous =
+							customization.continuous === undefined
+								? true
+								: customization.continuous;
+						userColors = customization.colors;
+						userBreakpoints = customization.breakpoints;
+						fallback = customization.fallback;
+					}
 
 					function hexToR(h) {
 						return parseInt(cutHex(h).substring(0, 2), 16);

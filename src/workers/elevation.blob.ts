@@ -9,27 +9,18 @@ export default URL.createObjectURL(
 					self.dems = {};
 
 					if (e.data.raster) {
-						const {
-							colors,
-							breakpoints,
-							continuous,
-							breaksAt0,
-							fallback,
-							RainbowAsString,
-						} = e.data;
+						const { customization, RainbowAsString } = e.data;
 						const rainbowCreator = new Function(
 							'return ' + RainbowAsString
 						);
 						const Rainbow = rainbowCreator();
 						const { data } = e.data.raster;
 						self.dems[e.data.id] = raster2dem(data);
-						self.shades = shading(Rainbow, self.dems[e.data.id], {
-							colors,
-							breakpoints,
-							continuous,
-							breaksAt0,
-							fallback,
-						});
+						self.shades = shading(
+							Rainbow,
+							self.dems[e.data.id],
+							customization
+						);
 					}
 
 					postMessage({
@@ -58,18 +49,26 @@ export default URL.createObjectURL(
 					return dem;
 				}
 
-				function shading(Rainbow, dem, userOptions) {
-					const continuous =
-						userOptions.continuous === undefined
-							? true
-							: userOptions.continuous;
-					const breaksAt0 = (userOptions.breaksAt0 =
-						userOptions.breaksAt0 === undefined
-							? true
-							: userOptions.breaksAt0);
-					const userColors = userOptions.colors;
-					const userBreakpoints = userOptions.breakpoints;
-					const fallback = userOptions.fallback;
+				function shading(Rainbow, dem, customization) {
+					let continuous = true,
+						breaksAt0 = true,
+						userColors,
+						userBreakpoints,
+						fallback;
+
+					if (customization) {
+						continuous =
+							customization.continuous === undefined
+								? true
+								: customization.continuous;
+						breaksAt0 = customization.breaksAt0 =
+							customization.breaksAt0 === undefined
+								? true
+								: customization.breaksAt0;
+						userColors = customization.colors;
+						userBreakpoints = customization.breakpoints;
+						fallback = customization.fallback;
+					}
 
 					function hexToR(h) {
 						return parseInt(cutHex(h).substring(0, 2), 16);

@@ -237,6 +237,12 @@ elevationLayer.addTo(map)
       <td>false</td>
       <td>Only relevant to <code>topotype: 'elevation'</code>.  Determines whether or not to inject a breakpoint at elevation = 0 and apply discontinuous use of color gradients.  Creates a nice water effect when set to <code>true</code>, but hides any topography that is below sea level. </a></td>
    </tr>
+   <tr>
+      <td><b>fallback</b></td>
+      <td>hex color</td>
+      <td>depends</td>
+      <td>Fallback color to use if calculated topo values escape the color mapping algorithm.</a></td>
+   </tr>
 </table>
 
 ### Colors and Breakpoints Hints and Tips
