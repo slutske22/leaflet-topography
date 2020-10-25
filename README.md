@@ -176,7 +176,12 @@ The `TopoLayer` constructor will build a new tile layer, derived from the Mapbox
 ````javascript
 import { TopoLayer } from 'leaflet-topography'
 
-const elevationLayer = new TopoLayer({ topotype: 'elevation', token: 'your_mapbox_token' })
+const elevationLayer = new TopoLayer({ 
+  topotype: 'elevation', 
+  token: 'your_mapbox_token'
+  customization: <customization_options>
+});
+
 elevationLayer.addTo(map)
 ````
 
@@ -184,7 +189,6 @@ elevationLayer.addTo(map)
    <tr>
       <td> <b> Option </b> </td>
       <td> <b> Type </b> </td>
-      <td> <b> Default </b> </td>
       <td> <b> Description </b> </td>
    </tr>
    <tr>
@@ -193,7 +197,6 @@ elevationLayer.addTo(map)
          required
       </td>
       <td>string</td>
-      <td>none</td>
       <td>Type of topography to render.  Can be one of `elevation`, `slope`, `aspect`, `slopeaspect`, or `custom`.  When choosing `custom`, the `worker` option must have a value.</td>
    </tr>
    <tr>
@@ -202,25 +205,38 @@ elevationLayer.addTo(map)
          <code>string</code><br>
          location of custom worker script
       </td>
-      <td>none</td>
       <td>If using a custom topography worker script, this value must be the path string that would be passed to <code>new Worker(&lt;worker&gt;)</code></td>
-   </tr> 
+   </tr>
    <tr>
-      <td><b>colors</b></td>
-      <td>Array of hex values</td>
-      <td>depends on topotype</td>
+      <td><b>customization</b></td>
+      <td>
+         <code>customization object</code>
+      </td>
+      <td>If using a custom topography worker script, this value must be the path string that would be passed to <code>new Worker(&lt;worker&gt;)</code></td>
+   </tr>  
+</table>
+
+The optional `customization` object allows you to customize the way colors are rendered.  It takes the following options, all of which are optional:
+
+<table>
+   <tr>
+      <td> <b> Option </b> </td>
+      <td> <b> Type </b> </td>
+      <td> <b> Description </b> </td>
+   </tr>
+   <tr>
+      <td><b><code>colors</code></b></td>
+      <td>Array of hex value strings</td>
       <td>You can pass an array of hex color values to choose the colors rendered by the workers, mapped to the breakpoints you define</td>
    </tr>   
    <tr>
-      <td><b>breakpoints</b></td>
-      <td>Array of number values</td>
-      <td>depends on topotype</td>
+      <td><b><code>breakpoints</code></b></td>
+      <td>Array of numbers</td>
       <td>Determines how colors are spread across values.  Should span the range of <a href="#results">possible values of results</a>.  If you provide <code>colors</code> without providing <code>breakpoints</code>, the breakpoints will be generated evenly for you across the topotype's range.</td>
    </tr>
    <tr>
-      <td><b>continuous</b></td>
+      <td><b><code>continuous</code></b></td>
       <td>boolean</td>
-      <td>depends on topotype</td>
       <td>
          Determines if color should be a continuous gradient, or render in class breaks according to whether or not the topo value falls in the breakpoint range
          <ul>
@@ -232,15 +248,13 @@ elevationLayer.addTo(map)
          </td>
    </tr>
    <tr>
-      <td><b>breaksAt0</b></td>
+      <td><b><code>breaksAt0</code></b></td>
       <td>boolean</td>
-      <td>false</td>
-      <td>Only relevant to <code>topotype: 'elevation'</code>.  Determines whether or not to inject a breakpoint at elevation = 0 and apply discontinuous use of color gradients.  Creates a nice water effect when set to <code>true</code>, but hides any topography that is below sea level. </a></td>
+      <td>Only relevant to <code>topotype: 'elevation'</code>.  Determines whether or not to inject a breakpoint at elevation = 0 and apply discontinuous use of color gradients.  Creates a nice water effect when set to <code>true</code>, but hides any topography that is below sea level. Defaults to <code>true</code>.</td>
    </tr>
    <tr>
-      <td><b>fallback</b></td>
-      <td>hex color</td>
-      <td>depends</td>
+      <td><b><code>fallback</code></b></td>
+      <td>String: hex color</td>
       <td>Fallback color to use if calculated topo values escape the color mapping algorithm.</a></td>
    </tr>
 </table>
