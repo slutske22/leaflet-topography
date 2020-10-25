@@ -10,10 +10,10 @@ var mapOptions = {
 };
 
 // himalayas:
-var mapOptions = {
-	center: { lat: 30.221101852485987, lng: 85.6494140625 },
-	zoom: 5,
-};
+// var mapOptions = {
+// 	center: { lat: 30.221101852485987, lng: 85.6494140625 },
+// 	zoom: 5,
+// };
 
 //Create a map and assign it to the map div
 var map = (window.map = L.map('leafletMapid', mapOptions));

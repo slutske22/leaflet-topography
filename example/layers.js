@@ -155,4 +155,11 @@ const slopeaspectLayer = [
 			topotype: 'slopeaspect',
 		})),
 	},
+	{
+		name: 'Continuous',
+		layer: (window.slopeaspectlayerContinuous = new Topography.TopoLayer({
+			topotype: 'slopeaspect',
+			continuous: true,
+		})),
+	},
 ];

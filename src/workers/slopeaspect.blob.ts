@@ -173,6 +173,20 @@ export default URL.createObjectURL(
 						337.5,
 						360,
 					];
+
+					var aspectGradients = (() => {
+						var collection = [];
+
+						for (let i = 0; i < breakpoints.length - 2; i++) {
+							var rainbow = new Rainbow();
+							rainbow.setNumberRange(breakpoints[i], breakpoints[i + 1]);
+							rainbow.setSpectrum(colors[i], colors[i + 1]);
+							collection.push(rainbow);
+						}
+
+						return collection;
+					})();
+
 					var gradients = colors.map((color) => {
 						let rainbow = new Rainbow();
 						rainbow.setNumberRange(0, 70);
@@ -188,13 +202,21 @@ export default URL.createObjectURL(
 								? aspect % 360
 								: aspect;
 
-						for (let i = 0; i < breakpoints.length - 1; i++) {
+						for (let i = 0; i < breakpoints.length - 2; i++) {
 							if (
 								breakpoints[i] < correctedAspect &&
 								correctedAspect <= breakpoints[i + 1]
 							) {
 								if (slope < 70) {
-									return gradients[i].colorAt(slope);
+									var aspectColor = aspectGradients[i].colorAt(
+										correctedAspect
+									);
+									var doubleGradient = new Rainbow();
+									doubleGradient.setNumberRange(0, 70);
+									doubleGradient.setSpectrum('#808080', aspectColor);
+									return continuous
+										? doubleGradient.colorAt(slope)
+										: gradients[i].colorAt(slope);
 								}
 
 								return colors[i];
