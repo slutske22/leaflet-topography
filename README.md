@@ -185,6 +185,8 @@ const elevationLayer = new TopoLayer({
 elevationLayer.addTo(map)
 ````
 
+### Constructor Options
+
 <table>
    <tr>
       <td> <b> Option </b> </td>
@@ -196,25 +198,34 @@ elevationLayer.addTo(map)
          <b>topotype</b><br>
          required
       </td>
-      <td>string</td>
+      <td><code>string<code></td>
       <td>Type of topography to render.  Can be one of `elevation`, `slope`, `aspect`, `slopeaspect`, or `custom`.  When choosing `custom`, the `worker` option must have a value.</td>
+   </tr>
+   <tr>
+      <td>
+         <b>token</b><br>
+         required
+      </td>
+      <td><code>string<code></td>
+      <td>Mapbox access token.  Can be omitted if it was already used in the <a href="#configure"><code>configure</code></a> function.</td>
    </tr>
    <tr>
       <td><b>worker</b></td>
       <td>
-         <code>string</code><br>
-         location of custom worker script
+         <code>string</code>
       </td>
       <td>If using a custom topography worker script, this value must be the path string that would be passed to <code>new Worker(&lt;worker&gt;)</code></td>
    </tr>
    <tr>
       <td><b>customization</b></td>
       <td>
-         <code>customization object</code>
+         <code>object</code>
       </td>
       <td>If using a custom topography worker script, this value must be the path string that would be passed to <code>new Worker(&lt;worker&gt;)</code></td>
    </tr>  
 </table>
+
+### Customization Options
 
 The optional `customization` object allows you to customize the way colors are rendered.  It takes the following options, all of which are optional:
 
