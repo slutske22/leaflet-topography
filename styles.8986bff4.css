@@ -27,6 +27,22 @@ body,
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
+#title {
+	display: flex;
+	align-items: center;
+	position: absolute;
+	top: 10px;
+	left: 60px;
+	color: white;
+}
+
+#title img {
+	width: 50px;
+	height: 35px;
+	margin-right: 10px;
+	filter: invert(1);
+}
+
 .form {
 	background-color: white;
 	padding: 2em;
@@ -44,7 +60,7 @@ body,
 .form img {
 	align-self: center;
 	width: 150px;
-	height: 80px;
+	height: 90px;
 }
 
 #key-input {
