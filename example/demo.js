@@ -25,6 +25,9 @@ export function initializeDemo(key) {
 	//
 	modal.style.display = 'none';
 	resultsContainer.style.display = 'block';
+	const csb = document.getElementById('codesandbox-container');
+	const topLeft = document.querySelector('.leaflet-right.leaflet-top');
+	topLeft.appendChild(csb);
 
 	// Configure leaflet-topography
 	Topography.configure({

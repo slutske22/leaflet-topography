@@ -87,3 +87,44 @@ body,
 #topo-results {
 	color: darkblue;
 }
+
+#codesandbox-container {
+	align-self: flex-start;
+	margin-top: 15px;
+	margin-right: 20px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: auto;
+}
+
+#codesandbox-container h4 {
+	text-align: right;
+	position: absolute;
+	left: -130px;
+	opacity: 0;
+	transition: all 0.5s;
+	pointer-events: auto;
+	color: white;
+}
+
+#codesandbox-container:hover h4 {
+	text-align: center;
+	position: absolute;
+	left: -135px;
+	opacity: 1;
+	transition: all 0.5s;
+}
+
+#codesandbox-container img {
+	width: 35px;
+	height: 40px;
+	pointer-events: auto;
+	filter: invert(1);
+}
+
+.leaflet-right.leaflet-top {
+	display: flex;
+	flex-direction: row;
+}
