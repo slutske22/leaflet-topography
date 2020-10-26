@@ -5,7 +5,7 @@
 </p>
 <p align="center">
    <i align="center">a set of tools for calculating and visualizing topography in leafletjs</i>
-   <h2 align="center"><a href="https://codesandbox.io/s/react-esri-leaflet-example-n15yn">&#128064; Demo &#128064;</a></h2>
+   <h2 align="center"><a href="https://slutske22.github.io/leaflet-topography/">&#128064; Demo &#128064;</a></h2>
 </p>
 
 
@@ -288,7 +288,7 @@ There are countless combinations of <code>colors</code>, <code>breakpoints</code
          <code>elevation</code>
       </td>
       <td>
-        If using <code>breaksAt0: true</code>, <code>colors</code> and <code>breakpoints</code> must be of the same length, <i>unless</i> your <code>breakpoints</code> <i>already includes<i> <code>0</code>.  If it already includes <code>0</code>, <code>breakpoints</code> must contain <i>one value more</i> than <code>colors</code>.  See the sample codesandbox for examples of this.
+        If using <code>breaksAt0: true</code>, <code>colors</code> and <code>breakpoints</code> must be of the same length, <i>unless</i> your <code>breakpoints</code> <i>already includes<i> <code>0</code>.  If it already includes <code>0</code>, <code>breakpoints</code> must contain <i>one value more</i> than <code>colors</code>.  See the [demo](https://slutske22.github.io/leaflet-topography/).
       </td>
    </tr>
    <tr>
@@ -324,18 +324,6 @@ There are countless combinations of <code>colors</code>, <code>breakpoints</code
    </tr>
 </table>
 
-<!-- For `topotype: 'aspect'`, custom `color` and `breakpoints` should be of the same length, as well as circular, meaning their first value is the same as their last.  For example:
-
-````javascript
-const customAspectLayer = new Topography.TopoLayer({
-  topotype: 'aspect',
-  colors: ['#303E73', '#7A85AD', '#515E90', '#ca009c', '#303E73'],
-  breakpoints: [0, 90, 80, 270, 360],
-  continuous: true,
-})
-```` -->
-
-You can see a handful of examples of TopoLayers in [this codesandbox](www.todo.todo).
 
 <hr>
 
