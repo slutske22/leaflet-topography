@@ -3,18 +3,6 @@ import { Rainbow } from './utils';
 import { _config } from './config';
 import workers from './workers';
 
-// import ElevationWorker from './workers/src/dem.worker.js';
-// import SlopeWorker from './workers/src/slope.worker.js';
-// import AspectWorker from './workers/src/aspect.worker.js';
-// import SlopeAspectWorker from './workers/src/slopeaspect.worker.js';
-
-// const workers = {
-// 	elevation: ElevationWorker,
-// 	slope: SlopeWorker,
-// 	aspect: AspectWorker,
-// 	slopeaspect: SlopeAspectWorker,
-// };
-
 var uniqueId = (function () {
 	var lastId = 0;
 	return function () {

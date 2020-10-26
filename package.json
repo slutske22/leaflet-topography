@@ -2,19 +2,21 @@
 	"name": "leaflet-topography",
 	"version": "0.1.0",
 	"description": "a set of tools for calculating and visualizing topography in leafletjs",
-	"main": "index.js",
+	"main": "build/leaflet-topography.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"clean": "rimraf build",
-		"transpile": "babel src --out-dir build --extensions \".ts\"",
-		"tsc": "tsc",
-		"build": "npm run clean && npm run transpile",
-		"bundle": "npm run clean && webpack"
+		"build": "npm run clean && webpack",
+		"checkoutput": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/slutske22/leaflet-topography.git"
 	},
+	"files": [
+		"/build",
+		"/assets"
+	],
 	"keywords": [
 		"leaflet",
 		"leafletjs",

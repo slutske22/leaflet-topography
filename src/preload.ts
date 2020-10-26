@@ -39,15 +39,15 @@ function getTileCoords(latLngBoundsArray: LatLngBounds[], scale: number) {
 	return filteredTileCoords;
 }
 
-const preload = (bounds: LatLngBounds[], userOptions) => {
+const preload = async (bounds: LatLngBounds[], userOptions) => {
 	const options = Object.assign(_config, userOptions);
 	const { token, scale, priority, saveTile } = options;
 
 	const tileCoords = getTileCoords(bounds, scale);
 
-	tileCoords.forEach(({ x, y, z }) => {
+	tileCoords.forEach(async ({ x, y, z }) => {
 		const coord = { X: x, Y: y, Z: z };
-		fetchDEMTile(coord, token, priority, saveTile);
+		await fetchDEMTile(coord, token, priority, saveTile);
 	});
 };
 
