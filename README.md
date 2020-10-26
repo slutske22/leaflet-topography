@@ -410,6 +410,7 @@ map.on('click', e => {
 ### Planned Improvements
 
 - Units option for `getTopography`?
+- Fade-in effect on `TopoLayer` tiles when imageData is posted
 - Incorporate zoom level into `TopoLayer({ topotype: slope })` for consistent visuals across zoom levels
 - Smoothen `TopoLayer` at higher levels
 - General colorization algorithm optimization
