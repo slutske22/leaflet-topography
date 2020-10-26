@@ -1,4 +1,4 @@
-import { TopoLayer } from '../build/leaflet-topography.js';
+import { TopoLayer } from 'leaflet-topography';
 
 export const elevationLayers = [
 	{

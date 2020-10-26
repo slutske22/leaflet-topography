@@ -1,4 +1,3 @@
-import Topography from '../build/leaflet-topography.js';
 import * as Geocoding from 'esri-leaflet-geocoder';
 import { initializeDemo } from './demo';
 import './layers.js';
@@ -33,6 +32,10 @@ export const USGS_USImagery = L.tileLayer(
 USGS_USImagery.addTo(map);
 
 export const modal = document.getElementById('key-modal');
+export const resultsContainer = document.getElementById(
+	'topo-results-container'
+);
+export const resultsMarkup = document.getElementById('topo-results');
 const submitButton = document.getElementById('key-submit');
 const textArea = document.getElementById('key-input');
 const warning = document.getElementById('warning');

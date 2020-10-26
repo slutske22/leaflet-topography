@@ -1,7 +1,13 @@
 import 'leaflet.control.layers.tree';
 import './leaflet.tree.css';
-import Topography from '../build/leaflet-topography.js';
-import { map, modal, USGS_USImagery } from './index';
+import Topography from 'leaflet-topography';
+import {
+	map,
+	modal,
+	resultsContainer,
+	resultsMarkup,
+	USGS_USImagery,
+} from './index';
 import {
 	elevationLayers,
 	slopeLayers,
@@ -18,6 +24,7 @@ window.addEventListener('DOMContentLoaded', () => {
 export function initializeDemo(key) {
 	//
 	modal.style.display = 'none';
+	resultsContainer.style.display = 'block';
 
 	// Configure leaflet-topography
 	Topography.configure({
@@ -37,17 +44,13 @@ export function initializeDemo(key) {
 
 	// Implement getTopography function
 	map.on('click', (e) => {
-		console.log('Requesting Topography...');
-		Topography.getTopography(e.latlng).then((results) =>
-			console.log(
-				'LatLng:',
-				e.latlng,
-				'Zoom:',
-				map.getZoom(),
-				'Topography:',
-				results
-			)
-		);
+		resultsMarkup.innerHTML = 'Requesting Topography...';
+		Topography.getTopography(e.latlng).then((results) => {
+			resultsMarkup.innerHTML =
+				JSON.stringify(e.latlng, null, 2) +
+				'<br>' +
+				JSON.stringify(results, null, 2);
+		});
 	});
 
 	// Create layers control tree for various TopoLayer samples

@@ -68,3 +68,22 @@ body,
 #warning.show {
 	visibility: visible;
 }
+
+#topo-results-container {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	min-height: 200px;
+	background-color: white;
+	border: 1px solid grey;
+	padding: 1em;
+	display: none;
+}
+
+#topo-results-container h3 {
+	margin: 0;
+}
+
+#topo-results {
+	color: darkblue;
+}
