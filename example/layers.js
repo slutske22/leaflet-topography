@@ -1,15 +1,15 @@
-import Topography from '../build/leaflet-topography.js';
+import { TopoLayer } from '../build/leaflet-topography.js';
 
-const elevationLayers = [
+export const elevationLayers = [
 	{
 		name: 'Default',
-		layer: (window.elevationlayer = new Topography.TopoLayer({
+		layer: (window.elevationlayer = new TopoLayer({
 			topotype: 'elevation',
 		})),
 	},
 	{
 		name: 'Disontinuous Custom Colors',
-		layer: (window.elevationDisontinuous = new Topography.TopoLayer({
+		layer: (window.elevationDisontinuous = new TopoLayer({
 			topotype: 'elevation',
 			customization: {
 				continuous: false,
@@ -42,7 +42,7 @@ const elevationLayers = [
 	},
 	{
 		name: 'Continuous Custom Colors',
-		layer: (window.elevationcustomcontinuous = new Topography.TopoLayer({
+		layer: (window.elevationcustomcontinuous = new TopoLayer({
 			topotype: 'elevation',
 			customization: {
 				breaksAt0: false,
@@ -79,7 +79,7 @@ const elevationLayers = [
 	},
 	{
 		name: 'Continuous Colors, Break at 0',
-		layer: (window.elevationcontbreak = new Topography.TopoLayer({
+		layer: (window.elevationcontbreak = new TopoLayer({
 			topotype: 'elevation',
 			customization: {
 				colors: [
@@ -114,16 +114,16 @@ const elevationLayers = [
 	},
 ];
 
-const slopeLayers = [
+export const slopeLayers = [
 	{
 		name: 'Default',
-		layer: (window.slopelayer = new Topography.TopoLayer({
+		layer: (window.slopelayer = new TopoLayer({
 			topotype: 'slope',
 		})),
 	},
 	{
 		name: 'Tri Color',
-		layer: (window.slopelayerTricolor = new Topography.TopoLayer({
+		layer: (window.slopelayerTricolor = new TopoLayer({
 			topotype: 'slope',
 			customization: {
 				colors: ['#000000', '#808080', '#fd632a'],
@@ -132,7 +132,7 @@ const slopeLayers = [
 	},
 	{
 		name: 'Greater Than 70',
-		layer: (window.slopelayer70 = new Topography.TopoLayer({
+		layer: (window.slopelayer70 = new TopoLayer({
 			topotype: 'slope',
 			customization: {
 				colors: ['#000000', '#fd632a', '#fd632a'],
@@ -143,16 +143,16 @@ const slopeLayers = [
 	},
 ];
 
-const aspectLayers = [
+export const aspectLayers = [
 	{
 		name: 'Default',
-		layer: (window.aspectlayer = new Topography.TopoLayer({
+		layer: (window.aspectlayer = new TopoLayer({
 			topotype: 'aspect',
 		})),
 	},
 	{
 		name: 'Default, Continuous',
-		layer: (window.aspectlayercontinuous = new Topography.TopoLayer({
+		layer: (window.aspectlayercontinuous = new TopoLayer({
 			topotype: 'aspect',
 			customization: {
 				continuous: true,
@@ -161,7 +161,7 @@ const aspectLayers = [
 	},
 	{
 		name: 'Midnight Blue',
-		layer: (window.aspectlayerMidnightBlue = new Topography.TopoLayer({
+		layer: (window.aspectlayerMidnightBlue = new TopoLayer({
 			topotype: 'aspect',
 			customization: {
 				colors: [
@@ -181,7 +181,7 @@ const aspectLayers = [
 	},
 	{
 		name: 'Cardinal Directions',
-		layer: (window.aspectlayerCardinalDirections = new Topography.TopoLayer({
+		layer: (window.aspectlayerCardinalDirections = new TopoLayer({
 			topotype: 'aspect',
 			customization: {
 				colors: ['#f4fa00', '#9afb0c', '#0068c0', '#ca009c', '#f4fa00'],
@@ -191,7 +191,7 @@ const aspectLayers = [
 	},
 	{
 		name: 'North and South',
-		layer: (window.aspectlayerNorthSouth = new Topography.TopoLayer({
+		layer: (window.aspectlayerNorthSouth = new TopoLayer({
 			topotype: 'aspect',
 			customization: {
 				colors: ['#0068c0', '#b10012', '#0068c0'],
@@ -201,16 +201,16 @@ const aspectLayers = [
 	},
 ];
 
-const slopeaspectLayer = [
+export const slopeaspectLayers = [
 	{
 		name: 'Default',
-		layer: (window.slopeaspectlayer = new Topography.TopoLayer({
+		layer: (window.slopeaspectlayer = new TopoLayer({
 			topotype: 'slopeaspect',
 		})),
 	},
 	{
 		name: 'Continuous',
-		layer: (window.slopeaspectlayerContinuous = new Topography.TopoLayer({
+		layer: (window.slopeaspectlayerContinuous = new TopoLayer({
 			topotype: 'slopeaspect',
 			customization: {
 				continuous: true,
@@ -219,7 +219,7 @@ const slopeaspectLayer = [
 	},
 	{
 		name: 'Midnight Blue',
-		layer: (window.slopeaspectlayerMidnightBlue = new Topography.TopoLayer({
+		layer: (window.slopeaspectlayerMidnightBlue = new TopoLayer({
 			topotype: 'slopeaspect',
 			customization: {
 				colors: [
@@ -238,7 +238,7 @@ const slopeaspectLayer = [
 	},
 	{
 		name: 'Continuous',
-		layer: (window.slopeaspectlayerWest = new Topography.TopoLayer({
+		layer: (window.slopeaspectlayerWest = new TopoLayer({
 			topotype: 'slopeaspect',
 			customization: {
 				colors: ['#6c9b0a', '#08006f', '#6c9b0a', '#6c9b0a'],

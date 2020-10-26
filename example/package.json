@@ -16,6 +16,7 @@
 	},
 	"dependencies": {
 		"esri-leaflet": "^2.5.1",
-		"esri-leaflet-geocoder": "^2.3.3"
+		"esri-leaflet-geocoder": "^2.3.3",
+		"leaflet.control.layers.tree": "^1.0.2"
 	}
 }

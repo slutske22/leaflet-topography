@@ -1,5 +1,6 @@
 import Topography from '../build/leaflet-topography.js';
 import * as Geocoding from 'esri-leaflet-geocoder';
+import { initializeDemo } from './demo';
 import './layers.js';
 
 // Define some maps options
@@ -16,12 +17,12 @@ var mapOptions = {
 // };
 
 //Create a map and assign it to the map div
-var map = (window.map = L.map('leafletMapid', mapOptions));
+export const map = (window.map = L.map('leafletMapid', mapOptions));
 
 Geocoding.geosearch({ useMapBounds: false }).addTo(map);
 
 //  Add a baselayer
-var USGS_USImagery = L.tileLayer(
+export const USGS_USImagery = L.tileLayer(
 	'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}',
 	{
 		maxZoom: 20,
@@ -31,25 +32,15 @@ var USGS_USImagery = L.tileLayer(
 );
 USGS_USImagery.addTo(map);
 
-Topography.configure({
-	map,
-	token: process.env.MAPBOX_TOKEN,
-	scale: 13,
-	spread: 4,
-	priority: 'storage',
-});
+export const modal = document.getElementById('key-modal');
+const submitButton = document.getElementById('key-submit');
+const textArea = document.getElementById('key-input');
+const warning = document.getElementById('warning');
 
-const bounds = map.getBounds();
-
-if (map.getZoom() >= 13) {
-	Topography.preload([bounds]);
-}
-
-map.on('click', (e) => {
-	console.log(e.latlng, map.getZoom());
-});
-
-map.on('click', (e) => {
-	console.log('Requesting Topography...');
-	Topography.getTopography(e.latlng).then((results) => console.log(results));
+submitButton.addEventListener('click', () => {
+	if (textArea.value) {
+		initializeDemo(textArea.value);
+	} else {
+		warning.classList.add('show');
+	}
 });
