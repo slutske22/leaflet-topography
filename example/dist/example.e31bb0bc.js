@@ -36247,12 +36247,11 @@ var _layers = require("./layers");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import Topography from 'leaflet-topography';
-window.addEventListener('DOMContentLoaded', function () {
-  if ("pk.eyJ1Ijoic2x1dHNrZTIyIiwiYSI6ImNrZ2dycnV6bTFzd24yeXFvMndka2NqYTcifQ.HHsVRNANxzV-nQEZG1gKrA") {
-    initializeDemo("pk.eyJ1Ijoic2x1dHNrZTIyIiwiYSI6ImNrZ2dycnV6bTFzd24yeXFvMndka2NqYTcifQ.HHsVRNANxzV-nQEZG1gKrA");
-  }
-});
-
+// window.addEventListener('DOMContentLoaded', () => {
+// 	if (process.env.MAPBOX_TOKEN) {
+// 		initializeDemo(process.env.MAPBOX_TOKEN);
+// 	}
+// });
 function initializeDemo(key) {
   //
   _index.modal.style.display = 'none';

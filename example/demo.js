@@ -18,11 +18,11 @@ import {
 	customLayers,
 } from './layers';
 
-window.addEventListener('DOMContentLoaded', () => {
-	if (process.env.MAPBOX_TOKEN) {
-		initializeDemo(process.env.MAPBOX_TOKEN);
-	}
-});
+// window.addEventListener('DOMContentLoaded', () => {
+// 	if (process.env.MAPBOX_TOKEN) {
+// 		initializeDemo(process.env.MAPBOX_TOKEN);
+// 	}
+// });
 
 export function initializeDemo(key) {
 	//
