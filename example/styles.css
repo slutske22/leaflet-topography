@@ -110,7 +110,7 @@ body,
 }
 
 #codesandbox-container:hover h4 {
-	text-align: center;
+	text-justify: right;
 	position: absolute;
 	left: -135px;
 	opacity: 1;
