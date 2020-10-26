@@ -5,13 +5,16 @@
 	"main": "index.html",
 	"scripts": {
 		"start": "parcel index.html --open",
-		"build": "parcel build index.html"
+		"build": "parcel build index.html",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d dist"
 	},
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/core": "^7.12.3",
 		"@babel/plugin-transform-runtime": "^7.12.1",
+		"gh-pages": "^3.1.0",
 		"parcel-bundler": "^1.12.4"
 	},
 	"dependencies": {
