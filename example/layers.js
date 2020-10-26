@@ -1,4 +1,6 @@
-import { TopoLayer } from 'leaflet-topography';
+import { TopoLayer } from '../build/leaflet-topography.js';
+// import { TopoLayer } from 'leaflet-topography';
+import customWorker from './custom.worker';
 
 export const elevationLayers = [
 	{
@@ -246,5 +248,16 @@ export const slopeaspectLayers = [
 				fallback: '#6c9b0a',
 			},
 		})),
+	},
+];
+
+// Allowing user to provide worker still experimental
+export const customLayers = [
+	{
+		name: 'Sea Level Rise 3m',
+		layer: new TopoLayer({
+			topotype: 'custom',
+			worker: customWorker,
+		}),
 	},
 ];

@@ -1,6 +1,8 @@
+// import Topography from 'leaflet-topography';
+import Topography from '../build/leaflet-topography.js';
 import 'leaflet.control.layers.tree';
 import './leaflet.tree.css';
-import Topography from 'leaflet-topography';
+
 import {
 	map,
 	modal,
@@ -13,19 +15,21 @@ import {
 	slopeLayers,
 	aspectLayers,
 	slopeaspectLayers,
+	customLayers,
 } from './layers';
 
-// window.addEventListener('DOMContentLoaded', () => {
-// 	if (process.env.MAPBOX_TOKEN) {
-// 		initializeDemo(process.env.MAPBOX_TOKEN);
-// 	}
-// });
+window.addEventListener('DOMContentLoaded', () => {
+	if (process.env.MAPBOX_TOKEN) {
+		initializeDemo(process.env.MAPBOX_TOKEN);
+	}
+});
 
 export function initializeDemo(key) {
 	//
 	modal.style.display = 'none';
 	resultsContainer.style.display = 'block';
 	const csb = document.getElementById('codesandbox-container');
+	csb.style.display = 'flex';
 	const topLeft = document.querySelector('.leaflet-right.leaflet-top');
 	topLeft.appendChild(csb);
 
@@ -90,6 +94,14 @@ export function initializeDemo(key) {
 				})),
 			},
 		],
+	};
+
+	const overlayTree = {
+		label: '<code class="tree-title"> topotype: custom</code>',
+		children: customLayers.map((l) => ({
+			label: l.name,
+			layer: l.layer,
+		})),
 	};
 
 	L.control.layers.tree(baseTree, null, { collapsed: false }).addTo(map);

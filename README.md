@@ -199,7 +199,7 @@ elevationLayer.addTo(map)
          required
       </td>
       <td><code>string<code></td>
-      <td>Type of topography to render.  Can be one of `elevation`, `slope`, `aspect`, `slopeaspect`, or `custom`.  When choosing `custom`, the `worker` option must have a value.</td>
+      <td>Type of topography to render.  Can be one of `elevation`, `slope`, `aspect`, or `slopeaspect`.</td>
    </tr>
    <tr>
       <td>
@@ -208,13 +208,6 @@ elevationLayer.addTo(map)
       </td>
       <td><code>string<code></td>
       <td>Mapbox access token.  Can be omitted if it was already used in the <a href="#configure"><code>configure</code></a> function.</td>
-   </tr>
-   <tr>
-      <td><b>worker</b></td>
-      <td>
-         <code>string</code>
-      </td>
-      <td>If using a custom topography worker script, this value must be the path string that would be passed to <code>new Worker(&lt;worker&gt;)</code></td>
    </tr>
    <tr>
       <td><b>customization</b></td>
