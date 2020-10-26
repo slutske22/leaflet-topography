@@ -296,6 +296,7 @@ There are countless combinations of <code>colors</code>, <code>breakpoints</code
          <code>slope</code>
       </td>
       <td>
+         Slope layers are fairly simple, but see the <a href="#limitations">limitations</a> section.
       </td>
    </tr>
    <tr>
@@ -399,6 +400,19 @@ map.on('click', e => {
 **Be careful!** Calling `preload` on too large an area with a high `scale` may cause your browser to try to fetch hundreds or even millions of tile images at once!
 
 <hr>
+
+## Limitations
+
+- `TopoLayer`
+  - `topotype: slope` does not consider distance betwen pixels when calculating and coloring slope.  Lower zoom levels produce higher slope values, meaning the layer tends to "white out" as you zoom out, and "black out" as you zoom in.  Interestingly, this is in contrast to using `rasterFunction: "Slope_Degrees"` on an esri-leaflet terrain layer, which blacks out as you zoom out.
+  - `topotype: slopeaspect` with a `continuous: true` is *very* slow, as each pixel's color must be calculated across two gradients - one to interpolate between aspect colors, and another to interpolate between the resultant aspect color and the slope value.  This goes against the philosophy of this plugin, and should probably not be used.
+
+### Planned Improvements
+
+- Units option for `getTopography`?
+- Incorporate zoom level into `TopoLayer({ topotype: slope })` for consistent visuals across zoom levels
+- Smoothen `TopoLayer` at higher levels
+- General colorization algorithm optimization
 
 ## Alternatives
 

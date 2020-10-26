@@ -9,7 +9,6 @@ module.exports = {
 		filename: 'leaflet-topography.js',
 		library: 'Topography',
 		libraryTarget: 'umd',
-      globalObject: 'typeof self !== \'undefined\' ? self : this',
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.json'],
@@ -20,7 +19,7 @@ module.exports = {
 				test: /\.worker\.js$/,
 				loader: 'worker-loader',
 				options: {
-               filename: 'workers/[name].js',
+					filename: 'workers/[name].js',
 				},
 			},
 			{
