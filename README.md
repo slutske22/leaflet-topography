@@ -14,7 +14,7 @@ Leaflet-topography is a leaflet plugin which offers functions and layers for cal
 
 ## Why?
 
-While [other tools](#alternatives) exist to calculate and visualize topography in leaflet, this package is designed to do so at lightning speed. Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it them performs calculations to return elevation, slope, and aspect for that location.  The point's associated DEM tile is cached in the format and location of your choice. This means that further queries that fall in the same tile return topography data quickly, without the need for another network request.  For a detailed explanation of how this works, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
+While [other tools](#alternatives) exist to calculate and visualize topography in leaflet, this package is designed to do so at lightning speed. Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it then performs calculations to return elevation, slope, and aspect for that location.  The point's associated DEM tile is cached in the format and location of your choice. This means that further queries that fall in the same tile return topography data quickly, without the need for another network request.  For a detailed explanation of how this works, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
 
 
 <img width="100%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topography-banner.png">
@@ -91,7 +91,7 @@ map.on('click', (e) => {
 
 ### Options
 
-You must pass an options as the second argument of `getTopography`, *or* you can use the [`configure`](#configure) function to preconfigure leaflet-topography.
+You must pass an options as the second argument of `getTopography`, *or* you can use the [`configure`](#configure-section) function to preconfigure leaflet-topography.
 
 <table>
    <tr>
