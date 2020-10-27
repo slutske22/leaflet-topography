@@ -44,15 +44,15 @@ import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topogra
 ## Tools:
 
 <ul>
-   <li><h3><a href="#gettopography"><code>getTopography</code></a></h3></li>
-   <li><h3><a href="#topolayer"><code>TopoLayer</code></a></h3></li>
-   <li><h3><a href="#configure"><code>configure</code></a></h3></li>
-   <li><h3><a href="#preload"><code>preload</code></a></h3></li>
+   <li><h3><a href="#gettopography-section"><code>getTopography</code></a></h3></li>
+   <li><h3><a href="#topolayer-section"><code>TopoLayer</code></a></h3></li>
+   <li><h3><a href="#configure-section"><code>configure</code></a></h3></li>
+   <li><h3><a href="#preload-section"><code>preload</code></a></h3></li>
 </ul>
 
 <hr>
 
-<h3 id="gettopography"><code>getTopography</code></h3>
+<h3 id="gettopography-section"><code>getTopography</code></h3>
 
 This is leaflet-topography's central tool. This async function takes in an `L.LatLng` object, and a semi-optional configuration object, and returns a promise which resolves to the result, which contains elevation, slope, and aspect data for that `latlng`.  You can use `async / await` syntax, or `.then` syntax:
 
@@ -180,7 +180,7 @@ And now your tiles will be saved to and retrieved from the `window.myTemporaryCa
 <hr>
 
 
-### `TopoLayer`
+<h3 id="topolayer-section"><code>TopoLayer<code></h3>
 
 The `TopoLayer` constructor will build a new tile layer, derived from the Mapbox RGB Terrain tileset.  Using web workers and [RainbowVis.js](https://github.com/anomal/RainbowVis-JS), a `TopoLayer` transforms the rgb DEM to visualize topographic features.  It takes a configuration object as the contructor's argument:
 
@@ -331,7 +331,7 @@ There are countless combinations of <code>colors</code>, <code>breakpoints</code
 
 <hr>
 
-### `configure`
+<h3 id="configure-section"><code>configure</code></h3>
 
 You may find it useful to preconfigure leaflet-topography ahead of time. You can use the `configure` function to do so, which will eliminate the need to pass an `options` argument to `getTopography`, or to pass your token to the `TopoLayer` constructor.
 
@@ -357,7 +357,7 @@ const elevationLayer = new TopoLayer({ topotype: 'elevation' })
 
 <hr>
 
-### `preload`
+<h3 id="preload-section"><code>preload</code></h3>
 
 `preload` is a convenience function which takes in an aray of `L.LatLngBounds` and saves all DEM tiles within those bounds to the cache.  If you know you will be doing analysis in a certain area(s), `preload` will perform all the data fetching ahead of time:
 
