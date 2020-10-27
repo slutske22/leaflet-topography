@@ -180,7 +180,7 @@ And now your tiles will be saved to and retrieved from the `window.myTemporaryCa
 <hr>
 
 
-<h3 id="topolayer-section"><code>TopoLayer<code></h3>
+<h3 id="topolayer-section"><code>TopoLayer</code></h3>
 
 The `TopoLayer` constructor will build a new tile layer, derived from the Mapbox RGB Terrain tileset.  Using web workers and [RainbowVis.js](https://github.com/anomal/RainbowVis-JS), a `TopoLayer` transforms the rgb DEM to visualize topographic features.  It takes a configuration object as the contructor's argument:
 
