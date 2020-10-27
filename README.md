@@ -27,7 +27,16 @@ You can install leaflet-topography through npm:
 npm i leaflet-topography
 ```
 
-Or you can download `leaflet-topography.js` from the `/build` folder and include it anywhere in your project - either in your HTML `<head>` or by doing an `import './leaflet-topography.js'` in your project.  leaflet-topography will attach to the leaflet global `L`, and `L.Topography` will now be available for use.  You can also import relevant tools directly:
+Or you can include the package in your HTML `head` using unpkg: 
+
+````html
+<head>
+   <script src="leaflet-CDN-comes-first" type="text/javascript"></script>
+   <script src="https://unpkg.com/leaflet-topography" type="text/javascript"></script>
+</head>
+````
+
+leaflet-topography will attach to the leaflet global `L`, and `L.Topography` will now be available for use.  You can also import relevant tools directly:
 
 ````javascript
 import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topography'
