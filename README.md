@@ -10,14 +10,27 @@
 
 
 
+
+
 Leaflet-topography is a leaflet plugin which offers functions and layers for calculating and visuzalizing topographic data in a leaflet map. These tools are based on the [Mapbox RGB Encoded DEM](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb), which means you must use your mapbox access token to use these tools.
+
+<p float="left">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-1.PNG">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-2.PNG">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-3.PNG">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-4.PNG">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-6.PNG">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-7.PNG">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-5.PNG">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-8.PNG">
+</p>
 
 ## Why?
 
 While [other tools](#alternatives) exist to calculate and visualize topography in leaflet, this package is designed to do so at lightning speed. Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it then performs calculations to return elevation, slope, and aspect for that location.  The point's associated DEM tile is cached in the format and location of your choice. This means that further queries that fall in the same tile return topography data quickly, without the need for another network request.  For a detailed explanation of how this works, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
 
 
-<img width="100%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topography-banner.png">
+
 
 ## Installation and Use
 
@@ -53,6 +66,8 @@ import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topogra
 <hr>
 
 <h3 id="gettopography-section"><code>getTopography</code></h3>
+
+<img width="100%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topography-banner.png">
 
 This is leaflet-topography's central tool. This async function takes in an `L.LatLng` object, and a semi-optional configuration object, and returns a promise which resolves to the result, which contains elevation, slope, and aspect data for that `latlng`.  You can use `async / await` syntax, or `.then` syntax:
 
@@ -182,15 +197,24 @@ And now your tiles will be saved to and retrieved from the `window.myTemporaryCa
 
 <h3 id="topolayer-section"><code>TopoLayer</code></h3>
 
+
 <p float="left">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-1.PNG">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-2.PNG">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-3.PNG">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-4.PNG">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-6.PNG">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-7.PNG">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-5.PNG">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-8.PNG">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
+/assets/topo-a.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
+/assets/topo-b.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
+/assets/topo-e.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
+/assets/topo-c.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
+/assets/topo-d.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
+/assets/topo-g.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
+/assets/topo-f.PNG">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
+/assets/topo-h.png">
 </p>
 
 The `TopoLayer` constructor will build a new tile layer, derived from the Mapbox RGB Terrain tileset.  Using web workers and [RainbowVis.js](https://github.com/anomal/RainbowVis-JS), a `TopoLayer` transforms the rgb DEM to visualize topographic features.  All of the thumbnails above were generated with variations of a `TopoLayer`. It takes a configuration object as the contructor's argument:
