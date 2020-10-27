@@ -171,7 +171,16 @@ And now your tiles will be saved to and retrieved from the `window.myTemporaryCa
 
 ### `TopoLayer`
 
-The `TopoLayer` constructor will build a new tile layer, derived from the Mapbox RGB Terrain tileset.  Using web workers and [RainbowVis.js](https://github.com/anomal/RainbowVis-JS), a `TopoLayer` transforms the rgb DEM to visualize topographic features.  It takes a configuration object as the contructor's argument:
+<img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-1.PNG">
+<img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-2.PNG">
+<img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-3.PNG">
+<img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-4.PNG">
+<img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-6.PNG">
+<img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-7.PNG">
+<img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-5.PNG">
+<img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-8.PNG">
+
+The `TopoLayer` constructor will build a new tile layer, derived from the Mapbox RGB Terrain tileset.  Using web workers and [RainbowVis.js](https://github.com/anomal/RainbowVis-JS), a `TopoLayer` transforms the rgb DEM to visualize topographic features.  All of the thumbnails above were generated with variations of a `TopoLayer`. It takes a configuration object as the contructor's argument:
 
 ````javascript
 import { TopoLayer } from 'leaflet-topography'
