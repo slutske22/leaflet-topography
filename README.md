@@ -199,22 +199,14 @@ And now your tiles will be saved to and retrieved from the `window.myTemporaryCa
 
 
 <p float="left">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
-/assets/topo-a.png">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
-/assets/topo-b.png">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
-/assets/topo-e.png">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
-/assets/topo-c.png">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
-/assets/topo-d.png">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
-/assets/topo-g.png">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
-/assets/topo-f.PNG">
-   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD
-/assets/topo-h.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-a.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-b.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-e.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-c.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-d.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-g.png">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-f.PNG">
+   <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-h.png">
 </p>
 
 The `TopoLayer` constructor will build a new tile layer, derived from the Mapbox RGB Terrain tileset.  Using web workers and [RainbowVis.js](https://github.com/anomal/RainbowVis-JS), a `TopoLayer` transforms the rgb DEM to visualize topographic features.  All of the thumbnails above were generated with variations of a `TopoLayer`. It takes a configuration object as the contructor's argument:
