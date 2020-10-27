@@ -43,10 +43,12 @@ import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topogra
 ````
 ## Tools:
 
-- ### [`getTopography`](#gettopography) ###
-- ### [`TopoLayer`](#topolayer) ###
-- ### [`configure`](#configure) ###
-- ### [`preload`](#preload) ###
+<ul>
+   <li><h3><a href="#gettopography"><code>getTopography</code></a></h3></li>
+   <li><h3><a href="#topolayer"><code>TopoLayer</code></a></h3></li>
+   <li><h3><a href="#configure"><code>configure</code></a></h3></li>
+   <li><h3><a href="#preload"><code>preload</code></a></h3></li>
+</ul>
 
 <hr>
 

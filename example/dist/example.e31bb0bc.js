@@ -14185,35 +14185,31 @@ var global = arguments[3];
 
 },{}],"node_modules/esri-leaflet/package.json":[function(require,module,exports) {
 module.exports = {
-  "_args": [
-    [
-      "esri-leaflet@2.5.1",
-      "/workspace/leaflet-topography/example"
-    ]
-  ],
-  "_from": "esri-leaflet@2.5.1",
+  "_from": "esri-leaflet",
   "_id": "esri-leaflet@2.5.1",
   "_inBundle": false,
   "_integrity": "sha512-AW20oUuH4Co5qv+4rRtueHLczeqgYnJblv1KY1PLQgJrzeusT9ZgDXPi/esMeb3yN2PC2JL5BZIhlfzRegVDXA==",
   "_location": "/esri-leaflet",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "tag",
     "registry": true,
-    "raw": "esri-leaflet@2.5.1",
+    "raw": "esri-leaflet",
     "name": "esri-leaflet",
     "escapedName": "esri-leaflet",
-    "rawSpec": "2.5.1",
+    "rawSpec": "",
     "saveSpec": null,
-    "fetchSpec": "2.5.1"
+    "fetchSpec": "latest"
   },
   "_requiredBy": [
+    "#USER",
     "/",
     "/esri-leaflet-geocoder"
   ],
   "_resolved": "https://registry.npmjs.org/esri-leaflet/-/esri-leaflet-2.5.1.tgz",
-  "_spec": "2.5.1",
-  "_where": "/workspace/leaflet-topography/example",
+  "_shasum": "b473785d0459960a91934c4f8ea8e5512dd9145e",
+  "_spec": "esri-leaflet",
+  "_where": "/Users/seth/Documents/GitHub/leaflet-topography/example",
   "author": {
     "name": "Patrick Arlt",
     "email": "parlt@esri.com",
@@ -14222,6 +14218,7 @@ module.exports = {
   "bugs": {
     "url": "https://github.com/esri/esri-leaflet/issues"
   },
+  "bundleDependencies": false,
   "contributors": [
     {
       "name": "Patrick Arlt",
@@ -14238,6 +14235,7 @@ module.exports = {
     "@terraformer/arcgis": "^2.0.7",
     "tiny-binary-search": "^1.0.3"
   },
+  "deprecated": false,
   "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
   "devDependencies": {
     "@rollup/plugin-json": "^4.0.3",
@@ -22125,7 +22123,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45445" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52944" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
