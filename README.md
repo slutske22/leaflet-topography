@@ -255,9 +255,9 @@ The optional `customization` object allows you to customize the way colors are r
       <td>
          Determines if color should be a continuous gradient, or render in class breaks according to whether or not the topo value falls in the breakpoint range
          <ul>
-            <li><code>topotype: 'elevation'</code> defaults to true
+            <li><code>topotype: 'elevation' | 'slope'</code> defaults to true
             </li>
-            <li><code>topotype: 'aspect'</code> defaults to false
+            <li><code>topotype: 'aspect' | 'slopeaspect'</code> defaults to false
             </li>
          </ul>
          </td>
