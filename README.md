@@ -292,7 +292,7 @@ There are countless combinations of <code>colors</code>, <code>breakpoints</code
          <code>elevation</code>
       </td>
       <td>
-        If using <code>breaksAt0: true</code>, <code>colors</code> and <code>breakpoints</code> must be of the same length, <i>unless</i> your <code>breakpoints</code> <i>already includes<i> <code>0</code>.  If it already includes <code>0</code>, <code>breakpoints</code> must contain <i>one value more</i> than <code>colors</code>.  See the [demo](https://slutske22.github.io/leaflet-topography/).
+        If using <code>breaksAt0: true</code>, <code>colors</code> and <code>breakpoints</code> must be of the same length, <i>unless</i> your <code>breakpoints</code> <i>already includes<i> <code>0</code>.  If it already includes <code>0</code>, <code>breakpoints</code> must contain <i>one value more</i> than <code>colors</code>.  See the <a href="https://slutske22.github.io/leaflet-topography/">demo</a> for examples.
       </td>
    </tr>
    <tr>
