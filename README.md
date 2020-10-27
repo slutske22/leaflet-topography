@@ -14,7 +14,7 @@ Leaflet-topography is a leaflet plugin which offers functions and layers for cal
 
 ## Why?
 
-While [other tools](#alternatives) exist to calculate and visualize topography in leaflet, this package is designed to do so at lightning speed. Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it them performs calculations to return elevation, slope, and aspect for that location.  The point's associated DEM tile is cached in the format and location of your choice. This means that further queries that fall in the same tile return topography data quickly, without the need for another network request.  For a detailed explanation of how this works, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
+While [other tools](#alternatives) exist to calculate and visualize topography in leaflet, this package is designed to do so at lightning speed. Under the hood, leaflet-topography uses your mapbox token to fetch the [Mapbox-RGB-Terrain](https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#mapbox-terrain-rgb) tile associated with your `latlng`, and it then performs calculations to return elevation, slope, and aspect for that location.  The point's associated DEM tile is cached in the format and location of your choice. This means that further queries that fall in the same tile return topography data quickly, without the need for another network request.  For a detailed explanation of how this works, you can read my article, ["Slope and Aspect as a Function of LatLng in Leaflet"](https://observablehq.com/@slutske22/slope-as-a-function-of-latlng-in-leaflet)
 
 
 <img width="100%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topography-banner.png">
@@ -27,21 +27,32 @@ You can install leaflet-topography through npm:
 npm i leaflet-topography
 ```
 
-Or you can download `leaflet-topography.js` from the `/build` folder and include it anywhere in your project - either in your HTML `<head>` or by doing an `import './leaflet-topography.js'` in your project.  leaflet-topography will attach to the leaflet global `L`, and `L.Topography` will now be available for use.  You can also import relevant tools directly:
+Or you can include the package in your HTML `head` using unpkg: 
+
+````html
+<head>
+   <script src="leaflet-CDN-comes-first" type="text/javascript"></script>
+   <script src="https://unpkg.com/leaflet-topography" type="text/javascript"></script>
+</head>
+````
+
+leaflet-topography will attach to the leaflet global `L`, and `L.Topography` will now be available for use.  You can also import relevant tools directly:
 
 ````javascript
 import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topography'
 ````
 ## Tools:
 
-- ### [`getTopography`](#gettopography) ###
-- ### [`TopoLayer`](#topolayer) ###
-- ### [`configure`](#configure) ###
-- ### [`preload`](#preload) ###
+<ul>
+   <li><h3><a href="#gettopography-section"><code>getTopography</code></a></h3></li>
+   <li><h3><a href="#topolayer-section"><code>TopoLayer</code></a></h3></li>
+   <li><h3><a href="#configure-section"><code>configure</code></a></h3></li>
+   <li><h3><a href="#preload-section"><code>preload</code></a></h3></li>
+</ul>
 
 <hr>
 
-<h3 id="gettopography"><code>getTopography</code></h3>
+<h3 id="gettopography-section"><code>getTopography</code></h3>
 
 This is leaflet-topography's central tool. This async function takes in an `L.LatLng` object, and a semi-optional configuration object, and returns a promise which resolves to the result, which contains elevation, slope, and aspect data for that `latlng`.  You can use `async / await` syntax, or `.then` syntax:
 
@@ -80,7 +91,7 @@ map.on('click', (e) => {
 
 ### Options
 
-You must pass an options as the second argument of `getTopography`, *or* you can use the [`configure`](#configure) function to preconfigure leaflet-topography.
+You must pass an options as the second argument of `getTopography`, *or* you can use the [`configure`](#configure-section) function to preconfigure leaflet-topography.
 
 <table>
    <tr>
@@ -169,7 +180,7 @@ And now your tiles will be saved to and retrieved from the `window.myTemporaryCa
 <hr>
 
 
-### `TopoLayer`
+<h3 id="topolayer-section"><code>TopoLayer</code></h3>
 
 <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-1.PNG">
 <img width="12%" src="https://raw.githubusercontent.com/slutske22/leaflet-topography/HEAD/assets/topo-2.PNG">
@@ -253,9 +264,9 @@ The optional `customization` object allows you to customize the way colors are r
       <td>
          Determines if color should be a continuous gradient, or render in class breaks according to whether or not the topo value falls in the breakpoint range
          <ul>
-            <li><code>topotype: 'elevation'</code> defaults to true
+            <li><code>topotype: 'elevation' | 'slope'</code> defaults to true
             </li>
-            <li><code>topotype: 'aspect'</code> defaults to false
+            <li><code>topotype: 'aspect' | 'slopeaspect'</code> defaults to false
             </li>
          </ul>
          </td>
@@ -290,7 +301,7 @@ There are countless combinations of <code>colors</code>, <code>breakpoints</code
          <code>elevation</code>
       </td>
       <td>
-        If using <code>breaksAt0: true</code>, <code>colors</code> and <code>breakpoints</code> must be of the same length, <i>unless</i> your <code>breakpoints</code> <i>already includes<i> <code>0</code>.  If it already includes <code>0</code>, <code>breakpoints</code> must contain <i>one value more</i> than <code>colors</code>.  See the [demo](https://slutske22.github.io/leaflet-topography/).
+        If using <code>breaksAt0: true</code>, <code>colors</code> and <code>breakpoints</code> must be of the same length, <i>unless</i> your <code>breakpoints</code> <i>already includes</i> <code>0</code>.  If it already includes <code>0</code>, <code>breakpoints</code> must contain <i>one value more</i> than <code>colors</code>.  See the <a href="https://slutske22.github.io/leaflet-topography/">demo</a> for examples.
       </td>
    </tr>
    <tr>
@@ -321,7 +332,7 @@ There are countless combinations of <code>colors</code>, <code>breakpoints</code
          <code>slopeapsect</code>
       </td>
       <td>
-         All the same rules apply as from <code>topotype: aspect</code>.  I would recommend not using <code>continuous: true</code> on a <code>slopeaspect</code> layer, as it is very CPU heavy and slow.  This needs optimization.  I would recommend considering another visualization for that specific effect.  <a href="https://slutske22.maps.arcgis.com/home/item.html?id=03799ae3f3d8486ba27db2b2110d4765" target="_blank">Read more here.</a>
+         All the same rules apply as from <code>topotype: aspect</code>.  I would recommend not using <code>continuous: true</code> on a <code>slopeaspect</code> layer, as it is very CPU heavy and slow.  This needs optimization.  I would recommend considering another visualization for that specific effect.  <a href="https://www.esri.com/arcgis-blog/products/imagery/imagery/new-aspect-slope-raster-function-now-available/" target="_blank">Read more here.</a>
       </td>
    </tr>
 </table>
@@ -329,7 +340,7 @@ There are countless combinations of <code>colors</code>, <code>breakpoints</code
 
 <hr>
 
-### `configure`
+<h3 id="configure-section"><code>configure</code></h3>
 
 You may find it useful to preconfigure leaflet-topography ahead of time. You can use the `configure` function to do so, which will eliminate the need to pass an `options` argument to `getTopography`, or to pass your token to the `TopoLayer` constructor.
 
@@ -355,7 +366,7 @@ const elevationLayer = new TopoLayer({ topotype: 'elevation' })
 
 <hr>
 
-### `preload`
+<h3 id="preload-section"><code>preload</code></h3>
 
 `preload` is a convenience function which takes in an aray of `L.LatLngBounds` and saves all DEM tiles within those bounds to the cache.  If you know you will be doing analysis in a certain area(s), `preload` will perform all the data fetching ahead of time:
 
