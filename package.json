@@ -4,7 +4,7 @@
 	"description": "a set of tools for calculating and visualizing topography in leafletjs",
 	"main": "build/leaflet-topography.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "BABEL_ENV=development NODE_ENV=test jest --runInBand",
 		"clean": "rimraf build",
 		"build": "npm run clean && webpack",
 		"checkoutput": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
@@ -23,6 +23,14 @@
 		"topography",
 		"leaflet-topography"
 	],
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/__tests__/jest.stub.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/__tests__/jest.stub.js"
+		]
+	},
 	"author": "Seth Lutske",
 	"license": "GPL-3.0-or-later",
 	"bugs": {
@@ -38,9 +46,12 @@
 		"@babel/preset-env": "^7.12.1",
 		"@babel/preset-typescript": "^7.12.1",
 		"@types/es6-promise": "^3.3.0",
+		"@types/jest": "^26.0.15",
 		"@types/leaflet": "^1.5.19",
 		"babel-loader": "^8.1.0",
+		"jest": "^26.6.1",
 		"leaflet": "^1.7.1",
+		"regenerator-runtime": "^0.13.7",
 		"rimraf": "^3.0.2",
 		"uglifyjs-webpack-plugin": "^2.2.0",
 		"webpack": "^5.1.3",
