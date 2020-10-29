@@ -13,9 +13,9 @@ const configure = (userConfig: ConfigOptions) => {
 // configuration object, should not be modified directly, use config function below
 export var _config: ConfigOptions = {
 	service: 'mapbox',
-	priority: 'speed',
-	scale: 15,
-	spread: 2,
+	priority: 'storage',
+	scale: 14,
+	spread: 4,
 	saveTile: (name: string, tileData: ImageData | ImageBitmap) =>
 		(_tileCache[name] = tileData),
 	retrieveTile: (tileName) => _tileCache[tileName],
