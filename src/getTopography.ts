@@ -1,20 +1,20 @@
+import * as L from 'leaflet';
 import type { LatLng } from 'leaflet';
 import { _config } from './config';
 import { fetchDEMTile } from './utils';
-import type { UserOptions } from './types';
+import type { ConfigOptions } from './types';
 
 /**
  * Takes in an L.LatLng and returns { elevation, slope, aspect }
  * @param {Object} latlng | L.LatLng
  * @param userOptions | user options
  */
-async function getTopography(latlng: LatLng, userOptions: UserOptions) {
+async function getTopography(latlng: LatLng, userOptions: ConfigOptions) {
 	//
 	// SETUP:
 	// merge options from configuration _config with option passed in current function call
 	const options = Object.assign(_config, userOptions);
 	const {
-		map,
 		scale,
 		spread,
 		priority,
@@ -24,11 +24,6 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 	} = options;
 
 	// Sound alarms if certain config options are not given by user
-	if (!map) {
-		throw new Error(
-			'Map instance must be passed as option to leaflet-topography config or options'
-		);
-	}
 	if (!token) {
 		throw new Error('Token required in leaflet-topography config / options');
 	}
@@ -60,14 +55,14 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 
 		if (priority === 'speed') {
 			// Tile data already saved as Uint8ClampedArray, just need to pull the RGBA values, quick for high volumes
-			RGBA = getRGBfromImgData(tile, xyPositionOnTile.x, xyPositionOnTile.y);
+			RGBA = getRGBfromImgData(tile as ImageData, xyPositionOnTile.x, xyPositionOnTile.y);
 		} else {
 			// if (priority === "storage")
 			// Tile data in form of ImageBitMap, need to call .getImageData for coordinate, much slower for high volumes
 			var canvas = document.createElement('canvas');
 			canvas.width = canvas.height = 256;
 			var c = canvas.getContext('2d');
-			c.drawImage(tile, 0, 0);
+			c.drawImage(tile as ImageBitmap, 0, 0);
 			var pixelData = c.getImageData(
 				xyPositionOnTile.x,
 				xyPositionOnTile.y,
@@ -119,7 +114,7 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 	//       Central getTopography function using mapbox:             //
 	//                                                                //
 	// -------------------------------------------------------------- //
-	const point = map.project(latlng, scale);
+	const point = L.CRS.EPSG3857.latLngToPoint(latlng, scale);
 
 	const pixelDiff = spread;
 
@@ -129,13 +124,13 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		projectedW = { ...point, x: point.x - pixelDiff };
 
 	// @ts-ignore - ts complaining at me about projectedXs not being proper L.Point types
-	const N = map.unproject(projectedN, scale);
+	const N = L.CRS.EPSG3857.pointToLatLng(projectedN, scale);
 	// @ts-ignore
-	const S = map.unproject(projectedS, scale);
+	const S = L.CRS.EPSG3857.pointToLatLng(projectedS, scale);
 	// @ts-ignore
-	const E = map.unproject(projectedE, scale);
+	const E = L.CRS.EPSG3857.pointToLatLng(projectedE, scale);
 	// @ts-ignore
-	const W = map.unproject(projectedW, scale);
+	const W = L.CRS.EPSG3857.pointToLatLng(projectedW, scale);
 
 	const elevation = await getElevation({ x: point.x, y: point.y }),
 		eleN = await getElevation(projectedN),
@@ -143,8 +138,8 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 		eleE = await getElevation(projectedE),
 		eleW = await getElevation(projectedW);
 
-	const dx = map.distance(E, W),
-		dy = map.distance(N, S);
+	const dx = E.distanceTo(W),
+		dy = N.distanceTo(S);
 
 	const dzdx = (eleE - eleW) / dx,
 		dzdy = (eleN - eleS) / dy;

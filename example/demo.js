@@ -1,5 +1,5 @@
-import Topography from 'leaflet-topography';
-// import Topography from '../build/leaflet-topography.js';
+// import Topography from 'leaflet-topography';
+import Topography from '../build/leaflet-topography.js';
 import 'leaflet.control.layers.tree';
 import './leaflet.tree.css';
 
@@ -18,11 +18,11 @@ import {
 	customLayers,
 } from './layers';
 
-// window.addEventListener('DOMContentLoaded', () => {
-// 	if (process.env.MAPBOX_TOKEN) {
-// 		initializeDemo(process.env.MAPBOX_TOKEN);
-// 	}
-// });
+window.addEventListener('DOMContentLoaded', () => {
+	if (process.env.MAPBOX_TOKEN) {
+		initializeDemo(process.env.MAPBOX_TOKEN);
+	}
+});
 
 export function initializeDemo(key) {
 	//
@@ -39,7 +39,7 @@ export function initializeDemo(key) {
 		token: key,
 		scale: 13,
 		spread: 4,
-		priority: 'storage',
+		priority: 'speed',
 	});
 
 	// Preload map area on load

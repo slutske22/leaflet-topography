@@ -13,10 +13,6 @@ export interface ConfigOptions {
 	token: string;
 }
 
-export interface UserOptions extends ConfigOptions {
-	map: Map;
-}
-
 export interface TileCoord {
 	X: number;
 	Y: number;

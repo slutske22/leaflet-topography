@@ -1,12 +1,11 @@
 import * as L from 'leaflet';
-
-import { UserOptions } from './src/types';
+import { ConfigOptions } from './src/types';
 
 declare module 'leaflet' {
 	interface Topography {
 		getTopography: (
 			latlng: L.LatLng,
-			userOptions: UserOptions
+			userOptions: ConfigOptions
 		) => Promise<{ elevation: number; slope: number; aspect: number }>;
 		tileCache: object;
 	}

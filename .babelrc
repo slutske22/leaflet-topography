@@ -1,6 +1,6 @@
 {
-	"presets": ["@babel/typescript", "@babel/preset-env"]
-	// "plugins": [
-	//    "@babel/plugin-transform-block-scoping"
-	// ]
+	"presets": ["@babel/typescript", "@babel/preset-env"],
+	"plugins": [
+		["@babel/transform-runtime"]
+  ]
 }

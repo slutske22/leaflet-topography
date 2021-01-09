@@ -1,3 +1,5 @@
+import { isBrowser, isNode } from 'browser-or-node';
+import { Canvas, createCanvas, loadImage as nodeLoadImage } from 'canvas';
 import { TileCoord, Priority, SaveTile } from './types';
 
 /**
@@ -9,36 +11,54 @@ export async function fetchDEMTile(
 	tileCoord: TileCoord,
 	token: string,
 	priority: Priority,
-	saveTile: SaveTile
+	saveTile: SaveTile,
+	saveTileCallback?: (tilename?: string) => void
 ) {
 	const { X, Y, Z } = tileCoord;
 	const imageUrl = `https://api.mapbox.com/v4/mapbox.terrain-rgb/${Z}/${X}/${Y}.pngraw?access_token=${token}`;
 	const tileName = `X${X}Y${Y}Z${Z}`;
 
-	// Create a canvas, so I can write the image data to it and then call getImageData on it
-	var transferCanvas = document.createElement('canvas');
-	transferCanvas.width = transferCanvas.height = 256;
-	var c = transferCanvas.getContext('2d');
-
-	await loadImage(imageUrl).then((image) => {
-		if (priority === 'speed') {
-			//
-			// MORE STORAGE BUT MUCH FASTER
-			// Draw the image to a canvas and then use Canvas2DContext.getImageData to pull the RGBA data
-			// in the form of a Uint8Clamped array for the entire tile
-			c.drawImage(image, 0, 0, 256, 256);
-			var pixelData = c.getImageData(0, 0, 256, 256);
-			saveTile(tileName, pixelData);
-		} else {
-			//
-			// if (priority === "storage")
-			// LESS STORAGE NEEDED BUT MUCH SLOWER:
-			// Write the image to an ImageBitMap and then call .getImageData for each pixel inside the getElevation function
-			createImageBitmap(image, 0, 0, 256, 256).then((ibm) =>
-				saveTile(tileName, ibm)
-			);
+	if (isBrowser) {
+		// Create a canvas, so I can write the image data to it and then call getImageData on it
+		var transferCanvas = createCanvas(256, 256);
+		var c = transferCanvas.getContext('2d');
+		try {
+			await loadImage(imageUrl).then((image) => {
+				if (priority === 'speed') {
+					//
+					// MORE STORAGE BUT MUCH FASTER
+					// Draw the image to a canvas and then use Canvas2DContext.getImageData to pull the RGBA data
+					// in the form of a Uint8Clamped array for the entire tile
+					c.drawImage(image, 0, 0, 256, 256);
+					var pixelData = c.getImageData(0, 0, 256, 256);
+					saveTile(tileName, pixelData);
+				} else {
+					//
+					// if (priority === "storage")
+					// LESS STORAGE NEEDED BUT MUCH SLOWER:
+					// Write the image to an ImageBitMap and then call .getImageData for each pixel inside the getElevation function
+					createImageBitmap(image, 0, 0, 256, 256).then((ibm) =>
+						saveTile(tileName, ibm)
+					);
+				}
+			});
+		} catch (e) {
+			console.log(e);
 		}
-	});
+	}
+
+	if (isNode) {
+		try {
+			const image: any = await nodeLoadImage(imageUrl);
+			const canvas: Canvas = createCanvas(256, 256);
+			const ctx: RenderingContext = canvas.getContext('2d');
+			ctx.drawImage(image, 0, 0, 256, 256);
+			saveTile(tileName, ctx.getImageData(0, 0, 256, 256));
+			console.log(`tile ${tileName} saved succesfully`);
+		} catch (e) {
+			console.log(e);
+		}
+	}
 }
 
 /**
@@ -175,11 +195,7 @@ export function Rainbow() {
 					startColour.substring(2, 4),
 					endColour.substring(2, 4)
 				) +
-				calcHex(
-					number,
-					startColour.substring(4, 6),
-					endColour.substring(4, 6)
-				)
+				calcHex(number, startColour.substring(4, 6), endColour.substring(4, 6))
 			);
 		};
 
