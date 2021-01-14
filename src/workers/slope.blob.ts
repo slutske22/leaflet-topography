@@ -1,3 +1,5 @@
+import Blob from 'cross-blob';
+
 // Build a worker from an anonymous function body
 export default URL.createObjectURL(
 	new Blob(
