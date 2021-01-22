@@ -433,6 +433,8 @@ map.on('click', e => {
 - Incorporate zoom level into `TopoLayer({ topotype: slope })` for consistent visuals across zoom levels
 - Smoothen `TopoLayer` at higher levels
 - General colorization algorithm optimization
+- Remove need to pass `L.map` instance, use `L.CRS.EPSG3857.pointToLatLng` instead of `map.project`
+- Add node environment support
 
 ## Alternatives
 
