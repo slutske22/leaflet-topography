@@ -182,7 +182,7 @@ The key feature of leaflet-topography that enables returning topography data for
 ````javascript
 import { configure } from 'leaflet-topography'
 
-const mySaveFunction = (name, data) => window.myTemporaryCache[name] = data
+const mySaveFunction = (name, data) => { window.myTemporaryCache[name] = data }
 const myRetrieveFunction = (name) => return window.myTemporaryCache[name]
 
 configure({
