@@ -292,7 +292,7 @@ The optional `customization` object allows you to customize the way colors are r
    <tr>
       <td><b>breaksAt0</b></td>
       <td><code>boolean</code></td>
-      <td>Only relevant to <code>topotype: 'elevation'</code>.  Determines whether or not to inject a breakpoint at elevation = 0 and apply discontinuous use of color gradients.  Creates a nice water effect when set to <code>true</code>, but hides any topography that is below sea level. Defaults to <code>true</code>.</td>
+      <td>Only relevant to <code>topotype: 'elevation'</code>.  Determines whether or not to inject a breakpoint at elevation = 0 and apply discontinuous use of color gradients.  Creates a nice water effect when set to <code>true</code>, but may be visually deceptive for land topography that is below sea level. Defaults to <code>true</code>.</td>
    </tr>
    <tr>
       <td><b>fallback</b></td>
