@@ -13,15 +13,8 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 	// SETUP:
 	// merge options from configuration _config with option passed in current function call
 	const options = Object.assign(_config, userOptions);
-	const {
-		map,
-		scale,
-		spread,
-		priority,
-		token,
-		saveTile,
-		retrieveTile,
-	} = options;
+	const { map, scale, spread, priority, token, saveTile, retrieveTile } =
+		options;
 
 	// Sound alarms if certain config options are not given by user
 	if (!map) {
@@ -60,14 +53,18 @@ async function getTopography(latlng: LatLng, userOptions: UserOptions) {
 
 		if (priority === 'speed') {
 			// Tile data already saved as Uint8ClampedArray, just need to pull the RGBA values, quick for high volumes
-			RGBA = getRGBfromImgData(tile, xyPositionOnTile.x, xyPositionOnTile.y);
+			RGBA = getRGBfromImgData(
+				tile as ImageData,
+				xyPositionOnTile.x,
+				xyPositionOnTile.y
+			);
 		} else {
 			// if (priority === "storage")
 			// Tile data in form of ImageBitMap, need to call .getImageData for coordinate, much slower for high volumes
 			var canvas = document.createElement('canvas');
 			canvas.width = canvas.height = 256;
 			var c = canvas.getContext('2d');
-			c.drawImage(tile, 0, 0);
+			c.drawImage(tile as ImageBitmap, 0, 0);
 			var pixelData = c.getImageData(
 				xyPositionOnTile.x,
 				xyPositionOnTile.y,
