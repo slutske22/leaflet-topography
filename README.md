@@ -77,7 +77,6 @@ import Topography from 'leaflet-topography'
 const map = L.map('mapdiv', mapOptions));
 
 const options = {
-  map,
   token: 'your_mapbox_access_token'
 }
 
@@ -117,21 +116,12 @@ You must pass an options as the second argument of `getTopography`, *or* you can
    </tr>
    <tr>
       <td>
-         <b>map</b><br>
-         required 
-      </td>
-      <td> <code> L.Map </code> </td>
-      <td> none </td>
-      <td> Instance of leaflet map, required for proper projections </td>
-   </tr>
-   <tr>
-      <td>
          <b>token</b><br>
-         required 
+         required* 
       </td>
       <td> <code> string </code> </td>
       <td> none </td>
-      <td> Mapbox token, required to retrieve mapbox tiles used in calculations </td>
+      <td> Mapbox token, required to retrieve mapbox tiles used in calculations.  Not required when using <code>tilesUrl</code> </td>
    </tr>
    <tr>
       <td>
@@ -162,7 +152,7 @@ You must pass an options as the second argument of `getTopography`, *or* you can
          <b>saveTile</b>
       </td>
       <td> <code> function </code> </td>
-      <td> undefined </td>
+      <td> <code> (name, tileData) => { L.Topography._tileCache[name] = tileData } </code> </td>
       <td> Custom function provided by the user to define tile-cacheing behavior. Must take the form <code>function(name: string, tileData: ImageData | ImageBitmap) => void</code>.  See the <a href="#cacheing-tiles">cacheing tiles</a> section for more information.</td>
    </tr>
    <tr>
@@ -170,8 +160,24 @@ You must pass an options as the second argument of `getTopography`, *or* you can
          <b>retrieveTile</b>
       </td>
       <td> <code> function </code> </td>
-      <td> undefined </td>
+      <td> <code>(tileName) => L.Topography._tileCache[tileName]</code> </td>
       <td> Custom function provided by the user to define where to retrieve tile data from.  Must take the form <code>function(name: string) => tileData: ImageData | ImageBitmap</code>. See the <a href="#cacheing-tiles">cacheing tiles</a> section for more information.</td>
+   </tr>
+   <tr>
+      <td>
+         <b>tilesUrl</b>
+      </td>
+      <td> <code> string </code> </td>
+      <td> none </td>
+      <td> Optional url for custom tiles to be used instead of Mapbox rgb-terrain.  Must be in the standard <a href="https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames">slippymap tilename</a> format. </td>
+   </tr>
+   <tr>
+      <td>
+         <b>heightFunction</b>
+      </td>
+      <td> <code> function </code> </td>
+      <td> <code>function(R, G, B) => -10000 + (R * 256 * 256 + G * 256 + B) * 0.1</code> </td>
+      <td> Optional override function for calculating elevation value based on a pixel's RGB value.  Must be in the format of <code> function(R: number, G: number, B: number) => number </code> </td>
    </tr>
 </table>
 
@@ -433,7 +439,6 @@ map.on('click', e => {
 - Incorporate zoom level into `TopoLayer({ topotype: slope })` for consistent visuals across zoom levels
 - Smoothen `TopoLayer` at higher levels
 - General colorization algorithm optimization
-- Remove need to pass `L.map` instance, use `L.CRS.EPSG3857.pointToLatLng` instead of `map.project`
 - Add node environment support
 
 ## Alternatives

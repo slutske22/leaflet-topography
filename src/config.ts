@@ -15,8 +15,9 @@ export var _config: ConfigOptions = {
 	priority: 'storage',
 	scale: 14,
 	spread: 4,
-	saveTile: (name: string, tileData: ImageData | ImageBitmap) =>
-		(_tileCache[name] = tileData),
+	saveTile: (name, tileData) => {
+		_tileCache[name] = tileData;
+	},
 	retrieveTile: (tileName) => _tileCache[tileName],
 };
 
