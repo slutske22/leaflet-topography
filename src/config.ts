@@ -12,7 +12,6 @@ const configure = (userConfig: ConfigOptions) => {
 
 // configuration object, should not be modified directly, use config function below
 export var _config: ConfigOptions = {
-	service: 'mapbox',
 	priority: 'storage',
 	scale: 14,
 	spread: 4,

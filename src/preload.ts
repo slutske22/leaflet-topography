@@ -47,7 +47,7 @@ const preload = async (bounds: LatLngBounds[], userOptions) => {
 
 	tileCoords.forEach(async ({ x, y, z }) => {
 		const coord = { X: x, Y: y, Z: z };
-		await fetchDEMTile(coord, token, priority, saveTile);
+		await fetchDEMTile(coord);
 	});
 };
 

@@ -1,18 +1,18 @@
 import { TileCoord, Priority, SaveTile } from './types';
+import { _config } from './config';
 
 /**
  * Takes in a tile coordinate, fetches the tile image, and saves it to the cache in the form of
  * either an ImageData array or an ImageBitman, depending on options.priority
  * @param {Object} tileCoord
  */
-export async function fetchDEMTile(
-	tileCoord: TileCoord,
-	token: string,
-	priority: Priority,
-	saveTile: SaveTile
-) {
+export async function fetchDEMTile(tileCoord: TileCoord) {
+	const { tilesUrl, token, priority, saveTile } = _config;
+
 	const { X, Y, Z } = tileCoord;
-	const imageUrl = `https://api.mapbox.com/v4/mapbox.terrain-rgb/${Z}/${X}/${Y}.pngraw?access_token=${token}`;
+	const imageUrl =
+		tilesUrl ||
+		`https://api.mapbox.com/v4/mapbox.terrain-rgb/${Z}/${X}/${Y}.pngraw?access_token=${token}`;
 	const tileName = `X${X}Y${Y}Z${Z}`;
 
 	// Create a canvas, so I can write the image data to it and then call getImageData on it
