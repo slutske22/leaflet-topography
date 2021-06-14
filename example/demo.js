@@ -35,19 +35,16 @@ export function initializeDemo(key) {
 
 	// Configure leaflet-topography
 	Topography.configure({
-		map,
 		token: key,
 		scale: 13,
 		spread: 4,
 		priority: 'storage',
 	});
 
+	console.log(Topography._config);
+
 	// Preload map area on load
 	const bounds = map.getBounds();
-
-	if (map.getZoom() >= 13) {
-		Topography.preload([bounds]);
-	}
 
 	// Implement getTopography function
 	map.on('click', (e) => {

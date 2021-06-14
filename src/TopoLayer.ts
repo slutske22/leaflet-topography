@@ -15,6 +15,7 @@ const TopoLayer = GridLayer.extend({
 	beforeAdd: function (map) {
 		// error if there's no token
 		const { token } = this.options;
+
 		if (!token && !_config.token) {
 			throw new Error('Cannot initialize TopoLayer without mapbox token');
 		}

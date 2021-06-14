@@ -1,5 +1,5 @@
-// import { TopoLayer } from '../build/leaflet-topography.js';
-import { TopoLayer } from 'leaflet-topography';
+import { TopoLayer } from '../build/leaflet-topography.js';
+// import { TopoLayer } from 'leaflet-topography';
 import customWorker from './custom.worker';
 
 export const elevationLayers = [
@@ -63,18 +63,7 @@ export const elevationLayers = [
 					'#ffffff',
 				],
 				breakpoints: [
-					-850,
-					0,
-					300,
-					500,
-					700,
-					800,
-					1500,
-					2400,
-					5000,
-					6000,
-					8500,
-					8900,
+					-850, 0, 300, 500, 700, 800, 1500, 2400, 5000, 6000, 8500, 8900,
 				],
 			},
 		})),
@@ -98,16 +87,7 @@ export const elevationLayers = [
 					'#ffffff',
 				],
 				breakpoints: [
-					-850,
-					300,
-					500,
-					700,
-					800,
-					1200,
-					2500,
-					3000,
-					8000,
-					8700,
+					-850, 300, 500, 700, 800, 1200, 2500, 3000, 8000, 8700,
 				],
 				continuous: true,
 				breaksAt0: true,
