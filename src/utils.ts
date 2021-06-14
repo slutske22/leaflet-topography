@@ -10,9 +10,12 @@ export async function fetchDEMTile(tileCoord: TileCoord) {
 	const { tilesUrl, token, priority, saveTile } = _config;
 
 	const { X, Y, Z } = tileCoord;
-	const imageUrl =
-		tilesUrl ||
-		`https://api.mapbox.com/v4/mapbox.terrain-rgb/${Z}/${X}/${Y}.pngraw?access_token=${token}`;
+	const imageUrl = tilesUrl
+		? tilesUrl
+				.replace('{z}', `${Z}`)
+				.replace('{y}', `${Y}`)
+				.replace('{x}', `${X}`)
+		: `https://api.mapbox.com/v4/mapbox.terrain-rgb/${Z}/${X}/${Y}.pngraw?access_token=${token}`;
 	const tileName = `X${X}Y${Y}Z${Z}`;
 
 	// Create a canvas, so I can write the image data to it and then call getImageData on it
@@ -175,11 +178,7 @@ export function Rainbow() {
 					startColour.substring(2, 4),
 					endColour.substring(2, 4)
 				) +
-				calcHex(
-					number,
-					startColour.substring(4, 6),
-					endColour.substring(4, 6)
-				)
+				calcHex(number, startColour.substring(4, 6), endColour.substring(4, 6))
 			);
 		};
 
