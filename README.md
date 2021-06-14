@@ -374,7 +374,6 @@ const map = L.map('mapDiv', mapOptions));
 
 // Configure leaflet-topography
 L.Topography.configure({
-  map,
   token: your_mapbox_token
 });
 
@@ -401,7 +400,6 @@ import { preload, configure } from 'leaflet-topography';
 const map = L.map('mapdiv', mapOptions));
 
 configure({
-  map,
   token: 'your_mapbox_access_token',
   priority: 'storage'
 });
