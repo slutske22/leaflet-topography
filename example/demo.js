@@ -19,8 +19,8 @@ import {
 } from './layers';
 
 window.addEventListener('DOMContentLoaded', () => {
-	if (process?.env?.MAPBOX_TOKEN) {
-		initializeDemo(process?.env?.MAPBOX_TOKEN);
+	if (process.env.MAPBOX_TOKEN) {
+		initializeDemo(process.env.MAPBOX_TOKEN);
 	}
 });
 
