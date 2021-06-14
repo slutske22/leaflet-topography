@@ -1,3 +1,5 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import * as Geocoding from 'esri-leaflet-geocoder';
 import { initializeDemo } from './demo';
 import './layers.js';
