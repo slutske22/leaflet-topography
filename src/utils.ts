@@ -1,13 +1,20 @@
 import { TileCoord, Priority, SaveTile } from './types';
 import { _config } from './config';
 
+interface Options {
+	tilesUrl?: string;
+	token?: string;
+	priority: Priority;
+	saveTile: SaveTile;
+}
+
 /**
  * Takes in a tile coordinate, fetches the tile image, and saves it to the cache in the form of
  * either an ImageData array or an ImageBitman, depending on options.priority
  * @param {Object} tileCoord
  */
-export async function fetchDEMTile(tileCoord: TileCoord) {
-	const { tilesUrl, token, priority, saveTile } = _config;
+export async function fetchDEMTile(tileCoord: TileCoord, options: Options) {
+	const { tilesUrl, token, priority, saveTile } = options;
 
 	const { X, Y, Z } = tileCoord;
 	const imageUrl = tilesUrl

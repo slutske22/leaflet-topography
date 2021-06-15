@@ -14,10 +14,12 @@ const TopoLayer = GridLayer.extend({
 	// add worker initialization to beforeAdd Method
 	beforeAdd: function (map) {
 		// error if there's no token
-		const { token } = this.options;
+		const { token, tilesUrl } = this.options;
 
-		if (!token && !_config.token) {
-			throw new Error('Cannot initialize TopoLayer without mapbox token');
+		if (!token && !_config.token && !tilesUrl && !_config.tilesUrl) {
+			throw new Error(
+				'Cannot initialize TopoLayer without mapbox token or custom tilesUrl'
+			);
 		}
 
 		map._addZoomLimit(this);
@@ -56,6 +58,7 @@ const TopoLayer = GridLayer.extend({
 
 	// createTile method required - creates a new tile of the gridlayer
 	createTile: function (coords) {
+		const tilesUrl = this.options.tilesUrl || _config.tilesUrl;
 		const token = this.options.token || _config.token;
 
 		var tile = <HTMLCanvasElement>DomUtil.create('canvas', 'leaflet-tile');
@@ -83,7 +86,12 @@ const TopoLayer = GridLayer.extend({
 			demCtx.drawImage(demImg, 0, 0);
 			redraw();
 		};
-		demImg.src = `https://api.mapbox.com/v4/mapbox.terrain-rgb/${z}/${x}/${y}.pngraw?access_token=${token}`;
+		demImg.src = tilesUrl
+			? tilesUrl
+					.replace('{z}', `${z}`)
+					.replace('{y}', `${y}`)
+					.replace('{x}', `${x}`)
+			: `https://api.mapbox.com/v4/mapbox.terrain-rgb/${z}/${x}/${y}.pngraw?access_token=${token}`;
 
 		const redraw = () => {
 			const raster = demCtx.getImageData(0, 0, 256, 256);

@@ -14,8 +14,8 @@ async function getTopography(latlng: LatLng, userOptions?: ConfigOptions) {
 	// SETUP:
 	// merge options from configuration _config with option passed in current function call
 	const options = Object.assign(_config, userOptions);
-	configure(options);
-	const { tilesUrl, scale, spread, priority, token, retrieveTile } = _config;
+	const { tilesUrl, scale, spread, priority, token, retrieveTile, saveTile } =
+		options;
 
 	// Sound alarms if certain config options are not given by user
 	if (!tilesUrl && !token) {
@@ -38,7 +38,7 @@ async function getTopography(latlng: LatLng, userOptions?: ConfigOptions) {
 
 		// if tile doesn't yet exist, fetch it, wait until its fetched, and rerun this function
 		if (!tile) {
-			await fetchDEMTile({ X, Y, Z });
+			await fetchDEMTile({ X, Y, Z }, { tilesUrl, priority, token, saveTile });
 			return await getElevation(point);
 		}
 
