@@ -39,6 +39,9 @@ export function initializeDemo(key) {
 		scale: 13,
 		spread: 4,
 		priority: 'storage',
+		// heightFunction: (R, G, B) => {
+		// 	return 2 * R;
+		// },
 	});
 
 	console.log(Topography._config);

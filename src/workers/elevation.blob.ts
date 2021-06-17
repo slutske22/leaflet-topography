@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 // Build a worker from an anonymous function body
 export default URL.createObjectURL(
 	new Blob(
@@ -10,17 +12,25 @@ export default URL.createObjectURL(
 
 					if (e.data.raster) {
 						const { customization, RainbowAsString } = e.data;
-						const rainbowCreator = new Function(
-							'return ' + RainbowAsString
-						);
+						const { heightFunction: heightFunctionAsString } = customization;
+						console.log(customization);
+
+						const rainbowCreator = new Function('return ' + RainbowAsString);
 						const Rainbow = rainbowCreator();
-						const { data } = e.data.raster;
-						self.dems[e.data.id] = raster2dem(data);
-						self.shades = shading(
-							Rainbow,
-							self.dems[e.data.id],
-							customization
+
+						const heightFunctionCreator = new Function(
+							'return ' + heightFunctionAsString
 						);
+						const heightFunction = heightFunctionCreator();
+
+						const { data } = e.data.raster;
+
+						self.dems[e.data.id] = raster2dem(
+							data,
+							heightFunctionAsString ? heightFunction : null
+						);
+
+						self.shades = shading(Rainbow, self.dems[e.data.id], customization);
 					}
 
 					postMessage({
@@ -29,14 +39,16 @@ export default URL.createObjectURL(
 					});
 				};
 
-				function raster2dem(data) {
+				function raster2dem(data, heightFunction) {
 					const dem = new Int16Array(256 * 256);
 
 					var x, y, i, j;
 
-					function height(R, G, B) {
-						return -10000 + (R * 256 * 256 + G * 256 + B) * 0.1;
-					}
+					const height =
+						heightFunction ||
+						function (R, G, B) {
+							return -10000 + (R * 256 * 256 + G * 256 + B) * 0.1;
+						};
 
 					for (x = 0; x < 256; x++) {
 						for (y = 0; y < 256; y++) {
@@ -117,15 +129,7 @@ export default URL.createObjectURL(
 					})();
 
 					const backupBreakpoints = [
-						-850,
-						0,
-						300,
-						800,
-						1500,
-						2400,
-						5000,
-						7200,
-						8700,
+						-850, 0, 300, 800, 1500, 2400, 5000, 7200, 8700,
 					];
 
 					var breakpoints = (() => {
@@ -147,14 +151,8 @@ export default URL.createObjectURL(
 
 								for (let i = 0; i < breakpoints.length - 1; i++) {
 									var rainbow = new Rainbow();
-									rainbow.setNumberRange(
-										breakpoints[i],
-										breakpoints[i + 1]
-									);
-									rainbow._numberRange = [
-										breakpoints[i],
-										breakpoints[i + 1],
-									];
+									rainbow.setNumberRange(breakpoints[i], breakpoints[i + 1]);
+									rainbow._numberRange = [breakpoints[i], breakpoints[i + 1]];
 
 									// discontinuous use of colors between negative and position values
 									if (!breaksAt0) {
@@ -165,21 +163,11 @@ export default URL.createObjectURL(
 											rainbow.setSpectrum(colors[i], colors[i + 1]);
 											rainbow._spectrum = [colors[i], colors[i + 1]];
 										} else {
-											if (
-												i === 1 &&
-												userColors &&
-												!userBreakpoints
-											) {
+											if (i === 1 && userColors && !userBreakpoints) {
 												colors.push(colors[colors.length - 1]);
 											}
-											rainbow.setSpectrum(
-												colors[i + 1],
-												colors[i + 2]
-											);
-											rainbow._spectrum = [
-												colors[i + 1],
-												colors[i + 2],
-											];
+											rainbow.setSpectrum(colors[i + 1], colors[i + 2]);
+											rainbow._spectrum = [colors[i + 1], colors[i + 2]];
 										}
 									}
 
@@ -189,15 +177,6 @@ export default URL.createObjectURL(
 								return collection;
 						  })()
 						: null;
-
-					// console.log(
-					// 	'colors',
-					// 	colors,
-					// 	'breakpoints',
-					// 	breakpoints,
-					// 	'gradients',
-					// 	gradients
-					// );
 
 					function hypsotint(elevation) {
 						for (let i = 0; i < breakpoints.length - 1; i++) {

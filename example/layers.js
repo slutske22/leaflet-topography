@@ -7,6 +7,11 @@ export const elevationLayers = [
 		name: 'Default',
 		layer: (window.elevationlayer = new TopoLayer({
 			topotype: 'elevation',
+			customization: {
+				heightFunction: (R, G, B) => {
+					return -11111 + (R * 256 * 256 + G * 256 + B) * 0.1;
+				},
+			},
 		})),
 	},
 	{
@@ -86,9 +91,7 @@ export const elevationLayers = [
 					'#164A5B',
 					'#ffffff',
 				],
-				breakpoints: [
-					-850, 300, 500, 700, 800, 1200, 2500, 3000, 8000, 8700,
-				],
+				breakpoints: [-850, 300, 500, 700, 800, 1200, 2500, 3000, 8000, 8700],
 				continuous: true,
 				breaksAt0: true,
 			},

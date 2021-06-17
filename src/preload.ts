@@ -41,13 +41,13 @@ function getTileCoords(latLngBoundsArray: LatLngBounds[], scale: number) {
 
 const preload = async (bounds: LatLngBounds[], userOptions) => {
 	const options = Object.assign(_config, userOptions);
-	const { token, scale, priority, saveTile } = options;
+	const { tilesUrl, token, scale, priority, saveTile } = options;
 
 	const tileCoords = getTileCoords(bounds, scale);
 
 	tileCoords.forEach(async ({ x, y, z }) => {
 		const coord = { X: x, Y: y, Z: z };
-		await fetchDEMTile(coord);
+		await fetchDEMTile(coord, { tilesUrl, priority, token, saveTile });
 	});
 };
 

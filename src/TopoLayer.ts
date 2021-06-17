@@ -11,7 +11,10 @@ var uniqueId = (function () {
 })();
 
 const TopoLayer = GridLayer.extend({
-	// add worker initialization to beforeAdd Method
+	/**
+	 * Before layer gets added to map.
+	 * Add worker initialization to beforeAdd Method
+	 */
 	beforeAdd: function (map) {
 		// error if there's no token
 		const { token, tilesUrl } = this.options;
@@ -56,7 +59,25 @@ const TopoLayer = GridLayer.extend({
 		this._tileZoom = undefined;
 	},
 
-	// createTile method required - creates a new tile of the gridlayer
+	/**
+	 * Returns the height function to be used in topolayer webworkers
+	 * @returns function.toSTring() or null
+	 */
+	heightFunction: function () {
+		if (this.options.customization?.heightFunction) {
+			return this.options.customization?.heightFunction.toString();
+		}
+
+		if (_config.heightFunction) {
+			return _config.heightFunction.toString();
+		}
+
+		return null;
+	},
+
+	/**
+	 * createTile method required - creates a new tile of the gridlayer
+	 */
 	createTile: function (coords) {
 		const tilesUrl = this.options.tilesUrl || _config.tilesUrl;
 		const token = this.options.token || _config.token;
@@ -99,7 +120,11 @@ const TopoLayer = GridLayer.extend({
 				id: id,
 				raster,
 				RainbowAsString: Rainbow.toString(),
-				customization: this.options.customization,
+				heightFunction: this.heightFunction(),
+				customization: {
+					...this.options.customization,
+					heightFunction: this.heightFunction(),
+				},
 			};
 
 			var workerIndex = (x + y) % this._workers.length;

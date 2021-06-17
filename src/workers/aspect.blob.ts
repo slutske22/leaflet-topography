@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 // Build a worker from an anonymous function body
 export default URL.createObjectURL(
 	new Blob(
@@ -81,8 +83,7 @@ export default URL.createObjectURL(
 									: 90 - 90 * (dy > 0 ? 1 : -1);
 
 							slopes[i] =
-								(Math.atan(Math.sqrt(dx * dx + dy * dy)) * 180) /
-								Math.PI;
+								(Math.atan(Math.sqrt(dx * dx + dy * dy)) * 180) / Math.PI;
 						}
 					}
 

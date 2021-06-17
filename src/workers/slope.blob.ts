@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 // Build a worker from an anonymous function body
 export default URL.createObjectURL(
 	new Blob(
@@ -81,8 +83,7 @@ export default URL.createObjectURL(
 								8;
 
 							slopes[i] =
-								(Math.atan(Math.sqrt(dx * dx + dy * dy)) * 180) /
-								Math.PI;
+								(Math.atan(Math.sqrt(dx * dx + dy * dy)) * 180) / Math.PI;
 						}
 					}
 
@@ -176,10 +177,7 @@ export default URL.createObjectURL(
 						for (let i = 0; i < breakpoints.length - 1; i++) {
 							var rainbow = new Rainbow();
 							rainbow.setNumberRange(breakpoints[i], breakpoints[i + 1]);
-							rainbow._numberRange = [
-								breakpoints[i],
-								breakpoints[i + 1],
-							];
+							rainbow._numberRange = [breakpoints[i], breakpoints[i + 1]];
 							rainbow.setSpectrum(colors[i], colors[i + 1]);
 							rainbow._spectrum = [colors[i], colors[i + 1]];
 							collection.push(rainbow);
@@ -199,13 +197,8 @@ export default URL.createObjectURL(
 
 					function hypsotint(slope) {
 						for (let i = 0; i < breakpoints.length - 1; i++) {
-							if (
-								breakpoints[i] < slope &&
-								slope <= breakpoints[i + 1]
-							) {
-								return continuous
-									? gradients[i].colorAt(slope)
-									: colors[i];
+							if (breakpoints[i] < slope && slope <= breakpoints[i + 1]) {
+								return continuous ? gradients[i].colorAt(slope) : colors[i];
 							}
 						}
 
