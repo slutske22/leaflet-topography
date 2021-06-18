@@ -7,11 +7,11 @@ export const elevationLayers = [
 		name: 'Default',
 		layer: (window.elevationlayer = new TopoLayer({
 			topotype: 'elevation',
-			customization: {
-				heightFunction: (R, G, B) => {
-					return -11111 + (R * 256 * 256 + G * 256 + B) * 0.1;
-				},
-			},
+			// customization: {
+			// 	heightFunction: (R, G, B) => {
+			// 		return -11111 + (R * 256 * 256 + G * 256 + B) * 0.1;
+			// 	},
+			// },
 		})),
 	},
 	{

@@ -9,7 +9,10 @@ import type { ConfigOptions } from './types';
  * @param {Object} latlng | L.LatLng
  * @param userOptions | user options
  */
-async function getTopography(latlng: LatLng, userOptions?: ConfigOptions) {
+async function getTopography(
+	latlng: LatLng,
+	userOptions?: Partial<ConfigOptions>
+) {
 	//
 	// SETUP:
 	// merge options from configuration _config with option passed in current function call

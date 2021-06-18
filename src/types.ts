@@ -9,7 +9,6 @@ export interface ConfigOptions {
 	priority: Priority;
 	saveTile: SaveTile;
 	retrieveTile: (name: string) => ImageData | ImageBitmap;
-	map?: Map;
 	tilesUrl?: string;
 	token?: string;
 	heightFunction?: (R: number, G: number, B: number) => number;

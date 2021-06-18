@@ -64,15 +64,9 @@ const TopoLayer = GridLayer.extend({
 	 * @returns function.toSTring() or null
 	 */
 	heightFunction: function () {
-		if (this.options.customization?.heightFunction) {
-			return this.options.customization?.heightFunction.toString();
-		}
-
-		if (_config.heightFunction) {
-			return _config.heightFunction.toString();
-		}
-
-		return null;
+		return (
+			this.options.customization?.heightFunction || _config.heightFunction
+		).toString();
 	},
 
 	/**
