@@ -11,9 +11,13 @@ export default URL.createObjectURL(
 					self.dems = {};
 
 					if (e.data.raster) {
-						const { customization, RainbowAsString } = e.data;
-						const { heightFunction: heightFunctionAsString } = customization;
-						console.log(customization);
+						const {
+							customization,
+							RainbowAsString,
+							heightFunction: heightFunctionAsString,
+						} = e.data;
+
+						console.log(heightFunctionAsString);
 
 						const rainbowCreator = new Function('return ' + RainbowAsString);
 						const Rainbow = rainbowCreator();

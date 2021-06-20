@@ -63,10 +63,12 @@ const TopoLayer = GridLayer.extend({
 	 * Returns the height function to be used in topolayer webworkers
 	 * @returns function.toSTring() or null
 	 */
-	heightFunction: function () {
-		return (
-			this.options.customization?.heightFunction || _config.heightFunction
-		).toString();
+	heightFunctionString: function () {
+		if (this.options.customization?.heightFunction) {
+			return this.options.customization?.heightFunction.toString();
+		}
+
+		return _config.heightFunction.toString();
 	},
 
 	/**
@@ -114,11 +116,8 @@ const TopoLayer = GridLayer.extend({
 				id: id,
 				raster,
 				RainbowAsString: Rainbow.toString(),
-				heightFunction: this.heightFunction(),
-				customization: {
-					...this.options.customization,
-					heightFunction: this.heightFunction(),
-				},
+				heightFunction: this.heightFunctionString(),
+				customization: this.options.customization,
 			};
 
 			var workerIndex = (x + y) % this._workers.length;
