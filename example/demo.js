@@ -44,8 +44,6 @@ export function initializeDemo(key) {
 		},
 	});
 
-	console.log(Topography._config);
-
 	// Preload map area on load
 	const bounds = map.getBounds();
 
