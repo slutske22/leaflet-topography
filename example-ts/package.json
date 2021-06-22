@@ -1,0 +1,31 @@
+{
+	"name": "leaflet-topography-example",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.html",
+	"scripts": {
+		"start": "parcel index.html --open",
+		"build": "parcel build index.html --public-url /leaflet-topography/",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d dist"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@babel/core": "^7.12.3",
+		"@babel/plugin-transform-runtime": "^7.12.1",
+		"gh-pages": "^3.1.0",
+		"parcel-bundler": "^1.12.4"
+	},
+	"dependencies": {
+		"@babel/runtime": "^7.14.5",
+		"@babel/runtime-corejs3": "^7.14.5",
+		"core-js": "^3.15.0",
+		"esri-leaflet": "^2.5.1",
+		"esri-leaflet-geocoder": "^2.3.3",
+		"leaflet": "^1.7.1",
+		"leaflet-topography": "^0.1.0",
+		"leaflet.control.layers.tree": "^1.0.2",
+		"regenerator-runtime": "^0.13.7"
+	}
+}

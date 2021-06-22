@@ -48493,12 +48493,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var elevationLayers = [{
   name: 'Default',
   layer: window.elevationlayer = new _leafletTopography.TopoLayer({
-    topotype: 'elevation',
-    customization: {
-      heightFunction: function heightFunction(R, G, B) {
-        return -11111 + (R * 256 * 256 + G * 256 + B) * 0.1;
-      }
-    }
+    topotype: 'elevation'
   })
 }, {
   name: 'Disontinuous Custom Colors',
@@ -48681,10 +48676,7 @@ function initializeDemo(key) {
     token: key,
     scale: 13,
     spread: 4,
-    priority: 'storage',
-    heightFunction: function heightFunction(R, G, B) {
-      return -22222 + (R * 256 * 256 + G * 256 + B) * 0.1;
-    }
+    priority: 'storage'
   }); // Preload map area on load
 
 

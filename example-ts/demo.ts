@@ -1,3 +1,4 @@
+// import * as L from 'leaflet';
 // import Topography from 'leaflet-topography';
 import Topography from '../build/leaflet-topography.js';
 import 'leaflet.control.layers.tree';
@@ -39,13 +40,20 @@ export function initializeDemo(key) {
 		scale: 13,
 		spread: 4,
 		priority: 'storage',
+		heightFunction: (R, G, B) => {
+			return -10000 + (R * 256 * 256 + G * 256 + B) * 0.1;
+		},
 	});
 
 	// Preload map area on load
 	const bounds = map.getBounds();
 
+	if (map.getZoom() >= 13) {
+		Topography.preload([bounds]);
+	}
+
 	// Implement getTopography function
-	map.on('click', (e) => {
+	map.on('click', (e: L.LeafletMouseEvent) => {
 		resultsMarkup.innerHTML = 'Requesting Topography...';
 		Topography.getTopography(e.latlng).then((results) => {
 			resultsMarkup.innerHTML =
@@ -91,13 +99,14 @@ export function initializeDemo(key) {
 		],
 	};
 
-	const overlayTree = {
-		label: '<code class="tree-title"> topotype: custom</code>',
-		children: customLayers.map((l) => ({
-			label: l.name,
-			layer: l.layer,
-		})),
-	};
+	// const overlayTree = {
+	// 	label: '<code class="tree-title"> topotype: custom</code>',
+	// 	children: customLayers.map((l) => ({
+	// 		label: l.name,
+	// 		layer: l.layer,
+	// 	})),
+	// };
 
+	// @ts-ignore
 	L.control.layers.tree(baseTree, null, { collapsed: false }).addTo(map);
 }
