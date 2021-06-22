@@ -6,17 +6,13 @@ import { initializeDemo } from './demo';
 import './layers.ts';
 
 // Define some maps options
-// hawaii:
+// Puerto Rico:
 var mapOptions = {
-	center: { lat: 20.644973760193032, lng: -156.10400190576914 },
-	zoom: 15,
+	center: [18.27, -66.4],
+	zoom: 13,
+	minZoom: 10,
+	maxZoom: 15,
 };
-
-// himalayas:
-// var mapOptions = {
-// 	center: { lat: 30.221101852485987, lng: 85.6494140625 },
-// 	zoom: 5,
-// };
 
 //Create a map and assign it to the map div
 // @ts-ignore
