@@ -17,8 +17,6 @@ export default URL.createObjectURL(
 							heightFunction: heightFunctionAsString,
 						} = e.data;
 
-						console.log(heightFunctionAsString);
-
 						const rainbowCreator = new Function('return ' + RainbowAsString);
 						const Rainbow = rainbowCreator();
 

@@ -2,16 +2,29 @@ import { TopoLayer } from '../build/leaflet-topography.js';
 // import { TopoLayer } from 'leaflet-topography';
 import customWorker from './custom.worker';
 
+// Allow attaching things to window object:
+declare global {
+	interface Window {
+		[key: string]: any;
+	}
+}
+
 export const elevationLayers = [
 	{
 		name: 'Default',
 		layer: (window.elevationlayer = new TopoLayer({
 			topotype: 'elevation',
-			// customization: {
-			// 	heightFunction: (R, G, B) => {
-			// 		return -11111 + (R * 256 * 256 + G * 256 + B) * 0.1;
-			// 	},
-			// },
+		})),
+	},
+	{
+		name: 'Custom Height Function',
+		layer: (window.elevationlayerWithHeightFn = new TopoLayer({
+			topotype: 'elevation',
+			customization: {
+				heightFunction: ((R, G, B) => {
+					return -45000 + (R * 256 * 256 + G * 256 + B) * 0.01;
+				}).toString(),
+			},
 		})),
 	},
 	{

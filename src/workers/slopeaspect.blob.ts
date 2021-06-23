@@ -11,11 +11,25 @@ export default URL.createObjectURL(
 					self.slopeaspects = {};
 
 					if (e.data.raster) {
-						const { customization, RainbowAsString } = e.data;
+						const {
+							customization,
+							RainbowAsString,
+							heightFunction: heightFunctionAsString,
+						} = e.data;
+
 						const rainbowCreator = new Function('return ' + RainbowAsString);
 						const Rainbow = rainbowCreator();
+
+						const heightFunctionCreator = new Function(
+							'return ' + heightFunctionAsString
+						);
+						const heightFunction = heightFunctionCreator();
+
 						const { data } = e.data.raster;
-						self.slopeaspects[e.data.id] = raster2slopeaspect(data);
+						self.slopeaspects[e.data.id] = raster2slopeaspect(
+							data,
+							heightFunction
+						);
 						self.shades = shading(
 							Rainbow,
 							self.slopeaspects[e.data.id].slopes,
@@ -30,15 +44,16 @@ export default URL.createObjectURL(
 					});
 				};
 
-				function raster2dem(data) {
+				function raster2dem(data, heightFunction) {
 					const dem = new Int16Array(256 * 256);
 
 					var x, y, i, j;
 
-					// from https://docs.mapbox.com/help/troubleshooting/access-elevation-data/#decode-data
-					function height(R, G, B) {
-						return -10000 + (R * 256 * 256 + G * 256 + B) * 0.1;
-					}
+					const height =
+						heightFunction ||
+						function (R, G, B) {
+							return -10000 + (R * 256 * 256 + G * 256 + B) * 0.1;
+						};
 
 					for (x = 0; x < 256; x++) {
 						for (y = 0; y < 256; y++) {

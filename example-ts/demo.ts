@@ -37,7 +37,7 @@ export function initializeDemo(key) {
 	// Configure leaflet-topography
 	Topography.configure({
 		tilesUrl: 'https://tileserver.tejidx.com/rgb_50k100/{z}/{x}/{y}.png',
-		// token: key,
+		token: key,
 		scale: 13,
 		spread: 4,
 		priority: 'storage',
