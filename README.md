@@ -391,7 +391,7 @@ const elevationLayer = new TopoLayer({ topotype: 'elevation' })
 
 <h3 id="preload-section"><code>preload</code></h3>
 
-`preload` is a convenience function which takes in an aray of `L.LatLngBounds` and saves all DEM tiles within those bounds to the cache.  If you know you will be doing analysis in a certain area(s), `preload` will perform all the data fetching ahead of time:
+`preload` is a convenience function which takes in an aray of `L.LatLngBounds` and saves all DEM tiles within those bounds to the cache.  If you know you will be doing analysis in a certain area(s), `preload` will perform all the data fetching ahead of time.  You must call `configure` with your `token` or `tilesUrl` before calling `preload`:
 
 ````javascript
 import L from 'leaflet';
@@ -429,15 +429,34 @@ map.on('click', e => {
 - `TopoLayer`
   - `topotype: slope` does not consider distance betwen pixels when calculating and coloring slope.  Lower zoom levels produce higher slope values, meaning the layer tends to "white out" as you zoom out, and "black out" as you zoom in.  Interestingly, this is in contrast to using `rasterFunction: "Slope_Degrees"` on an esri-leaflet terrain layer, which blacks out as you zoom out.
   - `topotype: slopeaspect` with a `continuous: true` is *very* slow, as each pixel's color must be calculated across two gradients - one to interpolate between aspect colors, and another to interpolate between the resultant aspect color and the slope value.  This goes against the philosophy of this plugin, and should probably not be used.
+  - **Bug**: When creating a `TopoLayer`, you can pass a custom `heightFunction` on a per-layer basis inside the `customization` object.  However, [currently there is a bug that is not allowing the stringified function to be passed to the web workers when passed as a `customization` option](https://stackoverflow.com/questions/68029421/failed-to-execute-postmessage-on-worker-x-could-not-be-cloned).  For this reason, I recommend defining your `heightFunction` in the `configure` function:
+  
+        L.Topography.configure({
+          heightFunction: (R, G, B) => return some_function_of_R_G_B
+        })
+
+  - If you want to define the `heightFunction` for a specific TopoLayer only, you can pass it as a property of `customization`, but if must be stringified:
+
+        const customTopo = new TopoLayer({
+           topotype: 'aspect',
+           tilesUrl: "your_url_here",
+           customization: {
+              heightFunction ((R, G, B) => {
+                 return return some_function_of_R_G_B;
+              }).toString()
+           }
+        })
+   
+  
 
 ### Planned Improvements
 
+- Fix aforementioned `TopoLayer` bug
 - Units option for `getTopography`?
 - Fade-in effect on `TopoLayer` tiles when imageData is posted
 - Incorporate zoom level into `TopoLayer({ topotype: slope })` for consistent visuals across zoom levels
 - Smoothen `TopoLayer` at higher levels
 - General colorization algorithm optimization
-- Add node environment support
 
 ## Alternatives
 
