@@ -6,8 +6,8 @@
 	"scripts": {
 		"test": "BABEL_ENV=development NODE_ENV=test jest --runInBand",
 		"clean": "rimraf build",
-		"copy": "cp src/leaflet-topography.d.ts build/leaflet-topography.d.ts",
-		"build": "npm run clean && webpack && tsc && npm run copy",
+		"copy": "cp src/leaflet-topography.d.ts build/leaflet-topography.d.ts && cp src/types.ts build/types.ts",
+		"build": "npm run clean && webpack && npm run copy",
 		"checkoutput": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
 	},
 	"repository": {

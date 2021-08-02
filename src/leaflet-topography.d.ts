@@ -1,9 +1,29 @@
 import * as L from 'leaflet';
-import { ConfigOptions } from './types';
-import { TopoLayerOptions } from './TopoLayer';
+import { ConfigOptions, TopoLayerOptions } from './types';
+
+declare function getTopography(
+	latlng: L.LatLng,
+	userOptions?: Partial<ConfigOptions>
+): Promise<{
+	elevation: any;
+	slope: number;
+	aspect: number;
+	resolution: number;
+}>;
+
+declare function configure(userConfig: Partial<ConfigOptions>): ConfigOptions;
+
+declare function preload(
+	bounds: L.LatLngBounds[],
+	userOptions?: any
+): Promise<void>;
+
+declare class TopoLayer extends L.GridLayer {
+	constructor(options: TopoLayerOptions);
+}
 
 declare module 'leaflet' {
-	namespace Topography {
+	export namespace Topography {
 		export function getTopography(
 			latlng: L.LatLng,
 			userOptions?: Partial<ConfigOptions>
@@ -32,5 +52,14 @@ declare module 'leaflet' {
 		export const _tileCache: {};
 	}
 }
+
+export {
+	getTopography,
+	configure,
+	preload,
+	TopoLayer,
+	ConfigOptions,
+	TopoLayerOptions,
+};
 
 export default L.Topography;
