@@ -169,7 +169,8 @@ You must pass an options as the second argument of `getTopography`, *or* you can
       </td>
       <td> <code> string </code> </td>
       <td> none </td>
-      <td> Optional url for custom tiles to be used instead of Mapbox rgb-terrain.  Must be in the standard <a href="https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames">slippymap tilename</a> format. </td>
+      <td> Optional url for custom tiles to be used instead of Mapbox rgb-terrain.  Must be in the standard <a href="https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames">slippymap tilename</a> format.  <br>
+      <a href="https://codesandbox.io/s/github/slutske22/leaflet-topography/tree/main/example-ts">👁 See demo project here  👁</a> (Note this demo relies on custom tiles that may no longer be available by the time you read this). </td>
    </tr>
    <tr>
       <td>
