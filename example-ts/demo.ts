@@ -1,4 +1,4 @@
-// import * as L from 'leaflet';
+import * as L from 'leaflet';
 import Topography from 'leaflet-topography';
 // import Topography from '../build/leaflet-topography.js';
 import 'leaflet.control.layers.tree';

@@ -1,5 +1,5 @@
-// import { TopoLayer } from '../build/leaflet-topography.js';
-import { TopoLayer } from 'leaflet-topography';
+import { TopoLayer } from '../build/leaflet-topography.js';
+// import { TopoLayer } from 'leaflet-topography';
 import customWorker from './custom.worker';
 
 // Allow attaching things to window object:
@@ -23,7 +23,7 @@ export const elevationLayers = [
 			customization: {
 				heightFunction: ((R, G, B) => {
 					return -45000 + (R * 256 * 256 + G * 256 + B) * 0.01;
-				}).toString(),
+				}).toString() as unknown as (R: number, G: number, B: number) => number,
 			},
 		})),
 	},
@@ -134,7 +134,7 @@ export const slopeLayers = [
 			topotype: 'slope',
 			customization: {
 				colors: ['#000000', '#fd632a', '#fd632a'],
-				brakpoints: [0, 70, 90],
+				breakpoints: [0, 70, 90],
 				continuous: false,
 			},
 		})),

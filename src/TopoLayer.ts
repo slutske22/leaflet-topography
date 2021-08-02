@@ -1,7 +1,8 @@
-import { GridLayer, DomUtil } from 'leaflet';
+import { GridLayer, DomUtil, GridLayerOptions } from 'leaflet';
 import { Rainbow } from './utils';
 import { _config } from './config';
 import workers from './workers';
+import { ConfigOptions } from './types';
 
 var uniqueId = (function () {
 	var lastId = 0;
@@ -9,6 +10,26 @@ var uniqueId = (function () {
 		return ++lastId;
 	};
 })();
+
+export interface TopoLayerOptions
+	extends GridLayerOptions,
+		Partial<ConfigOptions> {
+	/**
+	 * What type of TopoLayer we want to create
+	 */
+	topotype: 'elevation' | 'slope' | 'aspect' | 'slopeaspect' | 'custom';
+	/**
+	 * Customization object for customizing colorization of TopoLayer
+	 */
+	customization?: {
+		colors?: string[];
+		breakpoints?: number[];
+		continuous?: boolean;
+		breaksAt0?: boolean;
+		fallback?: string;
+		heightFunction?: (R: number, G: number, B: number) => number;
+	};
+}
 
 const TopoLayer = GridLayer.extend({
 	/**
