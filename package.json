@@ -1,6 +1,6 @@
 {
 	"name": "leaflet-topography",
-	"version": "0.1.2-next.0",
+	"version": "0.2.0",
 	"description": "a set of tools for calculating and visualizing topography in leafletjs",
 	"main": "build/leaflet-topography.js",
 	"scripts": {
