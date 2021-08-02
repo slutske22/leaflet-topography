@@ -19,10 +19,6 @@ import {
 	customLayers,
 } from './layers';
 
-window.addEventListener('DOMContentLoaded', () => {
-	initializeDemo('token not needed when ussing tilesUrl');
-});
-
 export function initializeDemo(key) {
 	//
 	modal.style.display = 'none';
@@ -98,14 +94,10 @@ export function initializeDemo(key) {
 		],
 	};
 
-	// const overlayTree = {
-	// 	label: '<code class="tree-title"> topotype: custom</code>',
-	// 	children: customLayers.map((l) => ({
-	// 		label: l.name,
-	// 		layer: l.layer,
-	// 	})),
-	// };
-
 	// @ts-ignore
 	L.control.layers.tree(baseTree, null, { collapsed: false }).addTo(map);
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+	initializeDemo('token not needed when ussing tilesUrl');
+});
