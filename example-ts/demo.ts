@@ -20,9 +20,7 @@ import {
 } from './layers';
 
 window.addEventListener('DOMContentLoaded', () => {
-	if (process.env.MAPBOX_TOKEN) {
-		initializeDemo(process.env.MAPBOX_TOKEN);
-	}
+	initializeDemo('token not needed when ussing tilesUrl');
 });
 
 export function initializeDemo(key) {
