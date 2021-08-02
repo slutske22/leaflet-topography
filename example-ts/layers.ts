@@ -1,5 +1,5 @@
-import { TopoLayer } from '../build/leaflet-topography.js';
-// import { TopoLayer } from 'leaflet-topography';
+// import Topography, { TopoLayer } from '../build/leaflet-topography.js';
+import { TopoLayer } from 'leaflet-topography';
 import customWorker from './custom.worker';
 
 // Allow attaching things to window object:
