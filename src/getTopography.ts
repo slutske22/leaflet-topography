@@ -144,7 +144,7 @@ async function getTopography(
 		eleW = await getElevation(projectedW);
 
 	const dx = E.distanceTo(W),
-		dy = E.distanceTo(S);
+		dy = N.distanceTo(S);
 
 	const dzdx = (eleE - eleW) / dx,
 		dzdy = (eleN - eleS) / dy;
