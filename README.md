@@ -57,7 +57,10 @@ Or you can include the package in your HTML `head` using unpkg:
 leaflet-topography will attach to the leaflet global `L`, and `L.Topography` will now be available for use.  You can also import relevant tools directly:
 
 ````javascript
+// Somewhere at the root level of your app
 import 'regenerator-runtime/runtime';
+
+// Where you want to use leaflet-topography
 import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topography';
 ````
 ## Tools:
