@@ -32,12 +32,16 @@ While [other tools](#alternatives) exist to calculate and visualize topography i
 
 
 
+## Requirements
+
+leaflet-topography depends on leaflet 1.7.1.  It also requires the availability of [regenerator-runtime](https://www.npmjs.com/package/regenerator-runtime).
+
 ## Installation and Use
 
 You can install leaflet-topography through npm:
 
 ```
-npm i leaflet-topography
+npm i leaflet-topography regenerator-runtime
 ```
 
 Or you can include the package in your HTML `head` using unpkg: 
@@ -45,6 +49,7 @@ Or you can include the package in your HTML `head` using unpkg:
 ````html
 <head>
    <script src="leaflet-CDN-comes-first" type="text/javascript"></script>
+   <script src="https://unpkg.com/regenerator-runtime" type="text/javascript"></script>
    <script src="https://unpkg.com/leaflet-topography" type="text/javascript"></script>
 </head>
 ````
@@ -52,7 +57,8 @@ Or you can include the package in your HTML `head` using unpkg:
 leaflet-topography will attach to the leaflet global `L`, and `L.Topography` will now be available for use.  You can also import relevant tools directly:
 
 ````javascript
-import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topography'
+import 'regenerator-runtime/runtime';
+import Topography, { getTopography, configure, TopoLayer } from 'leaflet-topography';
 ````
 ## Tools:
 
@@ -452,6 +458,7 @@ map.on('click', e => {
 
 ### Planned Improvements
 
+- Remove need to manually include regenerator-runtime
 - Fix aforementioned `TopoLayer` bug
 - Units option for `getTopography`?
 - Fade-in effect on `TopoLayer` tiles when imageData is posted
