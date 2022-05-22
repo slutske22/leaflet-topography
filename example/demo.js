@@ -1,103 +1,106 @@
-import Topography from 'leaflet-topography';
+import Topography from "leaflet-topography";
 // import Topography from '../build/leaflet-topography.js';
-import 'leaflet.control.layers.tree';
-import './leaflet.tree.css';
+import "leaflet.control.layers.tree";
+import "./leaflet.tree.css";
 
 import {
-	map,
-	modal,
-	resultsContainer,
-	resultsMarkup,
-	USGS_USImagery,
-} from './index';
+  map,
+  modal,
+  resultsContainer,
+  resultsMarkup,
+  USGS_USImagery,
+} from "./index";
 import {
-	elevationLayers,
-	slopeLayers,
-	aspectLayers,
-	slopeaspectLayers,
-	customLayers,
-} from './layers';
+  elevationLayers,
+  slopeLayers,
+  aspectLayers,
+  slopeaspectLayers,
+  customUrlLayers,
+} from "./layers";
 
-// window.addEventListener('DOMContentLoaded', () => {
-// 	if (process.env.MAPBOX_TOKEN) {
-// 		initializeDemo(process.env.MAPBOX_TOKEN);
-// 	}
-// });
+window.addEventListener("DOMContentLoaded", () => {
+  if (process.env.MAPBOX_TOKEN) {
+    initializeDemo(process.env.MAPBOX_TOKEN);
+  }
+});
 
 export function initializeDemo(key) {
-	//
-	modal.style.display = 'none';
-	resultsContainer.style.display = 'block';
-	const csb = document.getElementById('codesandbox-container');
-	csb.style.display = 'flex';
-	const topLeft = document.querySelector('.leaflet-right.leaflet-top');
-	topLeft.appendChild(csb);
+  //
+  modal.style.display = "none";
+  resultsContainer.style.display = "block";
+  const csb = document.getElementById("codesandbox-container");
+  csb.style.display = "flex";
+  const topLeft = document.querySelector(".leaflet-right.leaflet-top");
+  topLeft.appendChild(csb);
 
-	// Configure leaflet-topography
-	Topography.configure({
-		token: key,
-		scale: 13,
-		spread: 4,
-		priority: 'storage',
-	});
+  // Configure leaflet-topography
+  Topography.configure({
+    token: key,
+    scale: 13,
+    spread: 4,
+    priority: "storage",
+  });
 
-	// Preload map area on load
-	const bounds = map.getBounds();
+  // Preload map area on load
+  const bounds = map.getBounds();
 
-	// Implement getTopography function
-	map.on('click', (e) => {
-		resultsMarkup.innerHTML = 'Requesting Topography...';
-		Topography.getTopography(e.latlng).then((results) => {
-			resultsMarkup.innerHTML =
-				JSON.stringify(e.latlng, null, 2) +
-				'<br>' +
-				JSON.stringify(results, null, 2);
-		});
-	});
+  // Implement getTopography function
+  map.on("click", (e) => {
+    resultsMarkup.innerHTML = "Requesting Topography...";
+    Topography.getTopography(e.latlng).then((results) => {
+      resultsMarkup.innerHTML =
+        JSON.stringify(e.latlng, null, 2) +
+        "<br>" +
+        JSON.stringify(results, null, 2);
+    });
+  });
 
-	// Create layers control tree for various TopoLayer samples
-	const baseTree = {
-		layer: USGS_USImagery,
-		label: 'Basemap',
-		children: [
-			{
-				label: '<code class="tree-title"> topotype: elevation</code>',
-				children: elevationLayers.map((l) => ({
-					label: l.name,
-					layer: l.layer,
-				})),
-			},
-			{
-				label: '<code class="tree-title"> topotype: slope</code>',
-				children: slopeLayers.map((l) => ({
-					label: l.name,
-					layer: l.layer,
-				})),
-			},
-			{
-				label: '<code class="tree-title"> topotype: aspect</code>',
-				children: aspectLayers.map((l) => ({
-					label: l.name,
-					layer: l.layer,
-				})),
-			},
-			{
-				label: '<code class="tree-title"> topotype: slopeaspect</code>',
-				children: slopeaspectLayers.map((l) => ({
-					label: l.name,
-					layer: l.layer,
-				})),
-			},
-		],
-	};
+  // Create layers control tree for various TopoLayer samples
+  const baseTree = {
+    layer: USGS_USImagery,
+    label: "Basemap",
+    children: [
+      {
+        label: '<code class="tree-title"> topotype: elevation</code>',
+        children: elevationLayers.map((l) => ({
+          label: l.name,
+          layer: l.layer,
+        })),
+      },
+      {
+        label: '<code class="tree-title"> topotype: slope</code>',
+        children: slopeLayers.map((l) => ({
+          label: l.name,
+          layer: l.layer,
+        })),
+      },
+      {
+        label: '<code class="tree-title"> topotype: aspect</code>',
+        children: aspectLayers.map((l) => ({
+          label: l.name,
+          layer: l.layer,
+        })),
+      },
+      {
+        label: '<code class="tree-title"> topotype: slopeaspect</code>',
+        children: slopeaspectLayers.map((l) => ({
+          label: l.name,
+          layer: l.layer,
+        })),
+      },
+      {
+        label: '<code class="tree-title"> custom tile url</code>',
+        children: customUrlLayers.map((l) => ({
+          label: l.name,
+          layer: l.layer,
+        })),
+      },
+    ],
+  };
 
-	const overlayTree = {
-		label: '<code class="tree-title"> topotype: custom</code>',
-		children: customLayers.map((l) => ({
-			label: l.name,
-			layer: l.layer,
-		})),
-	};
+  L.control.layers.tree(baseTree, null, { collapsed: false }).addTo(map);
 
-	L.control.layers.tree(baseTree, null, { collapsed: false }).addTo(map);
+  map.on("baselayerchange", function (e) {
+    console.log(e.layer);
+  });
 }
