@@ -34303,8 +34303,8 @@ var bathymetryLayer = new _leafletTopography.TopoLayer({
     return red * 256 + green + blue / 256 - 32768;
   }.toString(),
   customization: {
-    colors: ["#ffffff", "#303E73", "#7A85AD", "#515E90", "#172557", "#07123A", "#164A5B", "#75CFEC", "#172557", "#303E73", "#164A5B", "#75CFEC"],
-    brakpoints: [-11500, -10000, -8000, -6000, -4000, -2000, -1500, -1000, -500, -100, 0, 10000000],
+    colors: ["#FFFFFF", "#303E73", "#7A85AD", "#515E90", "#172557", "#07123A", "#164A5B", "#75CFEC", "#172557", "#303E73", "#164A5B", "#75CFEC", "#ffffff"],
+    breakpoints: [-11500, -10000, -8000, -6000, -4000, -2000, -1500, -1000, -500, -100, 0, 100000],
     continuous: false
   }
 });

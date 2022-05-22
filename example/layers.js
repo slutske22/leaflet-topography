@@ -248,7 +248,7 @@ const bathymetryLayer = new TopoLayer({
     red * 256 + green + blue / 256 - 32768).toString(),
   customization: {
     colors: [
-      "#ffffff",
+      "#FFFFFF",
       "#303E73",
       "#7A85AD",
       "#515E90",
@@ -260,10 +260,11 @@ const bathymetryLayer = new TopoLayer({
       "#303E73",
       "#164A5B",
       "#75CFEC",
+      "#ffffff",
     ],
-    brakpoints: [
+    breakpoints: [
       -11500, -10000, -8000, -6000, -4000, -2000, -1500, -1000, -500, -100, 0,
-      10000000,
+      100000,
     ],
     continuous: false,
   },
