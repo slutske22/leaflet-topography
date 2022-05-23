@@ -34311,7 +34311,8 @@ var bathymetryLayer = new _leafletTopography.TopoLayer({
       return red * 256 + green + blue / 256 - 32768;
     }.toString()
   }
-});
+}); // Assign name to hook into in the `map.on('baselayerchange')` event handler in demo.js
+
 bathymetryLayer.name = "bathymetry"; // Custom tile url layers
 
 var customUrlLayers = [{
@@ -34340,14 +34341,24 @@ var _layers = require("./layers");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import Topography from '../build/leaflet-topography.js';
+
+/**
+ * Create a .env file and pop your MAPBOX_TOKEN in there so as not to have
+ * to enter it every time
+ */
 window.addEventListener("DOMContentLoaded", function () {
   if ("pk.eyJ1Ijoic2x1dHNrZTIyIiwiYSI6ImNrZ2dycnV6bTFzd24yeXFvMndka2NqYTcifQ.HHsVRNANxzV-nQEZG1gKrA") {
     initializeDemo("pk.eyJ1Ijoic2x1dHNrZTIyIiwiYSI6ImNrZ2dycnV6bTFzd24yeXFvMndka2NqYTcifQ.HHsVRNANxzV-nQEZG1gKrA");
   }
 });
+/**
+ * Primary function which initializes demo
+ */
 
 function initializeDemo(key) {
-  //
+  /**
+   * Adjust some CSS once elements are loaded:
+   */
   _index.modal.style.display = "none";
   _index.resultsContainer.style.display = "block";
   var csb = document.getElementById("codesandbox-container");
@@ -34363,7 +34374,9 @@ function initializeDemo(key) {
   }); // Preload map area on load
 
 
-  var bounds = _index.map.getBounds(); // Implement getTopography function
+  var bounds = _index.map.getBounds();
+
+  _leafletTopography.default.preload([bounds]); // Implement getTopography function
 
 
   _index.map.on("click", function (e) {
@@ -34423,6 +34436,11 @@ function initializeDemo(key) {
   L.control.layers.tree(baseTree, null, {
     collapsed: false
   }).addTo(_index.map);
+  /**
+   * When baselayer changes, reconfigure leaflet-topography to use the correct
+   * height functions.  Necessary to showcase both the visual TopoLayers, as well
+   * as the analytic getTopography functions, with the correct height function
+   */
 
   _index.map.on("baselayerchange", function (e) {
     if (e.layer.name === "bathymetry") {
@@ -34438,12 +34456,13 @@ function initializeDemo(key) {
       // Set tilesUrl back to undefined to default back to mapbox
       _leafletTopography.default.configure({
         tilesUrl: undefined,
-        heightFunction: function (R, G, B) {
+        heightFunction: function heightFunction(R, G, B) {
           return -10000 + (R * 256 * 256 + G * 256 + B) * 0.1;
-        }.toString()
+        }
       });
 
       e.layer.redraw();
+      console.log(_leafletTopography.default._config);
     }
   });
 }

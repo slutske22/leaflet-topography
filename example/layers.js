@@ -278,6 +278,7 @@ const bathymetryLayer = new TopoLayer({
   },
 });
 
+// Assign name to hook into in the `map.on('baselayerchange')` event handler in demo.js
 bathymetryLayer.name = "bathymetry";
 
 // Custom tile url layers

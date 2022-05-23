@@ -18,14 +18,23 @@ import {
   customUrlLayers,
 } from "./layers";
 
+/**
+ * Create a .env file and pop your MAPBOX_TOKEN in there so as not to have
+ * to enter it every time
+ */
 window.addEventListener("DOMContentLoaded", () => {
   if (process.env.MAPBOX_TOKEN) {
     initializeDemo(process.env.MAPBOX_TOKEN);
   }
 });
 
+/**
+ * Primary function which initializes demo
+ */
 export function initializeDemo(key) {
-  //
+  /**
+   * Adjust some CSS once elements are loaded:
+   */
   modal.style.display = "none";
   resultsContainer.style.display = "block";
   const csb = document.getElementById("codesandbox-container");
@@ -43,6 +52,7 @@ export function initializeDemo(key) {
 
   // Preload map area on load
   const bounds = map.getBounds();
+  Topography.preload([bounds]);
 
   // Implement getTopography function
   map.on("click", (e) => {
@@ -100,6 +110,11 @@ export function initializeDemo(key) {
 
   L.control.layers.tree(baseTree, null, { collapsed: false }).addTo(map);
 
+  /**
+   * When baselayer changes, reconfigure leaflet-topography to use the correct
+   * height functions.  Necessary to showcase both the visual TopoLayers, as well
+   * as the analytic getTopography functions, with the correct height function
+   */
   map.on("baselayerchange", function (e) {
     if (e.layer.name === "bathymetry") {
       // Configure to use the bathymetry tiles urls, as well as the correct custom height function
@@ -114,12 +129,13 @@ export function initializeDemo(key) {
       // Set tilesUrl back to undefined to default back to mapbox
       Topography.configure({
         tilesUrl: undefined,
-        heightFunction: ((R, G, B) => {
+        heightFunction: (R, G, B) => {
           return -10000 + (R * 256 * 256 + G * 256 + B) * 0.1;
-        }).toString(),
+        },
       });
 
       e.layer.redraw();
+      console.log(Topography._config);
     }
   });
 }
