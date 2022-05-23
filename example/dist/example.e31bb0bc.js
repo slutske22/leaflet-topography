@@ -34346,15 +34346,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Create a .env file and pop your MAPBOX_TOKEN in there so as not to have
  * to enter it every time
  */
-window.addEventListener("DOMContentLoaded", function () {
-  if ("pk.eyJ1Ijoic2x1dHNrZTIyIiwiYSI6ImNrZ2dycnV6bTFzd24yeXFvMndka2NqYTcifQ.HHsVRNANxzV-nQEZG1gKrA") {
-    initializeDemo("pk.eyJ1Ijoic2x1dHNrZTIyIiwiYSI6ImNrZ2dycnV6bTFzd24yeXFvMndka2NqYTcifQ.HHsVRNANxzV-nQEZG1gKrA");
-  }
-});
+// window.addEventListener("DOMContentLoaded", () => {
+//   if (process.env.MAPBOX_TOKEN) {
+//     initializeDemo(process.env.MAPBOX_TOKEN);
+//   }
+// });
+
 /**
  * Primary function which initializes demo
  */
-
 function initializeDemo(key) {
   /**
    * Adjust some CSS once elements are loaded:

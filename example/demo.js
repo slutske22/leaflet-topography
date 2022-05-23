@@ -22,11 +22,11 @@ import {
  * Create a .env file and pop your MAPBOX_TOKEN in there so as not to have
  * to enter it every time
  */
-window.addEventListener("DOMContentLoaded", () => {
-  if (process.env.MAPBOX_TOKEN) {
-    initializeDemo(process.env.MAPBOX_TOKEN);
-  }
-});
+// window.addEventListener("DOMContentLoaded", () => {
+//   if (process.env.MAPBOX_TOKEN) {
+//     initializeDemo(process.env.MAPBOX_TOKEN);
+//   }
+// });
 
 /**
  * Primary function which initializes demo
