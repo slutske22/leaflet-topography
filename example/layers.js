@@ -273,6 +273,8 @@ const bathymetryLayer = new TopoLayer({
       -700, -600, -500, -400, -300, -200, -100, 0, 100000,
     ],
     continuous: false,
+    heightFunction: ((red, green, blue) =>
+      red * 256 + green + blue / 256 - 32768).toString(),
   },
 });
 

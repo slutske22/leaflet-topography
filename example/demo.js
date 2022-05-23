@@ -101,8 +101,6 @@ export function initializeDemo(key) {
   L.control.layers.tree(baseTree, null, { collapsed: false }).addTo(map);
 
   map.on("baselayerchange", function (e) {
-    console.log(e);
-
     if (e.layer.name === "bathymetry") {
       // Configure to use the bathymetry tiles urls, as well as the correct custom height function
       Topography.configure({
@@ -113,11 +111,15 @@ export function initializeDemo(key) {
         scale: 12,
       });
     } else {
-      // Set tilesUrl and heightFunction back to undefined to default back to mapbox
+      // Set tilesUrl back to undefined to default back to mapbox
       Topography.configure({
         tilesUrl: undefined,
-        heightFunction: undefined,
+        heightFunction: ((R, G, B) => {
+          return -10000 + (R * 256 * 256 + G * 256 + B) * 0.1;
+        }).toString(),
       });
+
+      e.layer.redraw();
     }
   });
 }

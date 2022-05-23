@@ -34306,7 +34306,10 @@ var bathymetryLayer = new _leafletTopography.TopoLayer({
     fallback: "#FFFFFF",
     colors: ["#303E73", "#7A85AD", "#515E90", "#172557", "#164A5B", "#75CFEC", "#172557", "#164A5B", "#303E73", "#003a49", "#00546a", "#006f8a", "#007c9b", "#0096bb", "#00a3cc", "#75CFEC", "#c1f2fe", "#000000"],
     breakpoints: [-11500, -10000, -9000, -8000, -7000, -6000, -5000, -4000, -2000, -1000, -700, -600, -500, -400, -300, -200, -100, 0, 100000],
-    continuous: false
+    continuous: false,
+    heightFunction: function (red, green, blue) {
+      return red * 256 + green + blue / 256 - 32768;
+    }.toString()
   }
 });
 bathymetryLayer.name = "bathymetry"; // Custom tile url layers
@@ -34422,8 +34425,6 @@ function initializeDemo(key) {
   }).addTo(_index.map);
 
   _index.map.on("baselayerchange", function (e) {
-    console.log(e);
-
     if (e.layer.name === "bathymetry") {
       // Configure to use the bathymetry tiles urls, as well as the correct custom height function
       _leafletTopography.default.configure({
@@ -34434,11 +34435,15 @@ function initializeDemo(key) {
         scale: 12
       });
     } else {
-      // Set tilesUrl and heightFunction back to undefined to default back to mapbox
+      // Set tilesUrl back to undefined to default back to mapbox
       _leafletTopography.default.configure({
         tilesUrl: undefined,
-        heightFunction: undefined
+        heightFunction: function (R, G, B) {
+          return -10000 + (R * 256 * 256 + G * 256 + B) * 0.1;
+        }.toString()
       });
+
+      e.layer.redraw();
     }
   });
 }
