@@ -101,6 +101,23 @@ export function initializeDemo(key) {
   L.control.layers.tree(baseTree, null, { collapsed: false }).addTo(map);
 
   map.on("baselayerchange", function (e) {
-    console.log(e.layer);
+    console.log(e);
+
+    if (e.layer.name === "bathymetry") {
+      // Configure to use the bathymetry tiles urls, as well as the correct custom height function
+      Topography.configure({
+        tilesUrl:
+          "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png",
+        heightFunction: (red, green, blue) =>
+          red * 256 + green + blue / 256 - 32768,
+        scale: 12,
+      });
+    } else {
+      // Set tilesUrl and heightFunction back to undefined to default back to mapbox
+      Topography.configure({
+        tilesUrl: undefined,
+        heightFunction: undefined,
+      });
+    }
   });
 }

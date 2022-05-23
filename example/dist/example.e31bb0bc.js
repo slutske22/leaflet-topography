@@ -34303,8 +34303,9 @@ var bathymetryLayer = new _leafletTopography.TopoLayer({
     return red * 256 + green + blue / 256 - 32768;
   }.toString(),
   customization: {
-    colors: ["#FFFFFF", "#303E73", "#7A85AD", "#515E90", "#172557", "#07123A", "#164A5B", "#75CFEC", "#172557", "#303E73", "#164A5B", "#75CFEC", "#ffffff"],
-    breakpoints: [-11500, -10000, -8000, -6000, -4000, -2000, -1500, -1000, -500, -100, 0, 100000],
+    fallback: "#FFFFFF",
+    colors: ["#303E73", "#7A85AD", "#515E90", "#172557", "#164A5B", "#75CFEC", "#172557", "#164A5B", "#303E73", "#003a49", "#00546a", "#006f8a", "#007c9b", "#0096bb", "#00a3cc", "#75CFEC", "#c1f2fe", "#000000"],
+    breakpoints: [-11500, -10000, -9000, -8000, -7000, -6000, -5000, -4000, -2000, -1000, -700, -600, -500, -400, -300, -200, -100, 0, 100000],
     continuous: false
   }
 });
@@ -34421,7 +34422,24 @@ function initializeDemo(key) {
   }).addTo(_index.map);
 
   _index.map.on("baselayerchange", function (e) {
-    console.log(e.layer);
+    console.log(e);
+
+    if (e.layer.name === "bathymetry") {
+      // Configure to use the bathymetry tiles urls, as well as the correct custom height function
+      _leafletTopography.default.configure({
+        tilesUrl: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png",
+        heightFunction: function heightFunction(red, green, blue) {
+          return red * 256 + green + blue / 256 - 32768;
+        },
+        scale: 12
+      });
+    } else {
+      // Set tilesUrl and heightFunction back to undefined to default back to mapbox
+      _leafletTopography.default.configure({
+        tilesUrl: undefined,
+        heightFunction: undefined
+      });
+    }
   });
 }
 },{"leaflet-topography":"node_modules/leaflet-topography/build/leaflet-topography.js","leaflet.control.layers.tree":"node_modules/leaflet.control.layers.tree/L.Control.Layers.Tree.js","./leaflet.tree.css":"leaflet.tree.css","./index":"index.js","./layers":"layers.js"}],"index.js":[function(require,module,exports) {
@@ -34453,7 +34471,7 @@ var mapOptions = {
     lat: 20.644973760193032,
     lng: -156.10400190576914
   },
-  zoom: 15
+  zoom: 14
 }; // himalayas:
 // var mapOptions = {
 // 	center: { lat: 30.221101852485987, lng: 85.6494140625 },
@@ -34461,32 +34479,32 @@ var mapOptions = {
 // };
 //Create a map and assign it to the map div
 
-var map = window.map = L.map('leafletMapid', mapOptions);
+var map = window.map = L.map("leafletMapid", mapOptions);
 exports.map = map;
 Geocoding.geosearch({
   useMapBounds: false
 }).addTo(map); //  Add a baselayer
 
-var USGS_USImagery = L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}', {
+var USGS_USImagery = L.tileLayer("https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}", {
   maxZoom: 20,
   attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
 });
 exports.USGS_USImagery = USGS_USImagery;
 USGS_USImagery.addTo(map);
-var modal = document.getElementById('key-modal');
+var modal = document.getElementById("key-modal");
 exports.modal = modal;
-var resultsContainer = document.getElementById('topo-results-container');
+var resultsContainer = document.getElementById("topo-results-container");
 exports.resultsContainer = resultsContainer;
-var resultsMarkup = document.getElementById('topo-results');
+var resultsMarkup = document.getElementById("topo-results");
 exports.resultsMarkup = resultsMarkup;
-var submitButton = document.getElementById('key-submit');
-var textArea = document.getElementById('key-input');
-var warning = document.getElementById('warning');
-submitButton.addEventListener('click', function () {
+var submitButton = document.getElementById("key-submit");
+var textArea = document.getElementById("key-input");
+var warning = document.getElementById("warning");
+submitButton.addEventListener("click", function () {
   if (textArea.value) {
     (0, _demo.initializeDemo)(textArea.value);
   } else {
-    warning.classList.add('show');
+    warning.classList.add("show");
   }
 });
 },{"core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","esri-leaflet-geocoder":"node_modules/esri-leaflet-geocoder/dist/esri-leaflet-geocoder-debug.js","./demo":"demo.js","./layers.js":"layers.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

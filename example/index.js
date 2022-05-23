@@ -1,14 +1,14 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-import * as Geocoding from 'esri-leaflet-geocoder';
-import { initializeDemo } from './demo';
-import './layers.js';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import * as Geocoding from "esri-leaflet-geocoder";
+import { initializeDemo } from "./demo";
+import "./layers.js";
 
 // Define some maps options
 // hawaii:
 var mapOptions = {
-	center: { lat: 20.644973760193032, lng: -156.10400190576914 },
-	zoom: 15,
+  center: { lat: 20.644973760193032, lng: -156.10400190576914 },
+  zoom: 14,
 };
 
 // himalayas:
@@ -18,34 +18,34 @@ var mapOptions = {
 // };
 
 //Create a map and assign it to the map div
-export const map = (window.map = L.map('leafletMapid', mapOptions));
+export const map = (window.map = L.map("leafletMapid", mapOptions));
 
 Geocoding.geosearch({ useMapBounds: false }).addTo(map);
 
 //  Add a baselayer
 export const USGS_USImagery = L.tileLayer(
-	'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}',
-	{
-		maxZoom: 20,
-		attribution:
-			'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>',
-	}
+  "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}",
+  {
+    maxZoom: 20,
+    attribution:
+      'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>',
+  }
 );
 USGS_USImagery.addTo(map);
 
-export const modal = document.getElementById('key-modal');
+export const modal = document.getElementById("key-modal");
 export const resultsContainer = document.getElementById(
-	'topo-results-container'
+  "topo-results-container"
 );
-export const resultsMarkup = document.getElementById('topo-results');
-const submitButton = document.getElementById('key-submit');
-const textArea = document.getElementById('key-input');
-const warning = document.getElementById('warning');
+export const resultsMarkup = document.getElementById("topo-results");
+const submitButton = document.getElementById("key-submit");
+const textArea = document.getElementById("key-input");
+const warning = document.getElementById("warning");
 
-submitButton.addEventListener('click', () => {
-	if (textArea.value) {
-		initializeDemo(textArea.value);
-	} else {
-		warning.classList.add('show');
-	}
+submitButton.addEventListener("click", () => {
+  if (textArea.value) {
+    initializeDemo(textArea.value);
+  } else {
+    warning.classList.add("show");
+  }
 });
